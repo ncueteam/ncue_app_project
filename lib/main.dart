@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 
 void main() {
@@ -30,7 +31,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -96,29 +96,44 @@ class BiometricAuthScreen extends StatefulWidget {
 
 class _BiometricAuthScreenState extends State<BiometricAuthScreen> {
   final LocalAuthentication _localAuthentication = LocalAuthentication();
-
+  String textValue = "";
+  Future<String> readFile() async {
+    return await rootBundle.loadString("assets/test.txt");
+  }
+  @override
+  void initState() {
+    super.initState();
+    readFile().then((value) => setState(() {
+      textValue = value;
+    }));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Biometric Authentication'),
+        title: const Text('Biometric Authentication'),
       ),
       body: Center(
-        child: ElevatedButton(
-          child: Text('Authenticate'),
-          onPressed: () async {
-            bool authenticated = await _localAuthentication.authenticate(
-              localizedReason: 'Please scan your fingerprint to authenticate'
-            );
-            if (authenticated) {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => MyHomePage(title: "x"),
-                ),
-              );
-            }
-          },
-        ),
+          child: Row(
+            children: <Widget>[
+              ElevatedButton(
+                child: Text('Authenticate'),
+                onPressed: () async {
+                  bool authenticated = await _localAuthentication.authenticate(
+                      localizedReason: 'Please scan your fingerprint to authenticate'
+                  );
+                  if (authenticated) {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => MyHomePage(title: "x"),
+                      ),
+                    );
+                  }
+                },
+              ),
+              Expanded(child: Text(textValue))
+            ],
+          )
       ),
     );
   }
