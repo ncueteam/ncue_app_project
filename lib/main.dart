@@ -117,7 +117,7 @@ class _BiometricAuthScreenState extends State<BiometricAuthScreen> {
           child: Row(
             children: <Widget>[
               ElevatedButton(
-                child: Text('Authenticate'),
+                child: const Text('Authenticate'),
                 onPressed: () async {
                   bool authenticated = await _localAuthentication.authenticate(
                       localizedReason: 'Please scan your fingerprint to authenticate'
