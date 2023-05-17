@@ -12,14 +12,6 @@ class LocalAuth {
       if (!await _canAuthenticate()) return false;
       
       return await _auth.authenticate(
-        // authMessages: [
-        //   AndroidAuthMessages(
-        //     signInTitle: 'Sign in',
-        //   ),
-        //   IOSAuthMessages(
-        //     cancelButton: 'No Thanks',
-        //   ),
-        // ],
         localizedReason: 'Use Face If to authenticate',
         options: const AuthenticationOptions(
           useErrorDialogs: true,

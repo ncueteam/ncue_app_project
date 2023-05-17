@@ -1,6 +1,14 @@
 # ncue_yproject
 
-ncue
+## 相關資料
+
+### 指紋辨識
+
+- [影片教學](https://www.youtube.com/watch?v=r78T0XpFB7s)
+
+### MQTT
+
+- [MQTT Client 官方文件](https://pub.dev/packages/mqtt_client)
 
 ## Getting Started
 
@@ -14,5 +22,3 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-
-hahahahaha
