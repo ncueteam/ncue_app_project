@@ -2,17 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:ncue_yproject/screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Main());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Main extends StatelessWidget {
+  const Main({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'NCUE 彰師大物聯網專案',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColorDark: Colors.black12,
+        primaryColorLight: Colors.white60,
+        primarySwatch: Colors.blueGrey
+        // primarySwatch: Colors.blue,
       ),
       home: const HomeScreen(),
     );
