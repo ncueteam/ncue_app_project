@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../services/local_auth_service.dart';
-import 'mqtt.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -48,11 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             if (authenticated)
               ElevatedButton(
-                child: Text('Go to Screen B'),
+                child: const Icon(Icons.home),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                 },
               ),
