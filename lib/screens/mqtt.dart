@@ -30,7 +30,7 @@ class _MqttPageState extends State<MqttPage> {
     client.pongCallback = pong;
 
     final connMessage = MqttConnectMessage()
-        // .authenticateAs('username', 'password')
+    // .authenticateAs('username', 'password')
         .withWillTopic('NCUEMQTT')
         .withWillMessage('MQTT Connect from App')
         .startClean()
@@ -49,6 +49,7 @@ class _MqttPageState extends State<MqttPage> {
   void onConnected() {
     print('Connected');
     client.subscribe('receive_topic', MqttQos.exactlyOnce);
+    client.subscribe('NCUEMQTT', MqttQos.exactlyOnce);
     client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
       for (var message in messages) {
         final MqttPublishMessage payload = message.payload as MqttPublishMessage;
@@ -81,7 +82,8 @@ class _MqttPageState extends State<MqttPage> {
   void sendMessage(String topic, String message) {
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
-    client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload as Uint8Buffer);
+    client.publishMessage(
+        topic, MqttQos.exactlyOnce, builder.payload as Uint8Buffer);
   }
 
   @override
@@ -104,12 +106,13 @@ class _MqttPageState extends State<MqttPage> {
             ElevatedButton(
               child: const Text('Send Message'),
               onPressed: () {
-                sendMessage('NCUEMQTT', 'Mqtt message send by app button');
+                sendMessage(
+                    'NCUEMQTT', 'Mqtt message sent by app button');
               },
             ),
           ],
         ),
-      )
+      ),
     );
   }
 }

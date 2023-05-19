@@ -21,6 +21,26 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("智慧物聯網系統"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.account_tree_rounded),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MqttPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -46,27 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: const Text('Log out')
               ),
-            if (authenticated)
-              ElevatedButton(
-                child: const Icon(Icons.home),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
-                },
-              ),
-            if (authenticated)
-              ElevatedButton(
-                child: const Icon(Icons.account_tree_rounded),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MqttPage()),
-                  );
-                },
-              ),
-
           ],
         ),
       ),
