@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/local_auth_service.dart';
+import 'mqtt.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -52,6 +53,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                },
+              ),
+            if (authenticated)
+              ElevatedButton(
+                child: const Icon(Icons.account_tree_rounded),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MqttPage()),
                   );
                 },
               ),
