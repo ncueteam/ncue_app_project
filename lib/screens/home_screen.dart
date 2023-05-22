@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/local_auth_service.dart';
+import 'mqtt.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -18,8 +19,28 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Example"),
+        title: const Text("智慧物聯網系統"),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.account_tree_rounded),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MqttPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -33,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     authenticated = authenticate;
                   });
                   },
-                child: const Text('Authenticate')
+                child: const Icon(Icons.fingerprint)
             ),
             if (authenticated) const Text('You are authenticated'),
             if (authenticated)
@@ -44,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   child: const Text('Log out')
-              )
+              ),
           ],
         ),
       ),

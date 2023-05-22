@@ -1,134 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:typed_data/src/typed_buffer.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class MqttPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'MQTT Flutter Example',
-      home: MQTTExample(),
-    );
-  }
+  _MqttPageState createState() => _MqttPageState();
 }
 
-class MQTTExample extends StatefulWidget {
-  @override
-  _MQTTExampleState createState() => _MQTTExampleState();
-}
-
-class _MQTTExampleState extends State<MQTTExample> {
-  late MqttServerClient _mqttClient;
-  bool _isConnected = false;
-  String _message = '';
+class _MqttPageState extends State<MqttPage> {
+  late MqttServerClient client;
+  String receivedMessage = '';
 
   @override
   void initState() {
     super.initState();
-    _mqttClient = MqttServerClient('mqtt.example.com', 'flutter_client');
-    _mqttClient.port = 1883;
-
-    _mqttClient.logging(on: true);
-
-    _mqttClient.onConnected = _onConnected;
-    _mqttClient.onDisconnected = _onDisconnected;
-    _mqttClient.onSubscribed = _onSubscribed;
-    _mqttClient.onSubscribeFail = _onSubscribeFail;
-    _mqttClient.onUnsubscribed = _onUnsubscribed;
-    _mqttClient.pongCallback = _pong;
-
-    final mqttConnectMessage = MqttConnectMessage()
-        .withClientIdentifier('flutter_client')
-        .keepAliveFor(60)
-        .startClean();
-
-    _mqttClient.connectionMessage = mqttConnectMessage;
+    connect();
   }
 
-  void _connect() async {
+  void connect() async {
+    client = MqttServerClient('test.mosquitto.org', 'ncue_app');
+    client.port = 1883;
+    client.logging(on: true);
+
+    client.onConnected = onConnected;
+    client.onSubscribed = onSubscribed;
+    client.onDisconnected = onDisconnected;
+    client.onUnsubscribed = onUnsubscribed;
+    client.pongCallback = pong;
+
+    final connMessage = MqttConnectMessage()
+    // .authenticateAs('username', 'password')
+        .withWillTopic('NCUEMQTT')
+        .withWillMessage('MQTT Connect from App')
+        .startClean()
+        .withWillQos(MqttQos.atLeastOnce);
+
+    client.connectionMessage = connMessage;
+
     try {
-      await _mqttClient.connect();
+      await client.connect();
     } catch (e) {
-      print('Error connecting to the MQTT server: $e');
+      print('Exception: $e');
+      client.disconnect();
     }
   }
 
-  void _disconnect() {
-    _mqttClient.disconnect();
-  }
-
-  void _subscribe() {
-    _mqttClient.subscribe('topic/example', MqttQos.exactlyOnce);
-  }
-
-  void _unsubscribe() {
-    _mqttClient.unsubscribe('topic/example');
-  }
-
-  void _onConnected() {
-    setState(() {
-      _isConnected = true;
+  void onConnected() {
+    print('Connected');
+    client.subscribe('receive_topic', MqttQos.exactlyOnce);
+    client.subscribe('NCUEMQTT', MqttQos.exactlyOnce);
+    client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
+      for (var message in messages) {
+        final MqttPublishMessage payload = message.payload as MqttPublishMessage;
+        final String messageText =
+        MqttPublishPayload.bytesToStringAsString(payload.payload.message);
+        setState(() {
+          receivedMessage = messageText;
+        });
+        print('Received message: $messageText');
+      }
     });
-    print('Connected to the MQTT server');
   }
 
-  void _onDisconnected() {
-    setState(() {
-      _isConnected = false;
-    });
-    print('Disconnected from the MQTT server');
-  }
-
-  void _onSubscribed(String topic) {
+  void onSubscribed(String topic) {
     print('Subscribed to topic: $topic');
   }
 
-  void _onSubscribeFail(String topic) {
-    print('Failed to subscribe to topic: $topic');
+  void onDisconnected() {
+    print('Disconnected');
   }
 
-  void _onUnsubscribed(String topic) {
+  void onUnsubscribed(String? topic) {
     print('Unsubscribed from topic: $topic');
   }
 
-  void _pong() {
-    print('Ping response received');
+  void pong() {
+    print('Ping response');
+  }
+
+  void sendMessage(String topic, String message) {
+    final builder = MqttClientPayloadBuilder();
+    builder.addString(message);
+    client.publishMessage(
+        topic, MqttQos.exactlyOnce, builder.payload as Uint8Buffer);
+  }
+
+  @override
+  void dispose() {
+    client.disconnect();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-        title: Text('MQTT Flutter Example'),
-    ),
-    body: Center(
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-    Text(_isConnected ? 'Connected' : 'Disconnected'),
-    SizedBox(height: 20),
-    Text(_message),
-    SizedBox(height: 20),
-    ElevatedButton(
-    onPressed: _isConnected ? _unsubscribe : null,
-    child: Text('Unsubscribe'),
-    ),
-    SizedBox(height: 20),
-    ElevatedButton(
-    onPressed: _isConnected ? _disconnect : null,
-    child: Text('Disconnect'),
-    ),
-    ],
-    ),
-    ),
-    floatingActionButton: FloatingActionButton(
-    onPressed: _isConnected ? _subscribe : _connect,
-    child: _isConnected ? Icon(Icons.stop) : Icon(Icons.play_arrow),
-    ),
+      appBar: AppBar(
+        title: const Text('MQTT Page'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Received Message: $receivedMessage'),
+            ElevatedButton(
+              child: const Text('Send Message'),
+              onPressed: () {
+                sendMessage(
+                    'NCUEMQTT', 'Mqtt message sent by app button');
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
