@@ -52,14 +52,14 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 //import 'package:shelf/shelf.dart' as shelf;
-import 'package:shelf/shelf_io.dart' as shelf_io;
-import 'package:shelf_static/shelf_static.dart';
+//import 'package:shelf/shelf_io.dart' as shelf_io;
+//import 'package:shelf_static/shelf_static.dart';
 
 
 void main() {
-  final staticHandler = createStaticHandler('assets/vue-soft-ui-dashboard-main/src/views/Profile.vue', defaultDocument: 'assets/Profile.vue');
-  final port = 8080; // Choose a port for the local server
-  final server = shelf_io.serve(staticHandler, 'localhost', port);
+  //final staticHandler = createStaticHandler('assets/vue-soft-ui-dashboard-main/src/views/Profile.vue', defaultDocument: 'assets/Profile.vue');
+  //final port = 8080; // Choose a port for the local server
+  //final server = shelf_io.serve(staticHandler, 'localhost', port);
   runApp(
     MaterialApp(
       theme: ThemeData(useMaterial3: true),
@@ -91,9 +91,10 @@ class _WebViewAppState extends State<WebViewApp> {
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(
-        Uri.parse('http://localhost:8080/'),
+        Uri.parse('http://frp.4hotel.tw:25580/'),
         //'assets/Profile.vue'
         //'assets/vue-soft-ui-dashboard-main/src/views/Profile.vue'
+        //'http://localhost:8080/'
       )
       ..addJavaScriptChannel('getInfoFromVue',
           onMessageReceived: (JavaScriptMessage message) {
