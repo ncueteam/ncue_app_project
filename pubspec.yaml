@@ -10,8 +10,12 @@ dependencies:
     sdk: flutter
   local_auth: ^2.1.6
   mqtt_client: ^9.8.1
-  shelf: ^1.4.1
-  shelf_static: ^1.1.2
+  #shelf: ^1.4.1
+  #shelf_static: ^1.1.2
+  webview_flutter: ^4.0.7 #^2.12.0#0.3.22+1
+  flutter_webview_plugin: ^0.4.0
+  path_provider: any #^2.0.15
+  sqflite: any #^2.2.8+4
 
 dev_dependencies:
   flutter_test:
