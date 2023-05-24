@@ -13,8 +13,9 @@ dependencies:
   #shelf: ^1.4.1
   #shelf_static: ^1.1.2
   webview_flutter: ^4.0.7 #^2.12.0#0.3.22+1
-  path_provider: ^2.0.15 #any
-  sqflite: ^2.2.8+4 #any
+  #path_provider: ^2.0.15 #any
+  #sqflite: ^2.2.8+4 #any
+  sqljocky5: ^2.2.1
   flutter_webview_plugin: ^0.4.0
 
 

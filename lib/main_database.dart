@@ -1,93 +1,151 @@
-import 'dart:convert';
-import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:sqljocky5/connection/connection.dart';
+import 'package:sqljocky5/connection/settings.dart';
+import 'package:sqljocky5/results/results.dart';
 
-import 'package:http/http.dart';
-import 'package:path/path.dart';
-import 'package:pdvx/db/store_data.dart';
-import 'package:sqflite/sqflite.dart' as sql;
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite_common/sqlite_api.dart';
+class mysqlDemo extends StatefulWidget {
+  @override
+  _mysqlDemoState createState() => _mysqlDemoState();
+}
 
-class DbLoginController {
-  static const DB_NAME = 'tabela';
+class _mysqlDemoState extends State<mysqlDemo> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init();
+  }
 
-  static Future<sql.Database> database() async {
-    var dbPath;
-    var db;
-
-    if (Platform.isWindows || Platform.isLinux) {
-      sqfliteFfiInit();
-      var databaseFactory = databaseFactoryFfi;
-      await databaseFactory.openDatabase(inMemoryDatabasePath);
-      db = inMemoryDatabasePath;
-    } else {
-      db = await sql.getDatabasesPath();
-    }
-    dbPath = join(db, 'pdvx.db');
-
-    return sql.openDatabase(
-      dbPath,
-      onCreate: (db, version) async {
-        return await db.execute(
-            ' CREATE TABLE IF NOT EXISTS tabela (     ' +
-                '   id INTEGER PRIMARY KEY AUTOINCREMENT, ' +
-                '   uuid TEXT,                            ' +
-                '   campo1  TEXT,                         ' +
-                '   campo2 TEXT,                          ' +
-                '   campo3 TEXT,                          ' +
-                '   campo4 TEXT,                          ' +
-                '   campo5 TEXT,                          ' +
-                '   campo6 CHAR,                          ' +
-                '   campo7 CHAR,                          ' +
-                '   campo8 TEXT,                          ' +
-                '   campo9 TEXT,                          ' +
-                '   campo10 TEXT,                         ' +
-                '   campo11 TEXT,                         ' +
-                '   campo12 TEXT,                         ' +
-                '   campo13 TEXT                          ' +
-                '  )                                      ');
-      },
-      onUpgrade: (db, oldVersion, newVersion) async {
-        // db.execute('ALTER TABLE tabela ADD COLUMN campo14 REAL ');
-        // db.execute('ALTER TABLE tabela ADD COLUMN campo15 REAL ');
-        // db.execute('ALTER TABLE tabela ADD COLUMN campo16 TEXT ');
-      },
-      version: 1,
+  //todo:数据库连接
+  MySqlConnection conn;
+  init() async {
+    print('database connection');
+    var s = ConnectionSettings(
+      user: "root",//todo:用户名
+      password: "",//todo:密码
+      host: "",//todo:flutter中电脑本地的ip
+      port: ,//todo:端口
+      db: "flutter_demo",//todo:需要连接的数据库
     );
-  }
-
-  static Future<void> insert(Map<String, Object> data) async {
-    final db = await DbLoginController.database();
-    await db.insert(
-      DB_NAME,
-      data,
-      conflictAlgorithm: sql.ConflictAlgorithm.replace,
-    );
-  }
-
-  static Future<List<Map<String, dynamic>>> getData() async {
-    final db = await DbLoginController.database();
-    return db.query(DB_NAME);
-  }
-
-  static Future<void> setData(final Response _response) async {
-    final Map<String, dynamic> _data = json.decode(_response.body);
-
-
-    DbLoginController.insert({
-      'id': 0,
-      'uuid':   _data['uuid'],
-      'campo1': _data['campo1'],
-      'campo2': _data['campo2'],
-      'campo3': _data['campo3'],
-      'campo4': _data['campo4'],
-      'campo5': _data['campo5'],
-      'campo6': _data['campo6'],
-      'campo7': _data['campo7'],
-      'campo8': _data['campo8'],
-      'campo9': _data['campo9'],
-      'campo10': _data['campo10'],
+    //todo:获取数据库连接
+    await MySqlConnection.connect(s).then((_){
+      conn=_;
+      print('連接成功');
     });
   }
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('連接mysql資料庫'),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: <Widget>[
+          Wrap(
+            children: <Widget>[
+              FlatButton(onPressed:query, child: Text('查詢資料')),
+              FlatButton(onPressed:update, child: Text('修改資料')),
+              FlatButton(onPressed:delete, child: Text('删除資料')),
+              FlatButton(onPressed:insert, child: Text('新增單筆資料')),
+              FlatButton(onPressed:insertMuilt, child: Text('新增多筆資料')),
+            ],
+          ),
+          getWidget(_model)
+        ],
+      ),
+    );
+  }
+  String querySql="select name, email from users";
+  //todo:查询数据
+  query() async{
+    _model.clear();
+    Results results = await conn.execute(querySql);
+    print('查询成功');
+    print('${results}');
+    results.forEach((row) {
+      setState(() {
+        model m =model();
+        m.name=row.byName('name');//todo:byName里面放的是你数据库返回的字段名
+        m.email=row.byName('email');
+        _model.add(m);
+      });
+    });
+  }
+  //todo:数据解析
+  List<model> _model =[];
+
+  //todo:获取widget
+  Widget getWidget(List<model> list){
+    List<Widget> _list =[];
+    for(int i=0;i<list.length;i++){
+      _list.add(layout(list[i].name, list[i].email));
+    }
+    return Column(children:_list,);
+  }
+
+  Widget layout(name,email){
+    return Text('Name: ${name}, email: ${email}');
+  }
+
+  //todo:修改数据
+  update() async{
+    await conn.prepared('UPDATE users SET name = ? WHERE id = ?', [
+      '',2
+    ]).then((_){
+      print('${_}');
+    });
+  }
+
+  //todo:新增单条数据
+  insert() async{
+    await conn.prepared('insert into users (name, email) values (?, ?)', ['flutter', 'flutter@qq.com']).then((_){
+      print('新增id${_.insertId}');
+    });
+  }
+
+  //todo:新增多条数据 返回id
+  insertMuilt() async{
+    var results = await conn.preparedMulti(
+        'insert into users (name, email) values (?, ?)',
+        [['aaa', 'aaa@qq.com'],
+          ['bbb', 'bbb@qq.com'],
+          ['ccc', 'ccc@qq.com']]);
+    print('${results}');
+  }
+
+  //todo:删除数据
+  delete() async{
+    conn.prepared('DELETE FROM users WHERE id = ?', [
+      2
+    ]);
+  }
+
+  //todo:事务操作
+  transaction() async{
+    Transaction trans = await conn.begin();//todo:开启事务
+    try {
+      //todo:如果没有抛出异常就提交事务
+      var result1 = await trans.execute(querySql);
+      var result2 = await trans.execute(querySql);
+      await trans.commit();
+    } catch(e) {
+      //todo:事务回滚
+      await trans.rollback();
+    }
+  }
+}
+
+
+//todo:实体类
+class model{
+  String name;
+  String email;
 }
