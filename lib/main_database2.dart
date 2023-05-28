@@ -1,103 +1,95 @@
-import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
 
-import 'packprice:path/path.dart';
-import 'packprice:sqflite/sqflite.dart';
+void main() {
+   runApp(
+     MaterialApp(
+       theme: ThemeData(useMaterial3: true),
+       home: MysqlDemo(),
+     ),
+   );
+ }
 
-void main() async {
-  final database = openDatabase(
-    join(await getDatabasesPath(), 'book_database.db'),
-    onCreate: (db, version) {
-      return db.execute(
-        "CREATE TABLE books(id INTEGER PRIMARY KEY, title TEXT, price INTEGER)",
-      );
-    },
-    version: 1,
-  );
-
-  Future<void> insertBook(Book book) async {
-    // Get a reference to the database.
-    final Database db = await database;
-
-    await db.insert(
-      'books',
-      book.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  Future<List<Book>> books() async {
-    final Database db = await database;
-
-    final List<Map<String, dynamic>> maps = await db.query('books');
-
-    return List.generate(maps.length, (i) {
-      return Book(
-        id: maps[i]['id'],
-        title: maps[i]['title'],
-        price: maps[i]['price'],
-      );
-    });
-  }
-
-  Future<void> updateBook(Book book) async {
-    final db = await database;
-    await db.update(
-      'books',
-      book.toMap(),
-      where: "id = ?",
-      whereArgs: [book.id],
-    );
-  }
-
-  Future<void> deleteBook(int id) async {
-    final db = await database;
-    await db.delete(
-      'books',
-      where: "id = ?",
-      whereArgs: [id],
-    );
-  }
-
-  var b1 = Book(
-    id: 0,
-    title: 'Let Us C',
-    price: 300,
-  );
-
-  await insertBook(b1);
-
-  print(await books());
-
-  b1 = Book(
-    id: b1.id,
-    title: b1.title,
-    price: b1.price,
-  );
-  await updateBook(b1);
-
-  print(await books());
-
-  await deleteBook(b1.id);
-
-  print(await books());
+class MysqlDemo extends StatefulWidget {
+  @override
+  _MysqlDemoState createState() => _MysqlDemoState();
 }
 
-class Book {
-  final int id;
-  final String title;
-  final int price;
-
-  Book({this.id, this.title, this.price});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'price': price,
-    };
-  }
+class _MysqlDemoState extends State<MysqlDemo> {
   @override
-  String toString() {
-    return 'Book{id: $id, title: $title, price: $price}';
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    init();
   }
-}  
+
+  init() async {
+    print('database connection');
+    await MySqlConnection.connect(ConnectionSettings(
+        host: 'frp.4hotel.tw',
+        port: 25582,
+        user: 'root',
+        db: 'app_data',
+        password: ''));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('連接mysql資料庫'),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: <Widget>[
+          Wrap(
+            children: <Widget>[
+              ElevatedButton(onPressed: query, child: const Text('查詢資料')),
+              ElevatedButton(onPressed: update, child: const Text('修改資料')),
+              ElevatedButton(onPressed: delete, child: const Text('删除資料')),
+              ElevatedButton(onPressed: insert, child: const Text('新增單筆資料')),
+              ElevatedButton(onPressed: insertMulti, child: const Text('新增多筆資料')),
+              ElevatedButton(onPressed: close, child: const Text('關閉資料庫')),
+            ],
+          ),
+          //getWidget(_model)
+        ],
+      ),
+    );
+  }
+
+  var conn;
+
+  query() async {
+    var results = await conn.query('select * from users2');
+    for (var row in results) {
+      print('ID: ${row[0]}, Name: ${row[1]}, Join_date: ${row[2]}');
+    }
+  }
+
+  update() async {
+
+  }
+
+  delete() async {
+
+  }
+
+  insert() async {
+
+  }
+
+  insertMulti() async {
+
+  }
+
+  close() async {
+    await conn.close();
+  }
+}
