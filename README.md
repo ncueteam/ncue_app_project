@@ -4,8 +4,7 @@
 
 ### 資料庫連接
 
-- https://blog.csdn.net/qq_42772570/article/details/102913031?ydreferer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8%3D?ydreferer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8%3D?ydreferer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8%3D
-
+- https://pub.dev/packages/mysql1
 ### 指紋辨識
 
 - [影片教學](https://www.youtube.com/watch?v=r78T0XpFB7s)

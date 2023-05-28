@@ -10,13 +10,15 @@ dependencies:
     sdk: flutter
   local_auth: ^2.1.6
   mqtt_client: ^9.8.1
+  webview_flutter: ^4.0.7 #^2.12.0#0.3.22+1
+  mysql1: ^0.20.0
+  dart_mysql: ^0.0.1
+  flutter_webview_plugin: ^0.4.0
   #shelf: ^1.4.1
   #shelf_static: ^1.1.2
-  webview_flutter: ^4.0.7 #^2.12.0#0.3.22+1
   #path_provider: ^2.0.15 #any
   #sqflite: ^2.2.8+4 #any
-  sqljocky5: ^2.2.1
-  flutter_webview_plugin: ^0.4.0
+  #sqljocky5: ^2.2.1
 
 
 dev_dependencies:
