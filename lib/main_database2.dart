@@ -1,4 +1,45 @@
-import 'package:flutter/material.dart';
+import 'package:mysql1/mysql1.dart';
+
+Future main() async {
+  final conn = await MySqlConnection.connect(
+    ConnectionSettings(
+      host: 'frp.4hotel.tw',
+      port: 25582,
+      user: 'root',
+      password: '',
+      db: 'app_data',
+    ),
+  );
+
+  //查询操作
+  var results = await conn.query('select * from user2');
+  for (var row in results) {
+    print('name: ${row[0]}, age: ${row[1]}, gender: ${row[2]}');
+  }
+
+  //插入操作
+  /*var insertResult = await conn.query(
+      'insert into user (name, age, gender) values (?, ?, ?)',
+      ['张三', 18, '男']);
+  print('insert ${insertResult.affectedRows} row');
+
+  //更新操作
+  var updateResult = await conn.query(
+      'update user set gender = ? where age > ?',
+      ['女', 18]);
+  print('update ${updateResult.affectedRows} row');
+
+  //删除操作
+  var deleteResult = await conn.query(
+      'delete from user where age < ?',
+      [18]);
+  print('delete ${deleteResult.affectedRows} row');*/
+  await conn.close();
+}
+
+
+
+/*import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
 void main() {
@@ -24,6 +65,7 @@ class _MysqlDemoState extends State<MysqlDemo> {
     init();
   }
 
+  var conn;
   init() async {
     print('database connection');
     await MySqlConnection.connect(ConnectionSettings(
@@ -32,6 +74,11 @@ class _MysqlDemoState extends State<MysqlDemo> {
         user: 'root',
         db: 'app_data',
         password: ''));
+
+    await MySqlConnection.connect(conn).then((_){
+       conn=_;
+       print('連接成功');
+     });
   }
 
   @override
@@ -65,8 +112,6 @@ class _MysqlDemoState extends State<MysqlDemo> {
     );
   }
 
-  var conn;
-
   query() async {
     var results = await conn.query('select * from users2');
     for (var row in results) {
@@ -93,4 +138,5 @@ class _MysqlDemoState extends State<MysqlDemo> {
   close() async {
     await conn.close();
   }
-}
+}*/
+
