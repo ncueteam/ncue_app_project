@@ -1,55 +1,5 @@
-/*import 'package:mysql1/mysql1.dart';
-
-Future main() async {
-  final conn = await MySqlConnection.connect(
-    ConnectionSettings(
-      host: 'frp.4hotel.tw',
-      port: 25580,
-      user: 'root',
-      password: '',
-      db: 'app_data',
-    ),
-  );
-
-  //查询操作
-  var results = await conn.query('select * from user2');
-  for (var row in results) {
-    print('name: ${row[0]}, age: ${row[1]}, gender: ${row[2]}');
-  }
-
-  //插入操作
-  /*var insertResult = await conn.query(
-      'insert into user (name, age, gender) values (?, ?, ?)',
-      ['张三', 18, '男']);
-  print('insert ${insertResult.affectedRows} row');
-
-  //更新操作
-  var updateResult = await conn.query(
-      'update user set gender = ? where age > ?',
-      ['女', 18]);
-  print('update ${updateResult.affectedRows} row');
-
-  //删除操作
-  var deleteResult = await conn.query(
-      'delete from user where age < ?',
-      [18]);
-  print('delete ${deleteResult.affectedRows} row');*/
-  await conn.close();
-}*/
-
-
-
 import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
-
-void main() {
-   runApp(
-     MaterialApp(
-       theme: ThemeData(useMaterial3: true),
-       home: MysqlDemo(),
-     ),
-   );
- }
 
 class MysqlDemo extends StatefulWidget {
   @override
@@ -60,7 +10,6 @@ class MysqlDemo extends StatefulWidget {
 class _MysqlDemoState extends State<MysqlDemo> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     init();
   }
@@ -70,8 +19,8 @@ class _MysqlDemoState extends State<MysqlDemo> {
     print('database connection');
     await MySqlConnection.connect(ConnectionSettings(
         host: 'frp.4hotel.tw', //'','10.0.2.2'
-        port: 3306,//25580
-        user: 'app_user',
+        port: 25583,
+        user: 'user',
         db: 'app_data',
         password: '0000'));
 
