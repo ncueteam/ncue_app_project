@@ -36,7 +36,7 @@ class BluetoothPageState extends State<BluetoothPage> {
 
   void connectToDevice(BluetoothDevice device) async {
     await device.connect();
-    List<BluetoothService> services = await device.discoverServices();
+    // List<BluetoothService> services = await device.discoverServices();
     setState(() {
       selectedDevice = device;
       on = true;
