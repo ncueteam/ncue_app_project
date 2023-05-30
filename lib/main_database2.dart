@@ -1,10 +1,10 @@
-import 'package:mysql1/mysql1.dart';
+/*import 'package:mysql1/mysql1.dart';
 
 Future main() async {
   final conn = await MySqlConnection.connect(
     ConnectionSettings(
       host: 'frp.4hotel.tw',
-      port: 25582,
+      port: 25580,
       user: 'root',
       password: '',
       db: 'app_data',
@@ -35,11 +35,11 @@ Future main() async {
       [18]);
   print('delete ${deleteResult.affectedRows} row');*/
   await conn.close();
-}
+}*/
 
 
 
-/*import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
 void main() {
@@ -69,11 +69,11 @@ class _MysqlDemoState extends State<MysqlDemo> {
   init() async {
     print('database connection');
     await MySqlConnection.connect(ConnectionSettings(
-        host: 'frp.4hotel.tw',
-        port: 25582,
-        user: 'root',
+        host: 'frp.4hotel.tw', //'','10.0.2.2'
+        port: 3306,//25580
+        user: 'app_user',
         db: 'app_data',
-        password: ''));
+        password: '0000'));
 
     await MySqlConnection.connect(conn).then((_){
        conn=_;
@@ -138,5 +138,5 @@ class _MysqlDemoState extends State<MysqlDemo> {
   close() async {
     await conn.close();
   }
-}*/
+}
 
