@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/local_auth_service.dart';
+import 'bluetooth.dart';
 import 'mqtt.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,6 +38,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.bluetooth),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BluetoothPage()),
               );
             },
           ),
