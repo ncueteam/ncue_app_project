@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ncue_yproject/screens/home_screen.dart';
+import 'package:ncue_aiot/screens/home_screen.dart';
 
 void main() {
   runApp(const Main());

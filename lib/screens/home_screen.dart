@@ -4,6 +4,7 @@ import '../services/local_auth_service.dart';
 import 'bluetooth.dart';
 import 'database.dart';
 import 'mqtt.dart';
+import 'google.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
       return widgets;
     }
     else {
-      List<Widget> widgets = [ElevatedButton(
+      List<Widget> widgets = [
+        ElevatedButton(
           onPressed: () async {
             final authenticate = await LocalAuth.authenticate();
             setState(() {
@@ -41,7 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
           child: const Icon(Icons.fingerprint)
-      )];
+        )
+      ];
       return widgets;
     }
   }
@@ -97,11 +100,30 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: actionBarButtons()
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: authButton(authenticated),
-        ),
+        child: Row (
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: authButton(authenticated),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const WebPage(url: "https://www.google.com/")),
+                      );
+                    },
+                    child: const Icon(Icons.web)
+                )
+              ],
+            ),
+          ],
+        )
       ),
     );
   }
