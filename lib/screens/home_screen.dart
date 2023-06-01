@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
       IconButton(
-        icon: const Icon(Icons.bluetooth),
+        icon: const Icon(Icons.add_box),
         onPressed: () {
           Navigator.push(
             context,

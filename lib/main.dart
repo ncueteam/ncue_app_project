@@ -11,12 +11,11 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'NCUE 彰師大物聯網專案',
+      title: 'NCUE 彰師大物聯網',
       theme: ThemeData(
         primaryColorDark: Colors.black12,
         primaryColorLight: Colors.white60,
         primarySwatch: Colors.blueGrey
-        // primarySwatch: Colors.blue,
       ),
       home: const HomeScreen(),
     );
