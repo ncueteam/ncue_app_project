@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
 class MysqlDemo extends StatefulWidget {
+  const MysqlDemo({super.key});
+
   @override
 
-  _MysqlDemoState createState() => _MysqlDemoState();
+  MysqlDemoState createState() => MysqlDemoState();
 }
 
-class _MysqlDemoState extends State<MysqlDemo> {
+class MysqlDemoState extends State<MysqlDemo> {
   @override
   void initState() {
     super.initState();
@@ -18,7 +20,7 @@ class _MysqlDemoState extends State<MysqlDemo> {
   init() async {
     print('database connection');
     await MySqlConnection.connect(ConnectionSettings(
-        host: 'frp.4hotel.tw', //'','10.0.2.2'
+        host: 'frp.4hotel.tw',
         port: 25583,
         user: 'user',
         db: 'app_data',
@@ -26,6 +28,7 @@ class _MysqlDemoState extends State<MysqlDemo> {
 
     await MySqlConnection.connect(conn).then((_){
        conn=_;
+
        print('連接成功');
      });
   }
