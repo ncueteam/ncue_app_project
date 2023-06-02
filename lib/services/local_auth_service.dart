@@ -4,23 +4,29 @@ import 'package:local_auth/local_auth.dart';
 class LocalAuth {
   static final _auth = LocalAuthentication();
 
-  static Future<bool> _canAuthenticate() async =>
-      await _auth.canCheckBiometrics || await _auth.isDeviceSupported();
-  
-  static Future<bool> authenticate() async {
+  static Future<bool> _canAuthenticate() async {
     try {
-      if (!await _canAuthenticate()) return false;
-      
-      return await _auth.authenticate(
-        localizedReason: 'Use Face If to authenticate',
-        options: const AuthenticationOptions(
-          useErrorDialogs: true,
-          stickyAuth: true
-        )
-      );
+      debugPrint('device checking...');
+      bool canCheckBio = await _auth.canCheckBiometrics;
+      bool support = await _auth.isDeviceSupported();
+      debugPrint('device:( bio: $canCheckBio, support: $support)');
+      return canCheckBio && support;
     } catch (e) {
-      debugPrint('error $e');
+      debugPrint('Error checking biometrics: $e');
       return false;
     }
   }
-} 
+
+  static Future<bool> authenticate() async {
+    try {
+      if (!await _canAuthenticate()) return false;
+      debugPrint('use checking biometrics...');
+      return await _auth.authenticate(
+        localizedReason: 'Use Face ID to authenticate',
+      );
+    } catch (e) {
+      debugPrint('Authentication error: $e');
+      return false;
+    }
+  }
+}

@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> authButton(bool auth) {
     if (auth) {
       List<Widget> widgets = [
+        const Text('指紋辨識'),
         const Text('You are authenticated'),
         ElevatedButton(
             onPressed: () {
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     else {
       List<Widget> widgets = [
+        const Text('指紋辨識'),
         ElevatedButton(
           onPressed: () async {
             final authenticate = await LocalAuth.authenticate();
@@ -100,7 +102,9 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: actionBarButtons()
       ),
       body: Center(
-        child: Row (
+        child: Column (
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -111,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Text('網頁嵌入'),
                 ElevatedButton(
                     onPressed: () async {
                       Navigator.push(
