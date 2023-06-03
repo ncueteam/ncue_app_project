@@ -19,12 +19,12 @@ class MysqlDemoState extends State<MysqlDemo> {
   var conn;
   init() async {
     print('database connection');
-    await MySqlConnection.connect(ConnectionSettings(
+    conn=ConnectionSettings(
         host: 'frp.4hotel.tw',
         port: 25583,
         user: 'user',
         db: 'app_data',
-        password: '0000'));
+        password: '0000');
 
     await MySqlConnection.connect(conn).then((_){
        conn=_;
@@ -89,6 +89,7 @@ class MysqlDemoState extends State<MysqlDemo> {
 
   close() async {
     await conn.close();
+    print("資料庫已關閉");
   }
 }
 
