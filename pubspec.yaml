@@ -11,7 +11,10 @@ dependencies:
   local_auth: ^2.1.6
   mqtt_client: ^9.8.1
   webview_flutter: ^2.0.0
-  flutter_blue: ^0.8.0
+  #藍芽部分
+  get: ^4.6.5
+  flutter_blue_plus: ^1.5.2
+  #資料庫
   mysql1: ^0.20.0
   #shelf: ^1.4.1
   #shelf_static: ^1.1.2

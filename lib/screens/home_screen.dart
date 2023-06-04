@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/local_auth_service.dart';
-import 'bluetooth.dart';
+import 'bt_page.dart';
 import 'database.dart';
 import 'mqtt.dart';
 import 'google.dart';
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => MqttPage()),
+            MaterialPageRoute(builder: (context) => const MqttPage()),
           );
         },
       ),
@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const BluetoothPage()),
+            MaterialPageRoute(builder: (context) => const BTPage()),
           );
         },
       ),
