@@ -2,40 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:mysql1/mysql1.dart';
 
 class MysqlDemo extends StatefulWidget {
-  const MysqlDemo({super.key});
+  const MysqlDemo({Key? key}) : super(key: key);
 
   @override
-
   MysqlDemoState createState() => MysqlDemoState();
 }
 
 class MysqlDemoState extends State<MysqlDemo> {
+  late MySqlConnection conn;
+
   @override
   void initState() {
     super.initState();
     init();
   }
 
-  var conn;
   init() async {
-    print('database connection');
-    conn=ConnectionSettings(
-        host: 'frp.4hotel.tw',
-        port: 25583,
-        user: 'user',
-        db: 'app_data',
-        password: '0000');
+    debugPrint("資料庫初始化...");
+    var settings = ConnectionSettings(
+      host: 'frp.4hotel.tw',
+      port: 25583,
+      user: 'user',
+      db: 'app_data',
+      password: '0000',
+    );
 
-    await MySqlConnection.connect(conn).then((_){
-       conn=_;
-
-       print('連接成功');
-     });
+    conn = await MySqlConnection.connect(settings);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    conn.close();
+    debugPrint("資料庫已關閉");
     super.dispose();
   }
 
@@ -48,17 +46,17 @@ class MysqlDemoState extends State<MysqlDemo> {
       ),
       body: ListView(
         children: <Widget>[
-          Wrap(
+          Column(
             children: <Widget>[
               ElevatedButton(onPressed: query, child: const Text('查詢資料')),
               ElevatedButton(onPressed: update, child: const Text('修改資料')),
               ElevatedButton(onPressed: delete, child: const Text('删除資料')),
               ElevatedButton(onPressed: insert, child: const Text('新增單筆資料')),
+              ElevatedButton(onPressed: createTable, child: const Text('新增資料表')),
               ElevatedButton(onPressed: insertMulti, child: const Text('新增多筆資料')),
               ElevatedButton(onPressed: close, child: const Text('關閉資料庫')),
             ],
           ),
-          //getWidget(_model)
         ],
       ),
     );
@@ -67,29 +65,36 @@ class MysqlDemoState extends State<MysqlDemo> {
   query() async {
     var results = await conn.query('select * from users2');
     for (var row in results) {
-      print('ID: ${row[0]}, Name: ${row[1]}, Join_date: ${row[2]}');
+      debugPrint('ID: ${row[0]}, Name: ${row[1]}, Join_date: ${row[2]}');
     }
   }
 
-  update() async {
-
+  createTable() async {
+    if (conn == null) return;
+    var results = await conn.query('''
+      CREATE TABLE ex_table (
+        id INT NOT NULL AUTO_INCREMENT,
+        name VARCHAR(255) NOT NULL,
+        PRIMARY KEY (id)
+      )
+    ''');
+    if (results.affectedRows != null && results.affectedRows! > 0) {
+      debugPrint("資料表已成功建立");
+    } else {
+      debugPrint("建立資料表時發生錯誤");
+    }
   }
 
-  delete() async {
+  update() async {}
 
-  }
+  delete() async {}
 
-  insert() async {
+  insert() async {}
 
-  }
-
-  insertMulti() async {
-
-  }
+  insertMulti() async {}
 
   close() async {
     await conn.close();
-    print("資料庫已關閉");
+    debugPrint("資料庫已關閉");
   }
 }
-

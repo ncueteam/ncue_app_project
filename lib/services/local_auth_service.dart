@@ -9,7 +9,7 @@ class LocalAuth {
       debugPrint('device checking...');
       bool canCheckBio = await _auth.canCheckBiometrics;
       bool support = await _auth.isDeviceSupported();
-      debugPrint('device:( bio: $canCheckBio, support: $support)');
+      debugPrint('device:( bio_check: $canCheckBio, support: $support)');
       return canCheckBio && support;
     } catch (e) {
       debugPrint('Error checking biometrics: $e');
