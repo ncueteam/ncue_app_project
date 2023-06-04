@@ -70,7 +70,7 @@ class MysqlDemoState extends State<MysqlDemo> {
   }
 
   createTable() async {
-    if (conn == null) return;
+    debugPrint(conn.toString());
     var results = await conn.query('''
       CREATE TABLE ex_table (
         id INT NOT NULL AUTO_INCREMENT,
