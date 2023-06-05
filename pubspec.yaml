@@ -15,12 +15,8 @@ dependencies:
   get: ^4.6.5
   flutter_blue_plus: ^1.5.2
   #資料庫
-  mysql1: ^0.20.0
-  #shelf: ^1.4.1
-  #shelf_static: ^1.1.2
-  #path_provider: ^2.0.15 #any
-  #sqflite: ^2.2.8+4 #any
-  #sqljocky5: ^2.2.1
+  #mysql1: ^0.20.0
+  mysql_client: ^0.0.27
 
 flutter_icons:
   android: "android/app/src/main/res"

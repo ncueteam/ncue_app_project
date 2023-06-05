@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:mysql_client/mysql_client.dart';
 
 class MysqlDemo extends StatefulWidget {
   const MysqlDemo({Key? key}) : super(key: key);
@@ -9,7 +9,6 @@ class MysqlDemo extends StatefulWidget {
 }
 
 class MysqlDemoState extends State<MysqlDemo> {
-  late MySqlConnection conn;
 
   @override
   void initState() {
@@ -17,23 +16,24 @@ class MysqlDemoState extends State<MysqlDemo> {
     init();
   }
 
+  var conn;
   init() async {
     debugPrint("資料庫初始化...");
-    var settings = ConnectionSettings(
-      host: 'frp.4hotel.tw',
+    conn = await MySQLConnection.createConnection(
+      host: "frp.4hotel.tw",
       port: 25583,
-      user: 'user',
-      db: 'app_data',
-      password: '0000',
+      userName: "app_user2",
+      password: "0000",
+      databaseName: "app_data", // optional
     );
 
-    conn = await MySqlConnection.connect(settings);
+    await conn.connect();
+
+    debugPrint("Connected");
   }
 
   @override
   void dispose() {
-    conn.close();
-    debugPrint("資料庫已關閉");
     super.dispose();
   }
 
@@ -53,7 +53,6 @@ class MysqlDemoState extends State<MysqlDemo> {
               ElevatedButton(onPressed: delete, child: const Text('删除資料')),
               ElevatedButton(onPressed: insert, child: const Text('新增單筆資料')),
               ElevatedButton(onPressed: createTable, child: const Text('新增資料表')),
-              ElevatedButton(onPressed: insertMulti, child: const Text('新增多筆資料')),
               ElevatedButton(onPressed: close, child: const Text('關閉資料庫')),
             ],
           ),
@@ -63,35 +62,53 @@ class MysqlDemoState extends State<MysqlDemo> {
   }
 
   query() async {
-    var results = await conn.query('select * from users2');
-    for (var row in results) {
-      debugPrint('ID: ${row[0]}, Name: ${row[1]}, Join_date: ${row[2]}');
+    var results = await conn.execute('SELECT * FROM users2');
+    for (final row in results.rows) {
+      print(row.assoc());
     }
   }
 
   createTable() async {
     debugPrint(conn.toString());
-    var results = await conn.query('''
-      CREATE TABLE ex_table (
-        id INT NOT NULL AUTO_INCREMENT,
-        name VARCHAR(255) NOT NULL,
-        PRIMARY KEY (id)
-      )
-    ''');
-    if (results.affectedRows != null && results.affectedRows! > 0) {
+    var results = await conn.execute(
+        'CREATE TABLE ex_table (id INT NOT NULL AUTO_INCREMENT,name VARCHAR(255) NOT NULL,PRIMARY KEY (id))');
+    if (results.affectedRows != null && results.affectedRows > 0) {
       debugPrint("資料表已成功建立");
     } else {
       debugPrint("建立資料表時發生錯誤");
     }
   }
 
-  update() async {}
+  update() async {
+    var res = await conn.execute(
+      "UPDATE users2 SET name=:name, join_date=:date WHERE name='adam'",
+      {"name": "Adam","date":"2023-06-05"},
+    );
 
-  delete() async {}
+    print(res.affectedRows);
+  }
 
-  insert() async {}
+  delete() async {
+    var res = await conn.execute(
+        "DELETE FROM users2 WHERE name='Vivian'"
+    );
+  }
 
-  insertMulti() async {}
+  insert() async {
+    var res = await conn.execute(
+      "INSERT INTO users2 (name, join_date) VALUES (:name, :join_date)",
+      {
+        "name": "Vivian",
+        "join_date": "2022-02-02",
+      },
+      /*{
+        "name": "Zoe",
+        "join_date": "2023-02-02",
+      },*/
+    );
+
+    print(res.affectedRows);
+  }
 
   close() async {
     await conn.close();
