@@ -16,8 +16,10 @@ class MysqlDemoState extends State<MysqlDemo> {
     init();
   }
 
+  String _message="";
   var conn;
   init() async {
+    _message="資料庫初始化...";
     debugPrint("資料庫初始化...");
     conn = await MySQLConnection.createConnection(
       host: "frp.4hotel.tw",
@@ -30,6 +32,7 @@ class MysqlDemoState extends State<MysqlDemo> {
     await conn.connect();
 
     debugPrint("Connected");
+    _message="Connected";
   }
 
   @override
@@ -54,6 +57,7 @@ class MysqlDemoState extends State<MysqlDemo> {
               ElevatedButton(onPressed: insert, child: const Text('新增單筆資料')),
               ElevatedButton(onPressed: createTable, child: const Text('新增資料表')),
               ElevatedButton(onPressed: close, child: const Text('關閉資料庫')),
+              Text(_message)
             ],
           ),
         ],
@@ -64,6 +68,7 @@ class MysqlDemoState extends State<MysqlDemo> {
   query() async {
     var results = await conn.execute('SELECT * FROM users2');
     for (final row in results.rows) {
+      //_message=row.assoc();
       print(row.assoc());
     }
   }
@@ -81,8 +86,8 @@ class MysqlDemoState extends State<MysqlDemo> {
 
   update() async {
     var res = await conn.execute(
-      "UPDATE users2 SET name=:name, join_date=:date WHERE name='adam'",
-      {"name": "Adam","date":"2023-06-05"},
+      "UPDATE users2 SET name=:name, join_date=:date WHERE name='Adam'",
+      {"name": "adam","date":"2023-06-05"},
     );
 
     print(res.affectedRows);
@@ -112,6 +117,7 @@ class MysqlDemoState extends State<MysqlDemo> {
 
   close() async {
     await conn.close();
+    _message="資料庫已關閉";
     debugPrint("資料庫已關閉");
   }
 }
