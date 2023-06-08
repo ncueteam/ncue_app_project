@@ -1,14 +1,17 @@
+
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:typed_data/src/typed_buffer.dart';
 
 class MqttPage extends StatefulWidget {
+  const MqttPage({super.key});
+
   @override
-  _MqttPageState createState() => _MqttPageState();
+  MqttPageState createState() => MqttPageState();
 }
 
-class _MqttPageState extends State<MqttPage> {
+class MqttPageState extends State<MqttPage> {
   late MqttServerClient client;
   String receivedMessage = '';
 
@@ -41,13 +44,13 @@ class _MqttPageState extends State<MqttPage> {
     try {
       await client.connect();
     } catch (e) {
-      print('Exception: $e');
+      debugPrint('Exception: $e');
       client.disconnect();
     }
   }
 
   void onConnected() {
-    print('Connected');
+    debugPrint('Connected');
     client.subscribe('receive_topic', MqttQos.exactlyOnce);
     client.subscribe('NCUEMQTT', MqttQos.exactlyOnce);
     client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
@@ -58,25 +61,25 @@ class _MqttPageState extends State<MqttPage> {
         setState(() {
           receivedMessage = messageText;
         });
-        print('Received message: $messageText');
+        debugPrint('Received message: $messageText');
       }
     });
   }
 
   void onSubscribed(String topic) {
-    print('Subscribed to topic: $topic');
+    debugPrint('Subscribed to topic: $topic');
   }
 
   void onDisconnected() {
-    print('Disconnected');
+    debugPrint('Disconnected');
   }
 
   void onUnsubscribed(String? topic) {
-    print('Unsubscribed from topic: $topic');
+    debugPrint('Unsubscribed from topic: $topic');
   }
 
   void pong() {
-    print('Ping response');
+    debugPrint('Ping response');
   }
 
   void sendMessage(String topic, String message) {
@@ -91,7 +94,6 @@ class _MqttPageState extends State<MqttPage> {
     client.disconnect();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
