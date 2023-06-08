@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../services/local_auth_service.dart';
 import 'bluetooth.dart';
+import 'package:ncue_yproject/MQTT/MQTTManager.dart';
 import 'mqtt.dart';
 
 class HomeScreen extends StatefulWidget {
