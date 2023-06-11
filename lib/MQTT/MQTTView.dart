@@ -1,8 +1,9 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_01/Mqtt/MQTTAppState.dart';
-import 'package:flutter_01/Mqtt/MQTTManager.dart';
+
+import 'MQTTAppState.dart';
+import 'MQTTManager.dart';
 
 class MQTTView extends StatefulWidget {
   @override

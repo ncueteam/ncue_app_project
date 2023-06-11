@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ncue_aiot/MQTT/MQTTTestPage.dart';
 
+import '../MQTT/MQTTView.dart';
 import '../services/local_auth_service.dart';
-import 'bluetooth.dart';
-import 'package:ncue_yproject/MQTT/MQTTManager.dart';
+import 'bt_page.dart';
 import 'mqtt.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MqttPage()),
+                MaterialPageRoute(builder: (context) => MQTTTestPage()),
+                //MaterialPageRoute(builder: (context) => MqttPage()),
               );
             },
           ),
@@ -47,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const BluetoothPage()),
+                MaterialPageRoute(builder: (context) => const BTPage()),
               );
             },
           ),
