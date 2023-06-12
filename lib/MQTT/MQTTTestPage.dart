@@ -13,6 +13,15 @@ class _MQTTTestPageState extends State<MQTTTestPage> with ChangeNotifier{
 
   late MqttServerClient client;
   String receivedMessage = '';
+  String historyMessage = '';
+
+  void setReceivedText(String text) {
+    receivedMessage = text;
+    historyMessage = historyMessage + '\n' + receivedMessage;
+    notifyListeners();
+  }
+  String get getReceivedText => receivedMessage;
+  String get getHistoryText => historyMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +44,7 @@ class _MQTTTestPageState extends State<MQTTTestPage> with ChangeNotifier{
       child: const Text('Send'),
       onPressed: () {
         sendMessage('NCUEMQTT', 'Mqtt message sent by app button');
+        setReceivedText('Mqtt message sent by app button');
       },
     );
   }
@@ -59,7 +69,7 @@ class _MQTTTestPageState extends State<MQTTTestPage> with ChangeNotifier{
       children: <Widget>[
         _buildAppBar(),
         _buildSendButtonFrom(),
-        //_buildScrollableTextWith(currentAppState.getHistoryText)
+        _buildScrollableTextWith(getHistoryText)
       ],
     );
   }
