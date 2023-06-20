@@ -5,6 +5,7 @@ import '../MQTT/MQTTView.dart';
 import '../services/local_auth_service.dart';
 import 'bt_page.dart';
 import 'mqtt.dart';
+import 'database.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -50,6 +51,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const BTPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.dataset),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MysqlDemo()),
               );
             },
           ),
