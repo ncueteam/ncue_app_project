@@ -13,10 +13,10 @@ class MysqlController {
       _message=a;
     }*/
     static void init() {
-      setState(() {
+      /*setState(() {
         _message="資料庫初始化...";
         connectState= false;
-      });
+      });*/
       conn= MySQLConnection.createConnection(
         host: "frp.4hotel.tw",
         port: 25583,
@@ -26,10 +26,10 @@ class MysqlController {
       );
       conn.connect();
       debugPrint("Connected");
-      setState(() {
+      /*setState(() {
         _message="Connected";
         connectState= true;
-      });
+      });*/
     }
     /*Future<void> init() async {
       this.conn= await MySQLConnection.createConnection(
@@ -49,9 +49,9 @@ class MysqlController {
       for (final row in results.rows) {
         _message+="${row.assoc()}\n";
         debugPrint(row.assoc().toString());
-        setState(() {
+        /*setState(() {
           _message=_message;
-        });
+        });*/
       }
     }
 }
