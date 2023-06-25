@@ -4,7 +4,7 @@
 
 ### 資料庫連接
 
-- https://pub.dev/packages/mysql1
+- https://pub.dev/packages/mysql_client/example
 ### 指紋辨識
 
 - [影片教學](https://www.youtube.com/watch?v=r78T0XpFB7s)
