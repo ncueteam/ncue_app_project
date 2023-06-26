@@ -4,6 +4,7 @@ import 'package:ncue_aiot/MQTT/MQTTTestPage.dart';
 import '../MQTT/MQTTView.dart';
 import '../services/local_auth_service.dart';
 import 'bt_page.dart';
+import 'json_page.dart';
 import 'mqtt.dart';
 import 'database.dart';
 
@@ -70,6 +71,15 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            ElevatedButton(
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const JsonScreen()),
+                  );
+                },
+                child: const Icon(Icons.add_chart)
+            ),
             ElevatedButton(
                 onPressed: () async {
                   final authenticate = await LocalAuth.authenticate();
