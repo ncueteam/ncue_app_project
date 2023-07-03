@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ncue_aiot/MQTT/MQTTTestPage.dart';
-
 import '../MQTT/MQTTView.dart';
 import '../services/local_auth_service.dart';
 import 'bt_page.dart';
 import 'mqtt.dart';
 import 'database.dart';
+import 'webview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -89,6 +89,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: const Text('Log out')
               ),
+            ElevatedButton(
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const WebViewTest()),
+                  );
+                },
+                child: const Icon(Icons.web_outlined)
+            ),
           ],
         ),
       ),

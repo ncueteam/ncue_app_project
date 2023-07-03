@@ -16,7 +16,6 @@ dependencies:
   get: ^4.6.5
   flutter_blue_plus: ^1.5.2
   #資料庫
-  #mysql1: ^0.20.0
   mysql_client: ^0.0.27
 
 flutter_icons:
