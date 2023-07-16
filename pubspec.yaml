@@ -12,6 +12,7 @@ dependencies:
   mqtt_client: ^9.8.1
   provider: ^6.0.0
   webview_flutter: ^4.2.2   #2.0.0
+  flutter_inappwebview: ^5.7.2+3
   #藍芽部分
   get: ^4.6.5
   flutter_blue_plus: ^1.5.2

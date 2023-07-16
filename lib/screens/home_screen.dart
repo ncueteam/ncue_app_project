@@ -7,6 +7,7 @@ import 'json_page.dart';
 import 'mqtt.dart';
 import 'database.dart';
 import 'webview.dart';
+import 'get_information.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -103,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () async {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>  const WebViewTest()),
+                    MaterialPageRoute(builder: (context) =>  MyApp()),
                   );
                 },
                 child: const Icon(Icons.web_outlined)

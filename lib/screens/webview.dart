@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../services/local_auth_service.dart';
 
@@ -11,6 +12,7 @@ class WebViewTest extends StatefulWidget {
 
 class WebViewTestState extends State<WebViewTest> {
   late final WebViewController controller;
+  InAppWebViewController? _inController;
   bool authenticated = false;
   var currentUrl = "http://frp.4hotel.tw:25580/";
 
@@ -28,8 +30,10 @@ class WebViewTestState extends State<WebViewTest> {
         ),
       )
       ..loadRequest(Uri.parse(currentUrl));
+
+
   }
-  double height=0.00;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,10 +84,12 @@ class WebViewTestState extends State<WebViewTest> {
           setState(() {
             authenticated = authenticate;
           });
-          const snackBar = SnackBar(
-            content: Text('You are authenticated.'),
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          if(authenticated){
+            const snackBar = SnackBar(
+              content: Text('You are authenticated.'),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         },
         child: const Icon(Icons.fingerprint),
       );
