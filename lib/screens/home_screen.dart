@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ncue_aiot/components/page_button.dart';
 import 'package:ncue_aiot/screens/mqtt.dart';
+import 'package:ncue_aiot/screens/webview.dart';
 import '../services/local_auth_service.dart';
 import 'bt_page.dart';
 import 'json_page.dart';
@@ -26,9 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: const [
           PageButton(icon: Icons.account_tree_rounded, page: MqttPage()),
-          PageButton(icon: Icons.home, page: HomeScreen()),
           PageButton(icon: Icons.bluetooth, page: BTPage()),
-          PageButton(icon: Icons.dataset, page: MysqlDemo())
+          PageButton(icon: Icons.dataset, page: MysqlDemo()),
+          PageButton(icon: Icons.abc_sharp, page: WebViewTest())
         ],
       ),
       body: Center(
@@ -49,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 },
                 child: const Icon(Icons.fingerprint)),
-            if (authenticated) const Text('You are authenticated'),
             if (authenticated)
               ElevatedButton(
                   onPressed: () {

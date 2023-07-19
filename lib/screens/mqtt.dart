@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -33,7 +32,7 @@ class MqttPageState extends State<MqttPage> {
     client.pongCallback = pong;
 
     final connMessage = MqttConnectMessage()
-    // .authenticateAs('username', 'password')
+        // .authenticateAs('username', 'password')
         .withWillTopic('NCUEMQTT')
         .withWillMessage('MQTT Connect from App')
         .startClean()
@@ -55,9 +54,10 @@ class MqttPageState extends State<MqttPage> {
     client.subscribe('NCUEMQTT', MqttQos.exactlyOnce);
     client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
       for (var message in messages) {
-        final MqttPublishMessage payload = message.payload as MqttPublishMessage;
+        final MqttPublishMessage payload =
+            message.payload as MqttPublishMessage;
         final String messageText =
-        MqttPublishPayload.bytesToStringAsString(payload.payload.message);
+            MqttPublishPayload.bytesToStringAsString(payload.payload.message);
         setState(() {
           receivedMessage = messageText;
         });
@@ -68,6 +68,7 @@ class MqttPageState extends State<MqttPage> {
 
   void onSubscribed(String topic) {
     debugPrint('Subscribed to topic: $topic');
+    setState(() {});
   }
 
   void onDisconnected() {
@@ -94,6 +95,7 @@ class MqttPageState extends State<MqttPage> {
     client.disconnect();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,8 +110,7 @@ class MqttPageState extends State<MqttPage> {
             ElevatedButton(
               child: const Text('Send Message'),
               onPressed: () {
-                sendMessage(
-                    'NCUEMQTT', 'Mqtt message sent by app button');
+                sendMessage('NCUEMQTT', 'Mqtt message sent by app button');
               },
             ),
           ],
