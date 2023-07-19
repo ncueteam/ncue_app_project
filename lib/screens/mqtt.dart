@@ -12,12 +12,26 @@ class MqttPage extends StatefulWidget {
 
 class MqttPageState extends State<MqttPage> {
   late MqttServerClient client;
-  String receivedMessage = '';
+  final MessageToSend = TextEditingController();
+  List<Widget> components = [];
 
   @override
   void initState() {
     super.initState();
     connect();
+    components.add(Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30.0),
+        child: TextField(
+            controller: MessageToSend,
+            decoration: const InputDecoration(
+              labelText: '發出訊息',
+              hintText: '要發出的訊息',
+              prefixIcon: Icon(Icons.send),
+            ),
+            textInputAction: TextInputAction.search,
+            onSubmitted: (value) =>
+                {sendMessage('NCUEMQTT', value), MessageToSend.clear()})));
+    components.add(const Text("等待接收資料..."));
   }
 
   void connect() async {
@@ -42,6 +56,9 @@ class MqttPageState extends State<MqttPage> {
 
     try {
       await client.connect();
+      setState(() {
+        components.add(Text("連線中...."));
+      });
     } catch (e) {
       debugPrint('Exception: $e');
       client.disconnect();
@@ -59,16 +76,16 @@ class MqttPageState extends State<MqttPage> {
         final String messageText =
             MqttPublishPayload.bytesToStringAsString(payload.payload.message);
         setState(() {
-          receivedMessage = messageText;
+          components.add(Text("【收到】$messageText"));
         });
-        debugPrint('Received message: $messageText');
       }
     });
   }
 
   void onSubscribed(String topic) {
-    debugPrint('Subscribed to topic: $topic');
-    setState(() {});
+    setState(() {
+      components.add(Text("開始訂閱資料: $topic"));
+    });
   }
 
   void onDisconnected() {
@@ -88,10 +105,14 @@ class MqttPageState extends State<MqttPage> {
     builder.addString(message);
     client.publishMessage(
         topic, MqttQos.exactlyOnce, builder.payload as Uint8Buffer);
+    setState(() {
+      components.add(Text("【送出】$message"));
+    });
   }
 
   @override
   void dispose() {
+    MessageToSend.dispose();
     client.disconnect();
     super.dispose();
   }
@@ -104,17 +125,9 @@ class MqttPageState extends State<MqttPage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Received Message: $receivedMessage'),
-            ElevatedButton(
-              child: const Text('Send Message'),
-              onPressed: () {
-                sendMessage('NCUEMQTT', 'Mqtt message sent by app button');
-              },
-            ),
-          ],
-        ),
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: components),
       ),
     );
   }

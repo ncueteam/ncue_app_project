@@ -11,15 +11,14 @@ class MQTTManager {
   final String _host;
   final String _topic;
 
-  MQTTManager({
-        required String host,
-        required String topic,
-        required String identifier,
-        required MQTTAppState state
-      })
-      : _identifier = identifier,//'ncue_app'
-        _host = host,//'test.mosquitto.org'
-        _topic = topic,//'NCUEMQTT'
+  MQTTManager(
+      {required String host,
+      required String topic,
+      required String identifier,
+      required MQTTAppState state})
+      : _identifier = identifier, //'ncue_app'
+        _host = host, //'test.mosquitto.org'
+        _topic = topic, //'NCUEMQTT'
         _currentState = state;
 
   void initializeMQTTClient() {
@@ -36,7 +35,8 @@ class MQTTManager {
 
     final MqttConnectMessage connMess = MqttConnectMessage()
         .withClientIdentifier(_identifier)
-        .withWillTopic('NCUEMQTT') // If you set this you must set a will message
+        .withWillTopic(
+            'NCUEMQTT') // If you set this you must set a will message
         .withWillMessage('MQTT Connect from App')
         .startClean() // Non persistent session for testing
         .withWillQos(MqttQos.atLeastOnce);
@@ -95,7 +95,7 @@ class MQTTManager {
 
       // final MqttPublishMessage recMess = c![0].payload;
       final String pt =
-      MqttPublishPayload.bytesToStringAsString(recMess.payload.message!);
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
       _currentState.setReceivedText(pt);
       print(
           'EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');

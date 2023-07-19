@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,8 +8,7 @@ class MQTTTestPage extends StatefulWidget {
   _MQTTTestPageState createState() => _MQTTTestPageState();
 }
 
-class _MQTTTestPageState extends State<MQTTTestPage> with ChangeNotifier{
-
+class _MQTTTestPageState extends State<MQTTTestPage> with ChangeNotifier {
   late MqttServerClient client;
   String receivedMessage = '';
   String historyMessage = '';
@@ -20,6 +18,7 @@ class _MQTTTestPageState extends State<MQTTTestPage> with ChangeNotifier{
     historyMessage = historyMessage + '\n' + receivedMessage;
     notifyListeners();
   }
+
   String get getReceivedText => receivedMessage;
   String get getHistoryText => historyMessage;
 
@@ -92,7 +91,7 @@ class _MQTTTestPageState extends State<MQTTTestPage> with ChangeNotifier{
     client.pongCallback = pong;
 
     final connMessage = MqttConnectMessage()
-    // .authenticateAs('username', 'password')
+        // .authenticateAs('username', 'password')
         .withWillTopic('NCUEMQTT')
         .withWillMessage('MQTT Connect from App')
         .startClean()
@@ -114,9 +113,10 @@ class _MQTTTestPageState extends State<MQTTTestPage> with ChangeNotifier{
     client.subscribe('NCUEMQTT', MqttQos.exactlyOnce);
     client.updates?.listen((List<MqttReceivedMessage<MqttMessage>> messages) {
       for (var message in messages) {
-        final MqttPublishMessage payload = message.payload as MqttPublishMessage;
+        final MqttPublishMessage payload =
+            message.payload as MqttPublishMessage;
         final String messageText =
-        MqttPublishPayload.bytesToStringAsString(payload.payload.message);
+            MqttPublishPayload.bytesToStringAsString(payload.payload.message);
         setState(() {
           receivedMessage = messageText;
         });
