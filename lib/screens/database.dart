@@ -9,34 +9,36 @@ class MysqlDemo extends StatefulWidget {
 }
 
 class MysqlDemoState extends State<MysqlDemo> {
+  String _message = "";
+  bool connectState = false;
 
-  String _message="";
-  bool connectState=false;
+  // MySQLConnection? connection;
+
   @override
   void initState() {
     super.initState();
     init();
   }
 
-  var conn;
+  var connection;
   init() async {
     setState(() {
-      _message="資料庫初始化...";
-      connectState= false;
+      _message = "資料庫初始化...";
+      connectState = false;
     });
     debugPrint("資料庫初始化...");
-    conn = await MySQLConnection.createConnection(
+    connection = await MySQLConnection.createConnection(
       host: "frp.4hotel.tw",
       port: 25583,
       userName: "app_user2",
       password: "0000",
       databaseName: "app_data", // optional
     );
-    await conn.connect();
+    await connection.connect();
     debugPrint("Connected");
     setState(() {
-      _message="Connected";
-      connectState= true;
+      _message = "Connected";
+      connectState = true;
     });
   }
 
@@ -57,14 +59,26 @@ class MysqlDemoState extends State<MysqlDemo> {
           Column(
             children: <Widget>[
               //Expanded(children: <Widget>[
-                ElevatedButton(onPressed: connectState ? null : connect, child: const Text('連接資料庫')),
-                ElevatedButton(onPressed: connectState ? query : null, child: const Text('查詢資料')),
-                ElevatedButton(onPressed: connectState ? insert : null, child: const Text('新增資料')),
-                ElevatedButton(onPressed: connectState ? update : null, child: const Text('修改資料')),
-                ElevatedButton(onPressed: connectState ? delete : null, child: const Text('删除資料')),
-                ElevatedButton(onPressed: connectState ? close : null, child: const Text('關閉資料庫')),
-                Text(_message, style:const TextStyle(fontSize: 20))
-                //],
+              ElevatedButton(
+                  onPressed: connectState ? null : connect,
+                  child: const Text('連接資料庫')),
+              ElevatedButton(
+                  onPressed: connectState ? query : null,
+                  child: const Text('查詢資料')),
+              ElevatedButton(
+                  onPressed: connectState ? insert : null,
+                  child: const Text('新增資料')),
+              ElevatedButton(
+                  onPressed: connectState ? update : null,
+                  child: const Text('修改資料')),
+              ElevatedButton(
+                  onPressed: connectState ? delete : null,
+                  child: const Text('删除資料')),
+              ElevatedButton(
+                  onPressed: connectState ? close : null,
+                  child: const Text('關閉資料庫')),
+              Text(_message, style: const TextStyle(fontSize: 20))
+              //],
               //),
             ],
           ),
@@ -75,100 +89,96 @@ class MysqlDemoState extends State<MysqlDemo> {
 
   connect() async {
     setState(() {
-      _message="資料庫初始化...";
+      _message = "資料庫初始化...";
     });
     debugPrint("資料庫初始化...");
-    conn = await MySQLConnection.createConnection(
+    connection = await MySQLConnection.createConnection(
       host: "frp.4hotel.tw",
       port: 25583,
       userName: "app_user2",
       password: "0000",
       databaseName: "app_data", // optional
     );
-    await conn.connect();
+    await connection.connect();
     debugPrint("Connected");
     setState(() {
-      _message="Connected";
-      connectState= true;
+      _message = "Connected";
+      connectState = true;
     });
   }
 
   query() async {
-    _message="";
-    var results = await conn.execute('SELECT * FROM users2');
+    _message = "";
+    var results = await connection.execute('SELECT * FROM users2');
     for (final row in results.rows) {
-      _message+="${row.assoc()}\n";
+      _message += "${row.assoc()}\n";
       debugPrint(row.assoc().toString());
       setState(() {
-        _message=_message;
+        _message = _message;
       });
     }
   }
 
   update() async {
-    var res = await conn.execute(
+    var res = await connection.execute(
       "UPDATE users2 SET name=:name, join_date=:date WHERE name='adam'",
-      {"name": "Adam","date":"2023-06-05"},
+      {"name": "Adam", "date": "2023-06-05"},
     );
-    if(res.affectedRows.toString()=="0"){
+    if (res.affectedRows.toString() == "0") {
       debugPrint("該資料不存在");
       setState(() {
-        _message="該資料不存在";
+        _message = "該資料不存在";
       });
-    }
-    else {
+    } else {
       debugPrint("修改成功 AffectedRows: ${res.affectedRows}");
       setState(() {
-        _message="修改成功 AffectedRows: ${res.affectedRows}";
+        _message = "修改成功 AffectedRows: ${res.affectedRows}";
       });
     }
   }
 
   delete() async {
-    var res = await conn.execute(
-        "DELETE FROM users2 WHERE name='Vivian'"
-    );
-    if(res.affectedRows.toString()=="0"){
+    var res =
+        await connection.execute("DELETE FROM users2 WHERE name='Vivian'");
+    if (res.affectedRows.toString() == "0") {
       debugPrint("該資料不存在");
       setState(() {
-        _message="該資料不存在";
+        _message = "該資料不存在";
       });
-    }
-    else {
+    } else {
       debugPrint("刪除成功 AffectedRows: ${res.affectedRows}");
       setState(() {
-        _message="刪除成功 AffectedRows: ${res.affectedRows}";
+        _message = "刪除成功 AffectedRows: ${res.affectedRows}";
       });
     }
   }
 
   insert() async {
-    var res = await conn.execute(
+    var res = await connection.execute(
       "INSERT INTO users2 (name, join_date) VALUES (:name, :join_date)",
       {
         "name": "Vivian",
         "join_date": "2022-02-02",
       },
     );
-    if(res.affectedRows.toString()=="0"){
+    if (res.affectedRows.toString() == "0") {
       debugPrint("新增失敗");
       setState(() {
-        _message="新增失敗";
+        _message = "新增失敗";
       });
-    }
-    else {
+    } else {
       debugPrint("新增成功 AffectedRows: ${res.affectedRows}");
       setState(() {
-        _message="新增成功 AffectedRows: ${res.affectedRows}";
+        _message = "新增成功 AffectedRows: ${res.affectedRows}";
       });
     }
   }
 
   close() async {
-    await conn.close();
+    await connection.close();
     setState(() {
-      _message="資料庫已關閉";
-      connectState= false;
+      _message = "資料庫已關閉";
+      connectState = false;
     });
     debugPrint("資料庫已關閉");
   }

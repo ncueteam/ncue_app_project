@@ -20,7 +20,7 @@ class JsonScreenState extends State<JsonScreen> {
       try {
         jsonMap = json.decode(jsonString);
       } catch (e) {
-        print('Invalid JSON data: $e');
+        // print('Invalid JSON data: $e');
       }
     });
   }
