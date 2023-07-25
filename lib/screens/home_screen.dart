@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:ncue_aiot/components/page_button.dart';
-import 'package:ncue_aiot/screens/mqtt.dart';
-import 'package:ncue_aiot/screens/wifi_ssid_pw_via_ble.dart';
-// import 'package:ncue_aiot/screens/webview.dart';
+import 'package:ncue_aiot/MQTT/MQTTTestPage.dart';
+import '../MQTT/MQTTView.dart';
 import '../services/local_auth_service.dart';
 import 'bt_page.dart';
 import 'json_page.dart';
+import 'mqtt.dart';
 import 'database.dart';
+import 'webview.dart';
+import 'get_information.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,11 +27,44 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("智慧物聯網系統"),
         centerTitle: true,
-        actions: const [
-          PageButton(icon: Icons.account_tree_rounded, page: MqttPage()),
-          PageButton(icon: Icons.bluetooth, page: BTPage()),
-          PageButton(icon: Icons.dataset, page: MysqlDemo()),
-          // PageButton(icon: Icons.abc_sharp, page: WebViewTest())
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.account_tree_rounded),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MQTTTestPage()),
+                //MaterialPageRoute(builder: (context) => MqttPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.bluetooth),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BTPage()),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.dataset),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MysqlDemo()),
+              );
+            },
+          ),
         ],
       ),
       body: Center(
@@ -38,10 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const PageButton(
-              icon: Icons.addchart,
-              page: JsonScreen(),
-              mode: "ElevatedButton",
+            ElevatedButton(
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const JsonScreen()),
+                  );
+                },
+                child: const Icon(Icons.add_chart)
             ),
             ElevatedButton(
                 onPressed: () async {
@@ -49,8 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   setState(() {
                     authenticated = authenticate;
                   });
-                },
-                child: const Icon(Icons.fingerprint)),
+                  },
+                child: const Icon(Icons.fingerprint)
+            ),
+            if (authenticated) const Text('You are authenticated'),
             if (authenticated)
               ElevatedButton(
                   onPressed: () {
@@ -58,15 +98,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       authenticated = false;
                     });
                   },
-                  child: const Text('Log out')),
-            const PageButton(
-              icon: Icons.account_circle,
-              page: WifiSetter(),
-              mode: "ElevatedButton",
+                  child: const Text('Log out')
+              ),
+            ElevatedButton(
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  const WebViewTest()),
+                  );
+                },
+                child: const Icon(Icons.web_outlined)
             ),
           ],
         ),
       ),
     );
   }
+
 }
