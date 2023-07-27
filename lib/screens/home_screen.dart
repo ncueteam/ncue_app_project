@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ncue_aiot/components/page_button.dart';
 import 'package:ncue_aiot/screens/mqtt.dart';
+import 'package:ncue_aiot/screens/wifi_ble.dart';
 import 'package:ncue_aiot/screens/wifi_ssid_pw_via_ble.dart';
 // import 'package:ncue_aiot/screens/webview.dart';
 import '../services/local_auth_service.dart';
@@ -61,7 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const Text('Log out')),
             const PageButton(
               icon: Icons.account_circle,
-              page: WifiSetter(),
+              //page: WifiSetter(),
+              page: WifiBle(),
               mode: "ElevatedButton",
             ),
           ],
