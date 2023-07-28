@@ -1,8 +1,6 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:ncue_aiot/screens/home_screen.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   // if (Platform.isAndroid) {

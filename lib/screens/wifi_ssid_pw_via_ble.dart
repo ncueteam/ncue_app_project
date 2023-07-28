@@ -36,7 +36,7 @@ class _WifiSetterState extends State<WifiSetter> {
                 //onPressed: submitAction,
                 onPressed: () {},
                 //color: Colors.indigoAccent,
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             )
           ],

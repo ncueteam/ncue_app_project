@@ -5,7 +5,6 @@ import 'package:ncue_aiot/screens/mqtt.dart';
 import 'package:ncue_aiot/screens/wifi_ssid_pw_via_ble.dart';
 // import 'package:ncue_aiot/screens/webview.dart';
 import '../services/local_auth_service.dart';
-import 'bt_page.dart';
 import 'json_page.dart';
 import 'database.dart';
 

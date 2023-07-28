@@ -17,25 +17,31 @@ class BleDeviceList extends StatefulWidget {
 class BleDeviceListState extends State<StatefulWidget> {
   String debugResult = "none\n";
 
-  // Future<void> turnBleOn() async {
-  //   if (await FlutterBluePlus.isAvailable == false) {
-  //     setState(() {
-  //       debugResult += "Bluetooth not supported by this device";
-  //     });
-  //     return;
-  //   }
-  //   if (Platform.isAndroid) {
-  //     await FlutterBluePlus.turnOn();
-  //   }
-  //   await FlutterBluePlus.adapterState
-  //       .where((s) => s == BluetoothAdapterState.on)
-  //       .first;
-  // }
+  bleOn() async {
+    FlutterBluePlus.setLogLevel(LogLevel.verbose);
+    // check availability
+    if (await FlutterBluePlus.isAvailable == false) {
+      setState(() {
+        debugResult += "Bluetooth not supported by this device";
+      });
+      return;
+    }
+
+    // turn on bluetooth ourself if we can
+    if (Platform.isAndroid) {
+      await FlutterBluePlus.turnOn();
+    }
+
+    // wait bluetooth to be on
+    await FlutterBluePlus.adapterState
+        .where((s) => s == BluetoothAdapterState.on)
+        .first;
+  }
 
   @override
   void initState() {
     super.initState();
-    // turnBleOn();
+    bleOn();
   }
 
   @override
