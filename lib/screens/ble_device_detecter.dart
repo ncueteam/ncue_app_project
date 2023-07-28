@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,12 +31,39 @@ class BleDeviceListState extends State<StatefulWidget> {
     // turn on bluetooth ourself if we can
     if (Platform.isAndroid) {
       await FlutterBluePlus.turnOn();
+      setState(() {
+        debugResult += "FlutterBluePlus.turnOn()\n";
+      });
     }
 
     // wait bluetooth to be on
     await FlutterBluePlus.adapterState
         .where((s) => s == BluetoothAdapterState.on)
         .first;
+    setState(() {
+      debugResult += "BluetoothAdapterState is on!\n";
+    });
+  }
+
+  scanDevices() async {
+    // ignore: unused_local_variable
+    StreamSubscription<List<ScanResult>> subscription =
+        FlutterBluePlus.scanResults.listen((results) {
+      for (ScanResult r in results) {
+        setState(() {
+          debugResult += '${r.device.localName} found! rssi: ${r.rssi}';
+        });
+      }
+    });
+
+    // Start scanning
+    FlutterBluePlus.startScan(timeout: const Duration(seconds: 4));
+
+    // Stop scanning
+    await FlutterBluePlus.stopScan();
+    setState(() {
+      debugResult += "scan finished";
+    });
   }
 
   @override
@@ -60,7 +88,13 @@ class BleDeviceListState extends State<StatefulWidget> {
             PageButton(icon: Icons.bluetooth, page: BleDeviceList()),
             PageButton(icon: Icons.dataset, page: MysqlDemo()),
           ]),
-      body: Column(children: [Text(debugResult)]),
+      body: Center(
+        child: Column(children: [
+          Text(debugResult),
+          ElevatedButton(
+              onPressed: () => {scanDevices()}, child: const Text("scan"))
+        ]),
+      ),
     );
   }
 }
