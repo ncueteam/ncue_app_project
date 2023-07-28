@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import '../services/local_auth_service.dart';
+import 'login.dart';
 
 class WebViewTest extends StatefulWidget {
   const WebViewTest({Key? key}) : super(key: key);
@@ -53,7 +53,6 @@ class WebViewTestState extends State<WebViewTest> {
         },
         child: WebViewWidget(controller: controller),
       ),
-      floatingActionButton: _fingerPrinter(),
     );
   }
 
@@ -66,30 +65,15 @@ class WebViewTestState extends State<WebViewTest> {
             currentUrl = value.toString();
           });
           debugPrint('Current URL2: $currentUrl');
+          if (currentUrl.toString() == '"http://frp.4hotel.tw:25580/sign-in"') {
+            debugPrint('Current URL4: $currentUrl');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>  const LoginRoute()),
+            );
+          }
         }
       });
     }
-  }
-
-  Widget _fingerPrinter() {
-    if (currentUrl.toString() == '"http://frp.4hotel.tw:25580/sign-in"') {
-      // Show the floating action button only on the login page
-      return FloatingActionButton(
-        onPressed: () async {
-          final authenticate = await LocalAuth.authenticate();
-          setState(() {
-            authenticated = authenticate;
-          });
-          if(authenticated){
-            const snackBar = SnackBar(
-              content: Text('You are authenticated.'),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        },
-        child: const Icon(Icons.fingerprint),
-      );
-    }
-    return Container();
   }
 }

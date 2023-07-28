@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../services/local_auth_service.dart';
+import '../services/api_manager.dart';
+import '../models/user.dart';
 
 
 class LoginRoute extends StatefulWidget {
@@ -14,6 +17,7 @@ class _LoginRouteState extends State<LoginRoute> {
   bool pwdShow = false;
   final GlobalKey _formKey = GlobalKey<FormState>();
   final bool _nameAutoFocus = true;
+  bool authenticated = false;
 
   @override
   void initState() {
@@ -87,12 +91,40 @@ class _LoginRouteState extends State<LoginRoute> {
           ),
         ),
       ),
+      floatingActionButton: _fingerPrinter(),
+    );
+  }
+
+  Widget _fingerPrinter() {
+    return FloatingActionButton(
+      onPressed: () async {
+        final authenticate = await LocalAuth.authenticate();
+        setState(() {
+          authenticated = authenticate;
+        });
+        if(authenticated){
+          const snackBar = SnackBar(
+            content: Text('You are authenticated.'),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+        },
+      child: const Icon(Icons.fingerprint),
     );
   }
 
   void _onLogin() async {
-    // 先验证各个表单字段是否合法
     if ((_formKey.currentState as FormState).validate()) {
+      /*UserRepository.createUser(
+        User(
+          email: _unameController.text,
+          password: _pwdController.text,
+        ),
+      );*/
+    }
+  }
+    // 先验证各个表单字段是否合法
+    /*if ((_formKey.currentState as FormState).validate()) {
       showLoading(context);
       User? user;
       try {
@@ -115,6 +147,5 @@ class _LoginRouteState extends State<LoginRoute> {
       if (user != null) {
         Navigator.of(context).pop();
       }
-    }
-  }
+    }*/
 }
