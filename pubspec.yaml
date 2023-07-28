@@ -15,9 +15,10 @@ dependencies:
   # flutter_inappwebview: ^5.7.2+3
   #藍芽部分
   get: ^4.6.5
-  flutter_blue_plus: ^1.5.2
+  flutter_blue_plus: ^1.11.8
   #資料庫
   mysql_client: ^0.0.27
+  permission_handler: ^10.4.3
 
 flutter_icons:
   android: "android/app/src/main/res"

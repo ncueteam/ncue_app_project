@@ -1,8 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ncue_aiot/screens/home_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-void main() {
+void main() async {
+  // if (Platform.isAndroid) {
+  //   WidgetsFlutterBinding.ensureInitialized();
+  //   [
+  //     Permission.location,
+  //     Permission.storage,
+  //     Permission.bluetooth,
+  //     Permission.bluetoothConnect,
+  //     Permission.bluetoothScan
+  //   ].request().then((status) {
+  //     runApp(const Main());
+  //   });
+  // } else {
   runApp(const Main());
+  // }
 }
 
 class Main extends StatelessWidget {
