@@ -19,6 +19,11 @@ dependencies:
   #藍芽部分
   get: ^4.6.5
   flutter_blue_plus: ^1.11.8
+  cupertino_icons: ^1.0.2
+  flutter_bluetooth_serial: ^0.4.0
+  intl: ^0.18.0
+  shared_preferences: ^2.0.17
+  grouped_list: ^5.1.2
   #資料庫
   mysql_client: ^0.0.27
   permission_handler: ^10.4.3
