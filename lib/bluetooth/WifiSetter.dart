@@ -26,7 +26,7 @@ class WifiSetterState extends State<WifiSetter>
   void initState() {
     super.initState();
 
-    ctrl.initTabController(this);
+    ctrl?.initTabController(this);
     init();
 
     listScrollController = ScrollController(initialScrollOffset: 50.0);

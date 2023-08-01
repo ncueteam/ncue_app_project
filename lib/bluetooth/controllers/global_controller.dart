@@ -84,7 +84,7 @@ class Controller extends GetxController {
   }
 
   void initTabController(TickerProvider tickerProvider) {
-    tabController = TabController(initialIndex: 0, length: _totalTab, vsync: tickerProvider);
+    tabController = TabController(length: _totalTab, vsync: tickerProvider);
 
     tabController.addListener(() {
       if (tabController.indexIsChanging || selectedTabIndex.value != tabController.index) {
