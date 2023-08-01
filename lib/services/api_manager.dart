@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
+
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,18 +34,18 @@ class UserRepository implements ApiDataSource {
     try {
       final response = await client.post(
         url,
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: body.toJson(),
       );
       if (response.statusCode == 201) {
+        debugPrint("debug print1");
         log(
           response.body,
           name: response.statusCode.toString(),
         );
         return response.body;
       } else {
+        debugPrint("debug print2");
+        debugPrint(response.body);
         return response.body;
       }
     } catch (e) {

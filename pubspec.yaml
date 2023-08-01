@@ -15,7 +15,7 @@ dependencies:
   http: ^1.1.0
   json_model: 1.0.0
   json_annotation: ^4.8.1
-  # flutter_inappwebview: ^5.7.2+3
+  encrypt: ^5.0.1
   #藍芽部分
   get: ^4.6.5
   flutter_blue_plus: ^1.11.8

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../services/local_auth_service.dart';
+import 'package:encrypt/encrypt.dart';
 import '../services/api_manager.dart';
 import '../models/user.dart';
 
@@ -62,7 +64,7 @@ class _LoginRouteState extends State<LoginRoute> {
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
-                          pwdShow ? Icons.visibility_off : Icons.visibility),
+                          pwdShow ? Icons.visibility : Icons.visibility_off),
                       onPressed: () {
                         setState(() {
                           pwdShow = !pwdShow;
@@ -113,14 +115,22 @@ class _LoginRouteState extends State<LoginRoute> {
     );
   }
 
+  static Future<String> encodeString(String content) async{
+    var publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.pem');
+    dynamic publicKey = RSAKeyParser().parse(publicKeyStr);
+    final encrypt = Encrypter(RSA(publicKey: publicKey));
+    return await encrypt.encrypt(content).base64.toUpperCase();
+  }
+
   void _onLogin() async {
+    final UserRepository userRepository = UserRepository();
     if ((_formKey.currentState as FormState).validate()) {
-      /*UserRepository.createUser(
-        User(
-          email: _unameController.text,
-          password: _pwdController.text,
-        ),
-      );*/
+      String pwdTemp=await encodeString(_pwdController.text);
+      debugPrint(pwdTemp);
+      await userRepository.createUser(
+        User()..email = _unameController.text
+              ..password = pwdTemp
+      );
     }
   }
     // 先验证各个表单字段是否合法

@@ -9,6 +9,7 @@ import 'ble_device_detecter.dart';
 import 'bt_page.dart';
 import 'json_page.dart';
 import 'database.dart';
+import 'webview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -64,6 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
             const PageButton(
               icon: Icons.account_circle,
               page: WifiApp(),
+              mode: "ElevatedButton",
+            ),
+            const PageButton(
+              icon: Icons.web,
+              page: WebViewTest(),
               mode: "ElevatedButton",
             ),
           ],
