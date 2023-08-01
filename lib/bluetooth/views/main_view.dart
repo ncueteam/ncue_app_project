@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../WifiSetter.dart';
+import '../wifisetter.dart';
 import '../controllers/device_controller.dart';
 import '../helper/popup_dialogs.dart';
 import 'connection_view.dart';
@@ -11,8 +11,8 @@ import 'devices_view.dart';
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 enum DevicePopupMenuItem {newDevice, saveDevice, loadDevice}
 
-class MainView extends StatelessWidget {
-  const MainView({Key? key}) : super(key: key);
+class WifiSetterView extends StatelessWidget {
+  const WifiSetterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

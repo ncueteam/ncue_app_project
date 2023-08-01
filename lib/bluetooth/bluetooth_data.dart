@@ -6,7 +6,7 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:get/get.dart';
 import 'package:ncue_aiot/bluetooth/utils.dart';
 
-import 'WifiSetter.dart';
+import 'wifisetter.dart';
 import 'constant/constant.dart';
 
 

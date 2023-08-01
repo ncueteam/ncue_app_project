@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../WifiSetter.dart';
+import '../wifisetter.dart';
 import '../constant/constant.dart';
 import '../helper/command_menu.dart';
 import '../helper/popup_dialogs.dart';

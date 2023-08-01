@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ncue_aiot/bluetooth/views/main_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bluetooth_data.dart';
 import 'controllers/device_controller.dart';
 import 'controllers/global_controller.dart';
+import 'package:ncue_aiot/bluetooth/views/main_view.dart';
 
 DateTime? currentBackPressTime;
 late Controller ctrl;
 late ScrollController listScrollController;
 late SharedPreferences prefs;
+
+class WifiApp extends StatelessWidget {
+  const WifiApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    debugPrint('[main] building UI');
+    ctrl = Get.put(Controller());
+
+    return GetMaterialApp(
+      title: 'Bluetooth App',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: WifiSetter(),
+    );
+  }
+}
 
 class WifiSetter extends StatefulWidget {
   const WifiSetter({Key? key}) : super(key: key);
@@ -58,6 +77,6 @@ class WifiSetterState extends State<WifiSetter>
     return GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus
             ?.unfocus(), // to hide keyboard if the screen tapped outside of the keyboard
-        child: const MainView());
+        child: const WifiSetterView());
   }
 }

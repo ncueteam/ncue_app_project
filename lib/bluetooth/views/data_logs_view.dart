@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 
-import '../WifiSetter.dart';
+import '../wifisetter.dart';
 import '../bluetooth_data.dart';
 import '../constant/constant.dart';
 import '../models/messages.dart';

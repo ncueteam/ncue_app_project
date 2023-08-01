@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const Text('Log out')),
             const PageButton(
               icon: Icons.account_circle,
-              page: WifiSetter(),
+              page: WifiApp(),
               mode: "ElevatedButton",
             ),
           ],

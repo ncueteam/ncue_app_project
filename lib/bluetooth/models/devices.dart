@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 
-import '../WifiSetter.dart';
+import '../wifisetter.dart';
 import 'commands.dart';
 
 class Devices {

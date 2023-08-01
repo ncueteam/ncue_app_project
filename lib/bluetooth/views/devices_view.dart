@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
-import '../WifiSetter.dart';
+import '../wifisetter.dart';
 import '../bluetooth_data.dart';
 import '../constant/constant.dart';
 import '../controllers/device_controller.dart';

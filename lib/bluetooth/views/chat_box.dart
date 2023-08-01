@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../WifiSetter.dart';
+import '../wifisetter.dart';
 import '../utils.dart';
 
 
