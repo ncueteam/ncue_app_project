@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:ncue_aiot/bluetooth/views/main_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 import 'bluetooth_data.dart';
 import 'controllers/device_controller.dart';
 import 'controllers/global_controller.dart';
@@ -26,7 +25,7 @@ class WifiSetterState extends State<WifiSetter>
   void initState() {
     super.initState();
 
-    ctrl?.initTabController(this);
+    ctrl.initTabController(this);
     init();
 
     listScrollController = ScrollController(initialScrollOffset: 50.0);

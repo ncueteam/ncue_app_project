@@ -8,8 +8,6 @@ import 'connection_view.dart';
 import 'data_logs_view.dart';
 import 'devices_view.dart';
 
-
-
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 enum DevicePopupMenuItem {newDevice, saveDevice, loadDevice}
 
