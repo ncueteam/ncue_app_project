@@ -1,7 +1,7 @@
 name: ncue_aiot
 description: ncue
 publish_to: 'none'
-version: 6.3.8+9
+version: 6.8.2+10
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
