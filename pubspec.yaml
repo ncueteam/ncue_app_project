@@ -12,10 +12,18 @@ dependencies:
   mqtt_client: ^9.8.1
   provider: ^6.0.0
   webview_flutter: ^4.2.2   #2.0.0
-  # flutter_inappwebview: ^5.7.2+3
+  http: ^1.1.0
+  json_model: 1.0.0
+  json_annotation: ^4.8.1
+  encrypt: ^5.0.1
   #藍芽部分
   get: ^4.6.5
   flutter_blue_plus: ^1.11.8
+  cupertino_icons: ^1.0.2
+  flutter_bluetooth_serial: ^0.4.0
+  intl: ^0.18.0
+  shared_preferences: ^2.0.17
+  grouped_list: ^5.1.2
   #資料庫
   mysql_client: ^0.0.27
   permission_handler: ^10.4.3
@@ -29,6 +37,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  json_model: ^1.0.0
+  json_serializable: ^6.7.1
+  build_runner: ^2.4.6
 flutter:
   uses-material-design: true
   assets:

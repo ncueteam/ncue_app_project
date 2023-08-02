@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ncue_aiot/components/page_button.dart';
-import 'package:ncue_aiot/screens/ble_device_detecter.dart';
 import 'package:ncue_aiot/screens/mqtt.dart';
-import 'package:ncue_aiot/screens/wifi_ssid_pw_via_ble.dart';
+
 // import 'package:ncue_aiot/screens/webview.dart';
+import '../bluetooth/test/wifisetter.dart';
+import '../bluetooth/wifipage.dart';
 import '../services/local_auth_service.dart';
+import 'ble_device_detecter.dart';
+import 'bt_page.dart';
 import 'json_page.dart';
 import 'database.dart';
+import 'webview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -61,7 +65,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const Text('Log out')),
             const PageButton(
               icon: Icons.account_circle,
-              page: WifiSetter(),
+              page: FlutterBlueApp(),
+              mode: "ElevatedButton",
+            ),
+            const PageButton(
+              icon: Icons.web,
+              page: WebViewTest(),
               mode: "ElevatedButton",
             ),
           ],
