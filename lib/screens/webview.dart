@@ -37,8 +37,7 @@ class WebViewTestState extends State<WebViewTest> {
         title: const Text('WebView Test'),
         toolbarHeight: 0.0,
       ),
-    body:
-      WillPopScope(
+      body: WillPopScope(
         onWillPop: () async {
           var canBack = await controller.canGoBack();
           if (canBack) {
@@ -47,6 +46,7 @@ class WebViewTestState extends State<WebViewTest> {
             _getCurrentUrl();
           } else {
             // 返回原生页面上一页
+            // ignore: use_build_context_synchronously
             Navigator.of(context).pop();
           }
           return false;
@@ -58,8 +58,12 @@ class WebViewTestState extends State<WebViewTest> {
 
   void _getCurrentUrl() {
     debugPrint('Current URL3: $currentUrl');
+    // ignore: unnecessary_null_comparison
     if (controller != null) {
-      controller.runJavaScriptReturningResult("window.location.href").then((value){
+      controller
+          .runJavaScriptReturningResult("window.location.href")
+          .then((value) {
+        // ignore: unnecessary_null_comparison
         if (value != null && value != currentUrl) {
           setState(() {
             currentUrl = value.toString();
@@ -69,7 +73,7 @@ class WebViewTestState extends State<WebViewTest> {
             debugPrint('Current URL4: $currentUrl');
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>  const LoginRoute()),
+              MaterialPageRoute(builder: (context) => const LoginRoute()),
             );
           }
         }
