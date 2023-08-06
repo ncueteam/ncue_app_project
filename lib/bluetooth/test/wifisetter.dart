@@ -18,6 +18,9 @@ final snackBarKeyA = GlobalKey<ScaffoldMessengerState>();
 final snackBarKeyB = GlobalKey<ScaffoldMessengerState>();
 final snackBarKeyC = GlobalKey<ScaffoldMessengerState>();
 
+TextEditingController wifiNameController = TextEditingController();
+TextEditingController wifiPasswordController = TextEditingController();
+
 class BluetoothAdapterStateObserver extends NavigatorObserver {
   StreamSubscription<BluetoothAdapterState>? _btStateSubscription;
 
@@ -566,6 +569,27 @@ class DeviceScreen extends StatelessWidget {
                   );
                 },
               ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: TextField(
+                  controller: wifiNameController,
+                  decoration: InputDecoration(labelText: 'Wifi Name'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: TextField(
+                  controller: wifiPasswordController,
+                  decoration: InputDecoration(labelText: 'Wifi Password'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Text('Submit'),
+                ),
+              )
             ],
           ),
         ),
