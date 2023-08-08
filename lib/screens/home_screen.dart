@@ -4,6 +4,7 @@ import 'package:ncue_aiot/screens/mqtt.dart';
 
 // import 'package:ncue_aiot/screens/webview.dart';
 import '../bluetooth/test/wifisetter.dart';
+import '../bluetooth/wifipage2.dart';
 import '../services/local_auth_service.dart';
 import 'ble_device_detecter.dart';
 import 'json_page.dart';
@@ -63,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: const Text('Log out')),
             const PageButton(
               icon: Icons.account_circle,
-              page: FlutterBlueApp(),
+              page: WifiSetter(),
               mode: "ElevatedButton",
             ),
             const PageButton(
