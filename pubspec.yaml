@@ -27,6 +27,9 @@ dependencies:
   #資料庫
   mysql_client: ^0.0.27
   permission_handler: ^10.4.3
+  #test:
+
+
 
 flutter_icons:
   android: "android/app/src/main/res"
