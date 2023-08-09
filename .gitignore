@@ -43,4 +43,4 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/assets/rsa_key.pem
+/assets/rsa_public_key.pem
