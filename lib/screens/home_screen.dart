@@ -4,6 +4,7 @@ import 'package:ncue_aiot/screens/mqtt.dart';
 
 // import 'package:ncue_aiot/screens/webview.dart';
 import '../bluetooth/test2/wifisetter2.dart';
+import '../bluetooth/wifipage.dart';
 import '../services/local_auth_service.dart';
 import 'ble_device_detecter.dart';
 import 'json_page.dart';
