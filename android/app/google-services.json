@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:218597899046:android:b7996c9489d7b098085fe7",
+        "mobilesdk_app_id": "1:218597899046:android:5963e4e6bb8f1b3f085fe7",
         "android_client_info": {
-          "package_name": "ncue.aiot"
+          "package_name": "haych.tw.postpartum_care_system"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "218597899046-slakd936b825jbdkvo4457rsajtr5gfj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "haych.tw.postpartum_care_system",
+            "certificate_hash": "856fa08b47a3f8e07154deaa1f117a20d36e3396"
+          }
+        },
         {
           "client_id": "218597899046-ussppo1llk2j2dfoob83h6qu5dg9o1mc.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +37,57 @@
             {
               "client_id": "218597899046-52lb1aegn9lvtj55kmi9g80iviirvqs2.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "218597899046-7h8s46s4149je3rtbk16mtsk63qgf5kj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "haych.tw.postpartumCareSystem"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218597899046:android:b7996c9489d7b098085fe7",
+        "android_client_info": {
+          "package_name": "ncue.aiot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218597899046-h7cu072a9r6fnl9k9tidb87tt1rgf2d8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ncue.aiot",
+            "certificate_hash": "856fa08b47a3f8e07154deaa1f117a20d36e3396"
+          }
+        },
+        {
+          "client_id": "218597899046-ussppo1llk2j2dfoob83h6qu5dg9o1mc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFPRE6Ao-jkQdFwuB4EkUmIa2A2DI-yVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218597899046-52lb1aegn9lvtj55kmi9g80iviirvqs2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "218597899046-7h8s46s4149je3rtbk16mtsk63qgf5kj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "haych.tw.postpartumCareSystem"
+              }
             }
           ]
         }

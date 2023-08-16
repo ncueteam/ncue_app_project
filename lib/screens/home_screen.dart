@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ncue_aiot/components/page_button.dart';
+import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
 import 'package:ncue_aiot/screens/mqtt.dart';
 
 // import 'package:ncue_aiot/screens/webview.dart';
@@ -21,7 +23,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final user = FirebaseAuth.instance.currentUser;
   bool authenticated = false;
+
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("智慧物聯網系統"),
         centerTitle: true,
-        actions: const [
-          PageButton(icon: Icons.account_tree_rounded, page: MqttPage()),
-          PageButton(icon: Icons.bluetooth, page: BleDeviceList()),
-          PageButton(icon: Icons.dataset, page: MysqlDemo()),
+        actions: [
+          IconButton(onPressed: signUserOut, icon: const Icon(Icons.logout)),
+          const PageButton(icon: Icons.account_tree_rounded, page: MqttPage()),
+          const PageButton(icon: Icons.bluetooth, page: BleDeviceList()),
+          const PageButton(icon: Icons.dataset, page: MysqlDemo()),
           // PageButton(icon: Icons.abc_sharp, page: WebViewTest())
         ],
       ),
@@ -41,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(user!.email!),
             const PageButton(
               icon: Icons.addchart,
               page: JsonScreen(),

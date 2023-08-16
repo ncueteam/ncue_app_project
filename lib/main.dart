@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ncue_aiot/screens/home_screen.dart';
+import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -8,20 +8,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // if (Platform.isAndroid) {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   [
-  //     Permission.location,
-  //     Permission.storage,
-  //     Permission.bluetooth,
-  //     Permission.bluetoothConnect,
-  //     Permission.bluetoothScan
-  //   ].request().then((status) {
-  //     runApp(const Main());
-  //   });
-  // } else {
   runApp(const Main());
-  // }
 }
 
 class Main extends StatelessWidget {
@@ -35,7 +22,7 @@ class Main extends StatelessWidget {
           primaryColorDark: Colors.black12,
           primaryColorLight: Colors.white60,
           primarySwatch: Colors.blueGrey),
-      home: const HomeScreen(),
+      home: const AuthPage(),
     );
   }
 }
