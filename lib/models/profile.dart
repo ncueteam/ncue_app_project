@@ -6,8 +6,7 @@ part 'profile.g.dart';
 class Profile {
   Profile();
 
-  User? email;
-  String? password;
+  User? user;
   String? lastLogin;
   
   factory Profile.fromJson(Map<String,dynamic> json) => _$ProfileFromJson(json);

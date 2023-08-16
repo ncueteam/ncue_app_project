@@ -58,13 +58,11 @@ class WebViewTestState extends State<WebViewTest> {
 
   void _getCurrentUrl() {
     debugPrint('Current URL3: $currentUrl');
-    // ignore: unnecessary_null_comparison
     if (controller != null) {
       controller
           .runJavaScriptReturningResult("window.location.href")
           .then((value) {
-        // ignore: unnecessary_null_comparison
-        if (value != null && value != currentUrl) {
+        if (value != currentUrl) {
           setState(() {
             currentUrl = value.toString();
           });

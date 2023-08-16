@@ -16,7 +16,7 @@ class Global {
       try {
         profile = Profile.fromJson(jsonDecode(_profile));
       } catch (e) {
-        print(e);
+        debugPrint(e.toString());
       }
     }
   }

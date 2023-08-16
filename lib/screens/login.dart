@@ -5,11 +5,11 @@ import 'package:encrypt/encrypt.dart';
 import '../services/api_manager.dart';
 import '../models/user.dart';
 
+
 class LoginRoute extends StatefulWidget {
   const LoginRoute({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _LoginRouteState createState() => _LoginRouteState();
 }
 
@@ -53,7 +53,14 @@ class _LoginRouteState extends State<LoginRoute> {
                   ),
                   // 校验用户名（不能为空）
                   validator: (v) {
-                    return v == null || v.trim().isNotEmpty ? null : "電子信箱不能為空";
+                    String regexEmail = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*\$";
+                    if((v==null||v.trim().isNotEmpty)== false){
+                      return "電子信箱不能為空";
+                    }else if(RegExp(regexEmail).hasMatch(v!.trim())== false){
+                      return "格式錯誤";
+                    }else{
+                      return null;
+                    }
                   }),
               TextFormField(
                 controller: _pwdController,
@@ -74,7 +81,7 @@ class _LoginRouteState extends State<LoginRoute> {
                 obscureText: !pwdShow,
                 //校验密码（不能为空）
                 validator: (v) {
-                  return v == null || v.trim().isNotEmpty ? null : "密碼不能為空";
+                  return v==null||v.trim().isNotEmpty ? null : "密碼不能為空";
                 },
               ),
               Padding(
@@ -104,37 +111,43 @@ class _LoginRouteState extends State<LoginRoute> {
         setState(() {
           authenticated = authenticate;
         });
-        if (authenticated) {
+        if(authenticated){
           const snackBar = SnackBar(
             content: Text('You are authenticated.'),
           );
-          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-      },
+        },
       child: const Icon(Icons.fingerprint),
     );
   }
 
-  static Future<String> encodeString(String content) async {
-    var publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.pem');
+   Future<String> encodeString(String content) async{
+    final publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.pem');
+    //const publicKeyStr=''''-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNNorgFngK1zjHOnQlIUh5NjOxZIiEPZ8Knu6B/IyY0LBRToo1TZC7/nK6j8on/2sBdv5nFuTwlOpW9UL8C4yZJdjTwYXn5X+wZZsz1RXNI5zjhSXuGeYzF7WhxusKo6zrR6b0IMNg2W016PWU3UkjOXxoaIGkMN77oIorPP5bHQIDAQAB-----END PUBLIC KEY-----''';
+    debugPrint(publicKeyStr.toString());
     dynamic publicKey = RSAKeyParser().parse(publicKeyStr);
-    final encrypt = Encrypter(RSA(publicKey: publicKey));
-    return await encrypt.encrypt(content).base64.toUpperCase();
+    final encode = Encrypter(RSA(publicKey: publicKey));
+    return encode.encrypt(content).base64;
   }
 
   void _onLogin() async {
     final UserRepository userRepository = UserRepository();
     if ((_formKey.currentState as FormState).validate()) {
-      String pwdTemp = await encodeString(_pwdController.text);
+      debugPrint(_pwdController.text);
+      String pwdTemp="";
+      await encodeString(_pwdController.text).then((value){
+          pwdTemp=value;
+      });
       debugPrint(pwdTemp);
-      await userRepository.createUser(User()
-        ..email = _unameController.text
-        ..password = pwdTemp);
+      await userRepository.createUser(
+        User()..email = _unameController.text
+              ..password = pwdTemp//"jsroVfJLiD78rAh2nJUMb43JMl3PVLMxhgPE2WHTV6FbTt6tr0LnYO7OzQZaw7R8z4hZUnBI0ogQQezYS8FPaPvqvBkcZZIeq4qoXwbtk0I13iMXjjjtrNhhPhF64kgKAScQx8pztvzdGjohkSLLnqoC44DaPSuo+LAnFkY5uy4="
+      );
     }
   }
-  // 先验证各个表单字段是否合法
-  /*if ((_formKey.currentState as FormState).validate()) {
+    // 先验证各个表单字段是否合法
+    /*if ((_formKey.currentState as FormState).validate()) {
       showLoading(context);
       User? user;
       try {
