@@ -31,9 +31,7 @@ class UserRepository implements ApiDataSource {
         debugPrint(response.statusCode.toString());
         String setCookieHeader = response.headers['set-cookie']!;
         xsrf = setCookieHeader.split("XSRF-TOKEN=")[1];
-        //debugPrint(xsrf);
         xsrf = xsrf.split(" ")[0];
-        //debugPrint(xsrf);
       } else {
         throw Exception('Error: ${response.statusCode}');
       }
@@ -59,21 +57,6 @@ class UserRepository implements ApiDataSource {
       debugPrint("debug print5");
       debugPrint(body.toJson().toString());
 
-      /*HttpClient httpClient = new HttpClient();
-      HttpClientRequest request = await httpClient.postUrl(url);
-      request.headers.set('Content-Type', 'application/json');
-      request.headers.add("X-XSRF-TOKEN", xsrf);
-      request.headers.add("credentials", 'include');
-      //request.headers.add("Accept", 'application/json');
-      debugPrint(request.headers.toString());
-      request.add(utf8.encode(json.encode(body.toJson())));
-      HttpClientResponse response = await request.close();
-      debugPrint(response.statusCode.toString());
-      // todo - you should check the response.statusCode
-      String reply = await response.transform(utf8.decoder).join();
-      debugPrint(reply);
-      httpClient.close();
-      return "test";*/
       final response = await client.post(
         url,
         headers: {
@@ -83,21 +66,20 @@ class UserRepository implements ApiDataSource {
           "Accept" : 'application/json',
         },
         body: json.encode(body.toJson()),
-        //encoding: Encoding.getByName("utf-8"),
       );
-      debugPrint("debug print4");
+      //debugPrint("debug print4");
       if (response.statusCode == 201) {
         debugPrint(response.statusCode.toString());
         debugPrint(response.body);
-        log(
+        /*log(
           response.body,
           name: response.statusCode.toString(),
-        );
-        return response.body;
+        );*/
+        return response.statusCode.toString();
       } else {
         debugPrint(response.statusCode.toString());
         debugPrint(response.body);
-        return response.body;
+        return response.statusCode.toString();
       }
     } catch (e) {
       return e.toString();
