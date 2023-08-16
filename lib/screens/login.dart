@@ -120,7 +120,7 @@ class _LoginRouteState extends State<LoginRoute> {
     var publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.pem');
     dynamic publicKey = RSAKeyParser().parse(publicKeyStr);
     final encrypt = Encrypter(RSA(publicKey: publicKey));
-    return encrypt.encrypt(content).base64.toUpperCase();
+    return await encrypt.encrypt(content).base64.toUpperCase();
   }
 
   void _onLogin() async {
