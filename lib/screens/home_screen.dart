@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ncue_aiot/components/page_button.dart';
 import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
+import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
+import 'package:ncue_aiot/screens/auth_system/login_page.dart';
 import 'package:ncue_aiot/screens/mqtt.dart';
 
 // import 'package:ncue_aiot/screens/webview.dart';
@@ -49,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(user!.email!),
             const PageButton(
               icon: Icons.addchart,
               page: JsonScreen(),
@@ -82,6 +84,62 @@ class _HomeScreenState extends State<HomeScreen> {
               mode: "ElevatedButton",
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          child: GNav(
+            backgroundColor: Colors.black,
+            color: Colors.white,
+            activeColor: Colors.white,
+            tabBackgroundColor: Colors.grey.shade800,
+            padding: const EdgeInsets.all(14),
+            gap: 8,
+            onTabChange: (index) {
+              switch (index) {
+                case 0:
+                  {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginOrRegisterPage()));
+                    break;
+                  }
+                case 1:
+                  {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                    break;
+                  }
+                default:
+                  {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                    break;
+                  }
+              }
+            },
+            tabs: [
+              GButton(
+                icon: Icons.account_balance,
+                text: user!.email!,
+              ),
+              const GButton(
+                icon: Icons.home,
+                text: "home",
+              ),
+              const GButton(
+                icon: Icons.settings,
+                text: "setting",
+              ),
+            ],
+          ),
         ),
       ),
     );
