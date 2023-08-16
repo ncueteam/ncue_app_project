@@ -5,11 +5,11 @@ import 'package:encrypt/encrypt.dart';
 import '../services/api_manager.dart';
 import '../models/user.dart';
 
-
 class LoginRoute extends StatefulWidget {
   const LoginRoute({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _LoginRouteState createState() => _LoginRouteState();
 }
 
@@ -53,7 +53,7 @@ class _LoginRouteState extends State<LoginRoute> {
                   ),
                   // 校验用户名（不能为空）
                   validator: (v) {
-                    return v==null||v.trim().isNotEmpty ? null : "電子信箱不能為空";
+                    return v == null || v.trim().isNotEmpty ? null : "電子信箱不能為空";
                   }),
               TextFormField(
                 controller: _pwdController,
@@ -74,7 +74,7 @@ class _LoginRouteState extends State<LoginRoute> {
                 obscureText: !pwdShow,
                 //校验密码（不能为空）
                 validator: (v) {
-                  return v==null||v.trim().isNotEmpty ? null : "密碼不能為空";
+                  return v == null || v.trim().isNotEmpty ? null : "密碼不能為空";
                 },
               ),
               Padding(
@@ -104,37 +104,37 @@ class _LoginRouteState extends State<LoginRoute> {
         setState(() {
           authenticated = authenticate;
         });
-        if(authenticated){
+        if (authenticated) {
           const snackBar = SnackBar(
             content: Text('You are authenticated.'),
           );
+          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-        },
+      },
       child: const Icon(Icons.fingerprint),
     );
   }
 
-  static Future<String> encodeString(String content) async{
+  static Future<String> encodeString(String content) async {
     var publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.pem');
     dynamic publicKey = RSAKeyParser().parse(publicKeyStr);
     final encrypt = Encrypter(RSA(publicKey: publicKey));
-    return await encrypt.encrypt(content).base64.toUpperCase();
+    return encrypt.encrypt(content).base64.toUpperCase();
   }
 
   void _onLogin() async {
     final UserRepository userRepository = UserRepository();
     if ((_formKey.currentState as FormState).validate()) {
-      String pwdTemp=await encodeString(_pwdController.text);
+      String pwdTemp = await encodeString(_pwdController.text);
       debugPrint(pwdTemp);
-      await userRepository.createUser(
-        User()..email = _unameController.text
-              ..password = pwdTemp
-      );
+      await userRepository.createUser(User()
+        ..email = _unameController.text
+        ..password = pwdTemp);
     }
   }
-    // 先验证各个表单字段是否合法
-    /*if ((_formKey.currentState as FormState).validate()) {
+  // 先验证各个表单字段是否合法
+  /*if ((_formKey.currentState as FormState).validate()) {
       showLoading(context);
       User? user;
       try {

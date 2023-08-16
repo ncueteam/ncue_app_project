@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "218597899046",
+    "project_id": "account-database-f8f8a",
+    "storage_bucket": "account-database-f8f8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218597899046:android:b7996c9489d7b098085fe7",
+        "android_client_info": {
+          "package_name": "ncue.aiot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218597899046-ussppo1llk2j2dfoob83h6qu5dg9o1mc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFPRE6Ao-jkQdFwuB4EkUmIa2A2DI-yVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218597899046-52lb1aegn9lvtj55kmi9g80iviirvqs2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

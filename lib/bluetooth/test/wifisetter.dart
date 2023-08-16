@@ -132,7 +132,6 @@ class FindDevicesScreen extends StatelessWidget {
           actions: [
             if (Platform.isAndroid)
               ElevatedButton(
-                child: const Text('TURN OFF'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
@@ -148,6 +147,7 @@ class FindDevicesScreen extends StatelessWidget {
                     snackBarKeyB.currentState?.showSnackBar(snackBar);
                   }
                 },
+                child: const Text('TURN OFF'),
               ),
           ],
         ),
@@ -185,7 +185,7 @@ class FindDevicesScreen extends StatelessWidget {
                                           .push(MaterialPageRoute(
                                               builder: (context) =>
                                                   DeviceScreen(device: d),
-                                              settings: RouteSettings(
+                                              settings: const RouteSettings(
                                                   name: '/deviceScreen'))),
                                     );
                                   }
@@ -199,8 +199,9 @@ class FindDevicesScreen extends StatelessWidget {
                                                   builder: (context) {
                                                     d
                                                         .connect(
-                                                            timeout: Duration(
-                                                                seconds: 4))
+                                                            timeout:
+                                                                const Duration(
+                                                                    seconds: 4))
                                                         .catchError((e) {
                                                       final snackBar = SnackBar(
                                                           content: Text(
@@ -214,7 +215,7 @@ class FindDevicesScreen extends StatelessWidget {
                                                     return DeviceScreen(
                                                         device: d);
                                                   },
-                                                  settings: RouteSettings(
+                                                  settings: const RouteSettings(
                                                       name: '/deviceScreen')));
                                         });
                                   }
@@ -241,7 +242,8 @@ class FindDevicesScreen extends StatelessWidget {
                                     builder: (context) {
                                       r.device
                                           .connect(
-                                              timeout: Duration(seconds: 4))
+                                              timeout:
+                                                  const Duration(seconds: 4))
                                           .catchError((e) {
                                         final snackBar = SnackBar(
                                             content: Text(prettyException(
@@ -251,8 +253,8 @@ class FindDevicesScreen extends StatelessWidget {
                                       });
                                       return DeviceScreen(device: r.device);
                                     },
-                                    settings:
-                                        RouteSettings(name: '/deviceScreen'))),
+                                    settings: const RouteSettings(
+                                        name: '/deviceScreen'))),
                           ),
                         )
                         .toList(),
@@ -268,7 +270,6 @@ class FindDevicesScreen extends StatelessWidget {
           builder: (c, snapshot) {
             if (snapshot.data ?? false) {
               return FloatingActionButton(
-                child: const Icon(Icons.stop),
                 onPressed: () async {
                   try {
                     FlutterBluePlus.stopScan();
@@ -279,6 +280,7 @@ class FindDevicesScreen extends StatelessWidget {
                   }
                 },
                 backgroundColor: Colors.red,
+                child: const Icon(Icons.stop),
               );
             } else {
               return FloatingActionButton(
@@ -433,7 +435,8 @@ class DeviceScreen extends StatelessWidget {
                   case BluetoothConnectionState.disconnected:
                     onPressed = () async {
                       try {
-                        await device.connect(timeout: Duration(seconds: 4));
+                        await device.connect(
+                            timeout: const Duration(seconds: 4));
                       } catch (e) {
                         final snackBar = SnackBar(
                             content:
@@ -521,12 +524,12 @@ class DeviceScreen extends StatelessWidget {
                             ),
                             const IconButton(
                               icon: SizedBox(
+                                width: 18.0,
+                                height: 18.0,
                                 child: CircularProgressIndicator(
                                   valueColor:
                                       AlwaysStoppedAnimation(Colors.grey),
                                 ),
-                                width: 18.0,
-                                height: 18.0,
                               ),
                               onPressed: null,
                             )
@@ -583,7 +586,7 @@ class DeviceScreen extends StatelessWidget {
       try {
         yield await device.readRssi();
       } catch (e) {
-        print("Error reading RSSI: $e");
+        debugPrint("Error reading RSSI: $e");
         break;
       }
       await Future.delayed(frequency);
