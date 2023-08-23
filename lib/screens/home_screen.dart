@@ -32,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () => Navigator.pushNamed(context, '/database'),
             child: const Icon(Icons.dataset),
           ),
-          // PageButton(icon: Icons.abc_sharp, page: WebViewTest())
         ],
       ),
       body: Center(

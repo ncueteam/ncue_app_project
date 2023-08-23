@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -22,6 +23,20 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final confirmPasswordController = TextEditingController();
 
+  final nameController = TextEditingController();
+
+  final ageController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nameController.dispose();
+    ageController.dispose();
+    super.dispose();
+  }
+
   void signUserUp() async {
     showDialog(
         context: context,
@@ -36,6 +51,8 @@ class _RegisterPageState extends State<RegisterPage> {
           email: emailController.text,
           password: passwordController.text,
         );
+        addUserDetails(nameController.text.trim(), emailController.text.trim(),
+            int.parse(ageController.text.trim()));
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
         AudioPlayer().play(AssetSource("sounds/crystal.mp3"));
@@ -47,12 +64,18 @@ class _RegisterPageState extends State<RegisterPage> {
       Navigator.pop(context);
       if (e.code == 'user-not-found') {
         debugPrint('No user found for that email.');
-        wrongMessage("查無此帳號");
+        wrongMessage("無效的電子郵件");
       } else if (e.code == 'wrong-password') {
         debugPrint('Wrong password provided for that user.');
         wrongMessage("密碼錯誤");
       }
     }
+  }
+
+  Future addUserDetails(String name, String email, int age) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .add({'name': name, 'age': age, 'email': email});
   }
 
   wrongMessage(String message) {
@@ -84,10 +107,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     Text("創建帳號",
                         style:
                             TextStyle(color: Colors.grey[600], fontSize: 20.0)),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     StyledTextField(
                       controller: emailController,
+                      hintText: '電子郵件',
+                      obscureText: false,
+                    ),
+                    const SizedBox(height: 10),
+                    StyledTextField(
+                      controller: nameController,
                       hintText: '使用者名稱',
+                      obscureText: false,
+                    ),
+                    const SizedBox(height: 10),
+                    StyledTextField(
+                      controller: ageController,
+                      hintText: '年齡',
                       obscureText: false,
                     ),
                     const SizedBox(height: 10),
