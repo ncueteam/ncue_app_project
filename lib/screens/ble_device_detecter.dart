@@ -4,10 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
-import '../components/page_button.dart';
-import 'database.dart';
-import 'mqtt.dart';
-
 class BleDeviceList extends StatefulWidget {
   const BleDeviceList({super.key});
 
@@ -80,14 +76,20 @@ class BleDeviceListState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: const Text("智慧物聯網系統"),
-          centerTitle: true,
-          actions: const [
-            PageButton(icon: Icons.account_tree_rounded, page: MqttPage()),
-            PageButton(icon: Icons.bluetooth, page: BleDeviceList()),
-            PageButton(icon: Icons.dataset, page: MysqlDemo()),
-          ]),
+      appBar: AppBar(title: const Text("智慧物聯網系統"), centerTitle: true, actions: [
+        ElevatedButton(
+          onPressed: () => Navigator.pushNamed(context, '/mqtt'),
+          child: const Icon(Icons.account_tree_rounded),
+        ),
+        ElevatedButton(
+          onPressed: () => Navigator.pushNamed(context, '/ble'),
+          child: const Icon(Icons.bluetooth),
+        ),
+        ElevatedButton(
+          onPressed: () => Navigator.pushNamed(context, '/database'),
+          child: const Icon(Icons.dataset),
+        ),
+      ]),
       body: Center(
         child: Column(children: [
           Text(debugResult),

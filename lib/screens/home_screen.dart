@@ -1,20 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:ncue_aiot/components/page_button.dart';
-import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
 import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
-import 'package:ncue_aiot/screens/auth_system/login_page.dart';
-import 'package:ncue_aiot/screens/mqtt.dart';
 
 // import 'package:ncue_aiot/screens/webview.dart';
-import '../bluetooth/test2/wifisetter2.dart';
-import '../bluetooth/wifipage.dart';
 import '../services/local_auth_service.dart';
-import 'ble_device_detecter.dart';
-import 'json_page.dart';
-import 'database.dart';
-import 'webview.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -41,9 +31,18 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         actions: [
           IconButton(onPressed: signUserOut, icon: const Icon(Icons.logout)),
-          const PageButton(icon: Icons.account_tree_rounded, page: MqttPage()),
-          const PageButton(icon: Icons.bluetooth, page: BleDeviceList()),
-          const PageButton(icon: Icons.dataset, page: MysqlDemo()),
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/mqtt'),
+            child: const Icon(Icons.account_tree_rounded),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/ble'),
+            child: const Icon(Icons.bluetooth),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pushNamed(context, '/database'),
+            child: const Icon(Icons.dataset),
+          ),
           // PageButton(icon: Icons.abc_sharp, page: WebViewTest())
         ],
       ),
@@ -52,10 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const PageButton(
-              icon: Icons.addchart,
-              page: JsonScreen(),
-              mode: "ElevatedButton",
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/json'),
+              child: const Icon(Icons.add_chart),
             ),
             ElevatedButton(
                 onPressed: () async {
@@ -73,15 +71,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     });
                   },
                   child: const Text('Log out')),
-            const PageButton(
-              icon: Icons.account_circle,
-              page: WifiSetter2(),
-              mode: "ElevatedButton",
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/wifi'),
+              child: const Icon(Icons.account_circle),
             ),
-            const PageButton(
-              icon: Icons.web,
-              page: WebViewTest(),
-              mode: "ElevatedButton",
+            ElevatedButton(
+              onPressed: () => Navigator.pushNamed(context, '/webview'),
+              child: const Icon(Icons.web),
             ),
           ],
         ),

@@ -1,21 +1,22 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ncue_aiot/screens/home_screen.dart';
+import 'package:ncue_aiot/bluetooth/wifipage2.dart';
+import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
+import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
+import 'package:ncue_aiot/screens/ble_device_detecter.dart';
+import 'package:ncue_aiot/screens/database.dart';
+import 'package:ncue_aiot/screens/json_page.dart';
+import 'package:ncue_aiot/screens/mqtt.dart';
+import 'package:ncue_aiot/screens/webview.dart';
+
+import 'firebase_options.dart';
 
 void main() async {
-  // if (Platform.isAndroid) {
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   [
-  //     Permission.location,
-  //     Permission.storage,
-  //     Permission.bluetooth,
-  //     Permission.bluetoothConnect,
-  //     Permission.bluetoothScan
-  //   ].request().then((status) {
-  //     runApp(const Main());
-  //   });
-  // } else {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const Main());
-  // }
 }
 
 class Main extends StatelessWidget {
@@ -29,7 +30,17 @@ class Main extends StatelessWidget {
           primaryColorDark: Colors.black12,
           primaryColorLight: Colors.white60,
           primarySwatch: Colors.blueGrey),
-      home: const HomeScreen(),
+      home: const AuthPage(),
+      routes: {
+        '/home': (context) => const AuthPage(),
+        '/mqtt': (context) => const MqttPage(),
+        '/json': (context) => const JsonScreen(),
+        '/login': (context) => const LoginOrRegisterPage(),
+        '/database': (context) => const MysqlDemo(),
+        '/webview': (context) => const WebViewTest(),
+        '/wifi': (context) => const WifiSetter(),
+        '/ble': (context) => const BleDeviceList()
+      },
     );
   }
 }
