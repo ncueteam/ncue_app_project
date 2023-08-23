@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import '../common/globals.dart';
+import '../common/states.dart';
 import '../services/local_auth_service.dart';
 import 'package:encrypt/encrypt.dart';
 import '../services/api_manager.dart';
@@ -18,16 +21,17 @@ class _LoginRouteState extends State<LoginRoute> {
   final TextEditingController _pwdController = TextEditingController();
   bool pwdShow = false;
   final GlobalKey _formKey = GlobalKey<FormState>();
-  final bool _nameAutoFocus = true;
+  late bool _nameAutoFocus = true;
   bool authenticated = false;
+  String loginMessage="";
 
   @override
   void initState() {
     // 自动填充上次登录的用户名，填充后将焦点定位到密码输入框
-    /*_unameController.text = Global.profile.lastLogin ?? "";
+    _unameController.text = Global.profile.lastLogin ?? "";
     if (_unameController.text.isNotEmpty) {
       _nameAutoFocus = false;
-    }*/
+    }
     super.initState();
   }
 
@@ -96,6 +100,7 @@ class _LoginRouteState extends State<LoginRoute> {
                   ),
                 ),
               ),
+              Text(loginMessage),
             ],
           ),
         ),
@@ -123,8 +128,7 @@ class _LoginRouteState extends State<LoginRoute> {
   }
 
    Future<String> encodeString(String content) async{
-    final publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.pem');
-    //const publicKeyStr=''''-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNNorgFngK1zjHOnQlIUh5NjOxZIiEPZ8Knu6B/IyY0LBRToo1TZC7/nK6j8on/2sBdv5nFuTwlOpW9UL8C4yZJdjTwYXn5X+wZZsz1RXNI5zjhSXuGeYzF7WhxusKo6zrR6b0IMNg2W016PWU3UkjOXxoaIGkMN77oIorPP5bHQIDAQAB-----END PUBLIC KEY-----''';
+    final publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.txt');
     debugPrint(publicKeyStr.toString());
     dynamic publicKey = RSAKeyParser().parse(publicKeyStr);
     final encode = Encrypter(RSA(publicKey: publicKey));
@@ -140,10 +144,21 @@ class _LoginRouteState extends State<LoginRoute> {
           pwdTemp=value;
       });
       debugPrint(pwdTemp);
-      await userRepository.createUser(
+      var response=await userRepository.createUser(
         User()..email = _unameController.text
-              ..password = pwdTemp//"jsroVfJLiD78rAh2nJUMb43JMl3PVLMxhgPE2WHTV6FbTt6tr0LnYO7OzQZaw7R8z4hZUnBI0ogQQezYS8FPaPvqvBkcZZIeq4qoXwbtk0I13iMXjjjtrNhhPhF64kgKAScQx8pztvzdGjohkSLLnqoC44DaPSuo+LAnFkY5uy4="
+              ..password = pwdTemp
       );
+      if(response=="401"){
+        setState(() {
+          loginMessage="帳號密碼錯誤";
+        });
+      }else{
+        setState(() {
+          loginMessage="登入成功";
+        });
+        Provider.of<UserModel>(context, listen: false).user.email = _unameController.text;
+        }
+      }
     }
   }
     // 先验证各个表单字段是否合法
@@ -171,4 +186,3 @@ class _LoginRouteState extends State<LoginRoute> {
         Navigator.of(context).pop();
       }
     }*/
-}
