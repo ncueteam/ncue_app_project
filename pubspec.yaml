@@ -31,7 +31,7 @@ dependencies:
   firebase_app_installations: ^0.2.3+4
   firebase_auth: ^4.7.2
   google_sign_in: ^6.1.4
-  firebase_core: ^2.15.0
+  firebase_core: ^2.15.1
   audioplayers: ^5.0.0
   google_nav_bar: ^5.0.6
   cloud_firestore: ^4.0.1

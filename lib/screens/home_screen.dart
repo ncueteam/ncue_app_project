@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.pushNamed(context, '/wifi');
                     break;
                   }
-                case 4:
+                /*case 4:
                   {
                     Navigator.pushNamed(context, '/json');
                     break;
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   {
                     Navigator.pushNamed(context, '/mqtt');
                     break;
-                  }
+                  }*/
                 default:
                   {
                     break;
@@ -138,14 +138,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: Icons.wifi,
                 text: "wifi",
               ),
-              GButton(
+              /*GButton(
                 icon: Icons.data_array_sharp,
                 text: "json",
               ),
               GButton(
                 icon: Icons.account_tree_rounded,
                 text: "mqtt",
-              ),
+              ),*/
             ],
           ),
         ),
