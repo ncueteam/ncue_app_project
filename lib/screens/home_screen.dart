@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
-
-// import 'package:ncue_aiot/screens/webview.dart';
 import '../services/local_auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,17 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("智慧物聯網系統"),
-        centerTitle: true,
+        centerTitle: false,
         actions: [
           IconButton(onPressed: signUserOut, icon: const Icon(Icons.logout)),
-          ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/mqtt'),
-            child: const Icon(Icons.account_tree_rounded),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/ble'),
-            child: const Icon(Icons.bluetooth),
-          ),
           ElevatedButton(
             onPressed: () => Navigator.pushNamed(context, '/database'),
             child: const Icon(Icons.dataset),
@@ -47,38 +36,40 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Row(
           children: [
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/json'),
-              child: const Icon(Icons.add_chart),
+            const Spacer(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(user!.email!),
+              ],
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  final authenticate = await LocalAuth.authenticate();
-                  setState(() {
-                    authenticated = authenticate;
-                  });
-                },
-                child: const Icon(Icons.fingerprint)),
-            if (authenticated)
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      authenticated = false;
-                    });
-                  },
-                  child: const Text('Log out')),
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/wifi'),
-              child: const Icon(Icons.account_circle),
+            const Spacer(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () async {
+                      final authenticate = await LocalAuth.authenticate();
+                      setState(() {
+                        authenticated = authenticate;
+                      });
+                    },
+                    child: const Icon(Icons.fingerprint)),
+                if (authenticated)
+                  ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          authenticated = false;
+                        });
+                      },
+                      child: const Text('Log out')),
+              ],
             ),
-            ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, '/webview'),
-              child: const Icon(Icons.web),
-            ),
+            const Spacer(),
           ],
         ),
       ),
@@ -97,42 +88,64 @@ class _HomeScreenState extends State<HomeScreen> {
               switch (index) {
                 case 0:
                   {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginOrRegisterPage()));
+                    Navigator.pushReplacementNamed(context, '/home');
                     break;
                   }
                 case 1:
                   {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
+                    Navigator.pushNamed(context, '/webview');
+                    break;
+                  }
+                case 2:
+                  {
+                    Navigator.pushNamed(context, '/database');
+                    break;
+                  }
+                case 3:
+                  {
+                    Navigator.pushNamed(context, '/wifi');
+                    break;
+                  }
+                case 4:
+                  {
+                    Navigator.pushNamed(context, '/json');
+                    break;
+                  }
+                case 5:
+                  {
+                    Navigator.pushNamed(context, '/mqtt');
                     break;
                   }
                 default:
                   {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
                     break;
                   }
               }
             },
-            tabs: [
+            tabs: const [
               GButton(
-                icon: Icons.account_balance,
-                text: user!.email!,
-              ),
-              const GButton(
                 icon: Icons.home,
                 text: "home",
               ),
-              const GButton(
-                icon: Icons.settings,
-                text: "setting",
+              GButton(
+                icon: Icons.web,
+                text: "web",
+              ),
+              GButton(
+                icon: Icons.dataset,
+                text: "database",
+              ),
+              GButton(
+                icon: Icons.wifi,
+                text: "wifi",
+              ),
+              GButton(
+                icon: Icons.data_array_sharp,
+                text: "json",
+              ),
+              GButton(
+                icon: Icons.account_tree_rounded,
+                text: "mqtt",
               ),
             ],
           ),
