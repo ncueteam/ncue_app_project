@@ -4,6 +4,7 @@ import 'package:ncue_aiot/bluetooth/wifipage2.dart';
 import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
 import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
 import 'package:ncue_aiot/screens/ble_device_detecter.dart';
+import 'package:ncue_aiot/screens/ble_system/ble_page.dart';
 import 'package:ncue_aiot/screens/database.dart';
 import 'package:ncue_aiot/screens/json_page.dart';
 import 'package:ncue_aiot/screens/mqtt.dart';
@@ -39,7 +40,8 @@ class Main extends StatelessWidget {
         '/database': (context) => const MysqlDemo(),
         '/webview': (context) => const WebViewTest(),
         '/wifi': (context) => const WifiSetter(),
-        '/ble': (context) => const BleDeviceList()
+        '/ble': (context) => const BleDeviceList(),
+        '/ble_page': (context) => const BluetoothOffPage()
       },
     );
   }

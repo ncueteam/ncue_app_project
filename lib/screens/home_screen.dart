@@ -43,6 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(user!.email!),
+                ElevatedButton(
+                    onPressed: () => Navigator.pushNamed(context, '/ble_page'),
+                    child: const Text("藍芽功能分離測試"))
               ],
             ),
             const Spacer(),
