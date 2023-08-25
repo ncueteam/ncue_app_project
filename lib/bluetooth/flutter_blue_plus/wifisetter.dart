@@ -89,7 +89,7 @@ class BluetoothOffScreen extends StatelessWidget {
               const Icon(
                 Icons.bluetooth_disabled,
                 size: 200.0,
-                color: Colors.white54,
+                color: Colors.white,
               ),
               Text(
                 'Bluetooth Adapter is ${adapterState != null ? adapterState.toString().split(".").last : 'not available'}.',
@@ -136,7 +136,7 @@ class FindDevicesScreen extends StatelessWidget {
             if (Platform.isAndroid)
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
+                  backgroundColor: Colors.blue,
                   foregroundColor: Colors.white,
                 ),
                 onPressed: () async {
@@ -346,8 +346,8 @@ class DeviceScreen extends StatelessWidget {
                     },
                     onWritePressed: () async {
                       try {
-                        await c.write(_getRandomBytes(),
-                            withoutResponse: c.properties.writeWithoutResponse);
+                        await c.write([0x12, 0x34]);
+                        //await c.write("Hello");
                         if (c.properties.read) {
                           await c.read();
                         }
@@ -572,27 +572,27 @@ class DeviceScreen extends StatelessWidget {
                   );
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: TextField(
-                  controller: wifiNameController,
-                  decoration: InputDecoration(labelText: 'Wifi Name'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: TextField(
-                  controller: wifiPasswordController,
-                  decoration: InputDecoration(labelText: 'Wifi Password'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Submit'),
-                ),
-              )
+              // Padding(
+              //   padding: const EdgeInsets.all(16),
+              //   child: TextField(
+              //     controller: wifiNameController,
+              //     decoration: InputDecoration(labelText: 'Wifi Name'),
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.all(16),
+              //   child: TextField(
+              //     controller: wifiPasswordController,
+              //     decoration: InputDecoration(labelText: 'Wifi Password'),
+              //   ),
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.all(16),
+              //   child: ElevatedButton(
+              //     onPressed: () {},
+              //     child: Text('Submit'),
+              //   ),
+              // )
             ],
           ),
         ),

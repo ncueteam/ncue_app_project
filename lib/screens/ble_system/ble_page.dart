@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
-import '../../bluetooth/test/wifisetter.dart';
+import '../../bluetooth/flutter_blue_plus/wifisetter.dart';
+
+
 
 class BluetoothOffPage extends StatelessWidget {
   const BluetoothOffPage({super.key});

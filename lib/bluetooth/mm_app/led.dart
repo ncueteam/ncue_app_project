@@ -119,24 +119,24 @@ class _ChatPage extends State<ChatPage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Container(
-              padding: const EdgeInsets.all(5),
-              width: double.infinity,
-              child: FittedBox(
-                child: Row(
-                  children: [
-                    ElevatedButton(
-                      onPressed: isConnected ? () => _sendMessage('1') : null,
-                      child: ClipOval(child: Image.asset('images/ledOn.png')),
-                    ),
-                    ElevatedButton(
-                      onPressed: isConnected ? () => _sendMessage('0') : null,
-                      child: ClipOval(child: Image.asset('images/ledOff.png')),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Container(
+            //   padding: const EdgeInsets.all(5),
+            //   width: double.infinity,
+            //   child: FittedBox(
+            //     child: Row(
+            //       children: [
+            //         ElevatedButton(
+            //           onPressed: isConnected ? () => _sendMessage('1') : null,
+            //           child: ClipOval(child: Image.asset('images/ledOn.png')),
+            //         ),
+            //         ElevatedButton(
+            //           onPressed: isConnected ? () => _sendMessage('0') : null,
+            //           child: ClipOval(child: Image.asset('images/ledOff.png')),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Flexible(
               child: ListView(
                   padding: const EdgeInsets.all(12.0),
