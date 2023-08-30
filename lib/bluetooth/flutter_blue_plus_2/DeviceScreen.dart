@@ -19,9 +19,11 @@ class DeviceScreen extends StatelessWidget {
   const DeviceScreen({Key? key, required this.device}) : super(key: key);
 
   List<int> _getRandomBytes() {
-    final math = Random();
+    //final math = Random();
     //return [math.nextInt(255), math.nextInt(255), math.nextInt(255), math.nextInt(255)];
-    return [0X56];
+    var wifiData = '${wifiNameController.text},${wifiPasswordController.text}';
+    List<int> bytes = utf8.encode(wifiData);
+    return bytes;
   }
 
   List<Widget> _buildServiceTiles(
@@ -131,29 +133,22 @@ class DeviceScreen extends StatelessWidget {
         .toList();
   }
 
-  // writeData(String data) async {
+
+  // writeData(
+  //     String data, BuildContext context, List<BluetoothService> services) async {
+  //   services.forEach((service) {
+  //     if (service.uuid.toString().toUpperCase() == SERVICE_UUID) {
+  //       service.characteristics.forEach((characteristics) {
+  //         if (characteristics.uuid.toString().toUpperCase() == CHARACTERISTIC_UUID) {
+  //           targetCharacteristic = characteristics;
+  //         }
+  //       });
+  //     }
+  //   });
+  //
   //   List<int> bytes = utf8.encode(data);
+  //   await targetCharacteristic?.write(bytes,withoutResponse: targetCharacteristic!.properties.writeWithoutResponse);
   // }
-  // submitAction() {
-  //   var wifiData = '${wifiNameController.text},${wifiPasswordController.text}';
-  //   writeData(wifiData);
-  // }
-
-  writeData(
-      String data, BuildContext context, List<BluetoothService> services) async {
-    services.forEach((service) {
-      if (service.uuid.toString() == SERVICE_UUID) {
-        service.characteristics.forEach((characteristics) {
-          if (characteristics.uuid.toString() == CHARACTERISTIC_UUID) {
-            targetCharacteristic = characteristics;
-          }
-        });
-      }
-    });
-
-    List<int> bytes = utf8.encode(data);
-    await targetCharacteristic?.write(bytes);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -373,20 +368,20 @@ class DeviceScreen extends StatelessWidget {
                   );
                 },
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(16),
-              //   child: TextField(
-              //     controller: wifiNameController,
-              //     decoration: InputDecoration(labelText: 'Wifi Name'),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(16),
-              //   child: TextField(
-              //     controller: wifiPasswordController,
-              //     decoration: InputDecoration(labelText: 'Wifi Password'),
-              //   ),
-              // ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: TextField(
+                  controller: wifiNameController,
+                  decoration: InputDecoration(labelText: 'Wifi Name'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: TextField(
+                  controller: wifiPasswordController,
+                  decoration: InputDecoration(labelText: 'Wifi Password'),
+                ),
+              ),
               // Padding(
               //   padding: const EdgeInsets.all(16),
               //   child: ElevatedButton(
@@ -396,25 +391,6 @@ class DeviceScreen extends StatelessWidget {
               //     child: Text('Submit'),
               //   ),
               // ),
-              StreamBuilder<List<BluetoothService>>(
-                stream: device.servicesStream,
-                initialData: const [],
-                builder: (c, snapshot) {
-                  return Column(
-                    //children: _buildServiceTiles(context, snapshot.data ?? []),
-                    children: <Widget>[
-                      ElevatedButton(
-                        child: const Text("Submit"),
-                        onPressed: () async {
-                          //var wifiData = '${wifiNameController.text},${wifiPasswordController.text}';
-                          var wifiData = "Hello";
-                          writeData(wifiData, context, snapshot.data ?? []);
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),
             ],
           ),
         ),

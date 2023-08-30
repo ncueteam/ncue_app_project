@@ -24,10 +24,6 @@ final Map<DeviceIdentifier, ValueNotifier<bool>> isConnectingOrDisconnecting = {
 TextEditingController wifiNameController = TextEditingController();
 TextEditingController wifiPasswordController = TextEditingController();
 
-final String SERVICE_UUID = "00009011-0000-1000-8000-00805F9B34FB";
-final String CHARACTERISTIC_UUID = "00009012-0000-1000-8000-00805F9B34FB";
-
-
 class BluetoothAdapterStateObserver extends NavigatorObserver {
   StreamSubscription<BluetoothAdapterState>? _btStateSubscription;
 
