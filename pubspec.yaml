@@ -56,3 +56,4 @@ flutter:
     - assets/
     - assets/sounds/
     - assets/icons/
+    - lib/icons/

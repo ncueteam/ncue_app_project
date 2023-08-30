@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:ncue_aiot/util/smart_device_box.dart';
 import '../services/local_auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,6 +21,20 @@ class _HomeScreenState extends State<HomeScreen> {
     FirebaseAuth.instance.signOut();
   }
 
+  List devices = [
+    ["esp32 core", "lib/icons/esp32.png", false],
+    ["smart light", "lib/icons/light-bulb.png", true],
+    ["smart AC", "lib/icons/air-conditioner.png", false],
+    ["smart TV", "lib/icons/smart-tv.png", false],
+    ["smart Fan", "lib/icons/fan.png", true],
+  ];
+
+  void powerSwitchChanged(bool value, int index) {
+    setState(() {
+      devices[index][2] = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,53 +42,69 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("智慧物聯網系統"),
         centerTitle: false,
         actions: [
-          IconButton(onPressed: signUserOut, icon: const Icon(Icons.logout)),
-          ElevatedButton(
-            onPressed: () => Navigator.pushNamed(context, '/database'),
-            child: const Icon(Icons.dataset),
-          ),
+          IconButton(onPressed: signUserOut, icon: const Icon(Icons.logout))
         ],
       ),
-      body: Center(
-        child: Row(
-          children: [
-            const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: Column(
+        children: [
+          Expanded(
+              child: GridView.builder(
+            itemCount: devices.length,
+            padding: const EdgeInsets.all(25),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 1 / 1.2),
+            itemBuilder: (BuildContext context, int index) {
+              return SmartDeviceBox(
+                deviceName: devices[index][0],
+                iconPath: devices[index][1],
+                powerOn: devices[index][2],
+                onChanged: (value) => powerSwitchChanged(value, index),
+              );
+            },
+          )),
+          Center(
+            child: Row(
               children: [
-                Text(user!.email!),
-                ElevatedButton(
-                    onPressed: () => Navigator.pushNamed(context, '/ble_page'),
-                    child: const Text("藍芽功能分離測試"))
+                const Spacer(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(user!.email!),
+                    ElevatedButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/ble_page'),
+                        child: const Text("藍芽功能分離測試")),
+                  ],
+                ),
+                const Spacer(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () async {
+                          final authenticate = await LocalAuth.authenticate();
+                          setState(() {
+                            authenticated = authenticate;
+                          });
+                        },
+                        child: const Icon(Icons.fingerprint)),
+                    if (authenticated)
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              authenticated = false;
+                            });
+                          },
+                          child: const Text('Log out')),
+                  ],
+                ),
+                const Spacer(),
               ],
             ),
-            const Spacer(),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () async {
-                      final authenticate = await LocalAuth.authenticate();
-                      setState(() {
-                        authenticated = authenticate;
-                      });
-                    },
-                    child: const Icon(Icons.fingerprint)),
-                if (authenticated)
-                  ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          authenticated = false;
-                        });
-                      },
-                      child: const Text('Log out')),
-              ],
-            ),
-            const Spacer(),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: Container(
         color: Colors.black,
@@ -105,19 +136,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
                 case 3:
                   {
-                    Navigator.pushNamed(context, '/wifi');
-                    break;
-                  }
-                /*case 4:
-                  {
                     Navigator.pushNamed(context, '/json');
                     break;
                   }
-                case 5:
+                case 4:
                   {
                     Navigator.pushNamed(context, '/mqtt');
                     break;
-                  }*/
+                  }
                 default:
                   {
                     break;
@@ -138,17 +164,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 text: "database",
               ),
               GButton(
-                icon: Icons.wifi,
-                text: "wifi",
-              ),
-              /*GButton(
                 icon: Icons.data_array_sharp,
                 text: "json",
               ),
               GButton(
                 icon: Icons.account_tree_rounded,
                 text: "mqtt",
-              ),*/
+              ),
             ],
           ),
         ),

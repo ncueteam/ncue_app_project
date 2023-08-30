@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ncue_aiot/bluetooth/wifipage2.dart';
 import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
 import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
 import 'package:ncue_aiot/screens/ble_device_detecter.dart';
@@ -39,7 +38,6 @@ class Main extends StatelessWidget {
         '/login': (context) => const LoginOrRegisterPage(),
         '/database': (context) => const MysqlDemo(),
         '/webview': (context) => const WebViewTest(),
-        '/wifi': (context) => const WifiSetter(),
         '/ble': (context) => const BleDeviceList(),
         '/ble_page': (context) => const BluetoothOffPage()
       },
