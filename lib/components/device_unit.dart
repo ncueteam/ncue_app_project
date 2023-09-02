@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class SmartDeviceBox extends StatelessWidget {
-  SmartDeviceBox(
+class DeviceUnit extends StatelessWidget {
+  DeviceUnit(
       {super.key,
       required this.deviceName,
       required this.iconPath,

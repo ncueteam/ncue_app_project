@@ -6,8 +6,10 @@ import 'package:ncue_aiot/screens/ble_device_detecter.dart';
 import 'package:ncue_aiot/screens/ble_system/ble_page.dart';
 import 'package:ncue_aiot/screens/database.dart';
 import 'package:ncue_aiot/screens/json_page.dart';
+import 'package:ncue_aiot/screens/local_storage_system/json_display_page.dart';
 import 'package:ncue_aiot/screens/mqtt.dart';
 import 'package:ncue_aiot/screens/webview.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'firebase_options.dart';
 
@@ -16,6 +18,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await Hive.initFlutter();
+
+  // ignore: unused_local_variable
+  var box = await Hive.openBox('local_storage');
+
   runApp(const Main());
 }
 
@@ -39,7 +46,8 @@ class Main extends StatelessWidget {
         '/database': (context) => const MysqlDemo(),
         '/webview': (context) => const WebViewTest(),
         '/ble': (context) => const BleDeviceList(),
-        '/ble_page': (context) => const BluetoothOffPage()
+        '/ble_page': (context) => const BluetoothOffPage(),
+        '/local_storage': (context) => const JsonDisplayPage()
       },
     );
   }

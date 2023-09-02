@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import '../models/index.dart';
 //import 'package:enhanced_http/enhanced_http.dart' as http;
@@ -49,9 +48,9 @@ class UserRepository implements ApiDataSource {
   }
 
   Future<String> _createUser(
-      Uri url,
-      User body,
-      ) async {
+    Uri url,
+    User body,
+  ) async {
     try {
       await getXsrf();
       debugPrint("debug print5");
@@ -63,7 +62,7 @@ class UserRepository implements ApiDataSource {
           'Content-Type': 'application/json',
           "X-XSRF-TOKEN": xsrf,
           "credentials": 'include',
-          "Accept" : 'application/json',
+          "Accept": 'application/json',
         },
         body: json.encode(body.toJson()),
       );
@@ -94,8 +93,8 @@ class UserRepository implements ApiDataSource {
   }
 
   Future<String> _getUser(
-      Uri url,
-      ) async {
+    Uri url,
+  ) async {
     try {
       final response = await client.get(
         url,
@@ -126,9 +125,9 @@ class UserRepository implements ApiDataSource {
   }
 
   Future<String> _updateUser(
-      Uri url,
-      User body,
-      ) async {
+    Uri url,
+    User body,
+  ) async {
     try {
       final response = await client.put(
         url,

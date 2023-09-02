@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:ncue_aiot/util/smart_device_box.dart';
+import 'package:ncue_aiot/components/device_grid_view.dart';
+import 'package:ncue_aiot/components/device_unit.dart';
 import '../services/local_auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,12 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     ["smart Fan", "lib/icons/fan.png", true],
   ];
 
-  void powerSwitchChanged(bool value, int index) {
-    setState(() {
-      devices[index][2] = value;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,21 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          Expanded(
-              child: GridView.builder(
-            itemCount: devices.length,
-            padding: const EdgeInsets.all(25),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 1 / 1.2),
-            itemBuilder: (BuildContext context, int index) {
-              return SmartDeviceBox(
-                deviceName: devices[index][0],
-                iconPath: devices[index][1],
-                powerOn: devices[index][2],
-                onChanged: (value) => powerSwitchChanged(value, index),
-              );
-            },
-          )),
+          DeviceGridView(
+              devices: devices,
+              powerSwitchChanged: (bool value, int index) => {
+                    setState(() {
+                      devices[index][2] = value;
+                    })
+                  }),
           Center(
             child: Row(
               children: [
@@ -71,6 +58,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(user!.email!),
+                    ElevatedButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/local_storage'),
+                        child: const Text("手機資料儲存測試")),
                     ElevatedButton(
                         onPressed: () =>
                             Navigator.pushNamed(context, '/ble_page'),
