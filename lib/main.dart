@@ -11,6 +11,7 @@ import 'package:ncue_aiot/screens/mqtt.dart';
 import 'package:ncue_aiot/screens/webview.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'bluetooth/flutter_blue_plus/wifisetter.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -46,7 +47,7 @@ class Main extends StatelessWidget {
         '/database': (context) => const MysqlDemo(),
         '/webview': (context) => const WebViewTest(),
         '/ble': (context) => const BleDeviceList(),
-        '/ble_page': (context) => const BluetoothOffPage(),
+        '/ble_page': (context) => const FlutterBlueApp(),
         '/local_storage': (context) => const JsonDisplayPage()
       },
     );
