@@ -20,9 +20,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await Hive.initFlutter();
-
-  // ignore: unused_local_variable
-  var box = await Hive.openBox('local_storage');
+  await Hive.openBox('local_storage');
+  await Hive.openBox('local_devices');
 
   runApp(const Main());
 }
