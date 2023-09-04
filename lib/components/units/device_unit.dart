@@ -1,20 +1,60 @@
 import 'dart:math';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class DeviceUnit extends StatelessWidget {
-  DeviceUnit(
-      {super.key,
-      required this.deviceName,
-      required this.iconPath,
-      required this.powerOn,
-      required this.onChanged});
+class DeviceUnit extends StatefulWidget {
+  DeviceUnit({super.key, required this.deviceData, required this.onChanged});
 
   void Function(bool)? onChanged;
-  final String deviceName;
-  final String iconPath;
-  final bool powerOn;
+  final List deviceData;
+
+  @override
+  State<DeviceUnit> createState() => _DeviceUnitState();
+}
+
+class _DeviceUnitState extends State<DeviceUnit> {
+  late String deviceName;
+  late String deviceUUID;
+  late String iconPath;
+  late bool powerOn;
+
+  Future updateDeviceData() async {
+    CollectionReference devices =
+        FirebaseFirestore.instance.collection('devices');
+    QuerySnapshot querySnapshot =
+        await devices.where('uuid', isEqualTo: deviceUUID).get();
+
+    if (querySnapshot.size > 0) {
+      DocumentSnapshot documentSnapshot = querySnapshot.docs[0];
+      DocumentReference documentReference = devices.doc(documentSnapshot.id);
+
+      Map<String, dynamic> updatedData = {
+        'uuid': deviceUUID,
+        'device_name': deviceName,
+        'iconPath': iconPath,
+        'powerOn': powerOn,
+      };
+      await documentReference.update(updatedData);
+    } else {
+      await FirebaseFirestore.instance.collection('devices').add({
+        'uuid': deviceUUID,
+        'device_name': deviceName,
+        'iconPath': iconPath,
+        'powerOn': powerOn
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    deviceUUID = widget.deviceData.elementAt(1);
+    deviceName = widget.deviceData.elementAt(2);
+    iconPath = widget.deviceData.elementAt(3);
+    powerOn = widget.deviceData.elementAt(4);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +85,18 @@ class DeviceUnit extends StatelessWidget {
                   )),
                   Transform.rotate(
                       angle: pi / 2,
-                      child: Switch(value: powerOn, onChanged: onChanged))
+                      child: Switch(
+                        value: powerOn,
+                        onChanged: (bool value) => {
+                          setState(
+                            () {
+                              powerOn = value;
+                              widget.onChanged;
+                              updateDeviceData();
+                            },
+                          )
+                        },
+                      ))
                 ],
               )
             ]),

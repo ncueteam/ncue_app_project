@@ -27,11 +27,41 @@ class _HomeScreenState extends State<HomeScreen> {
     ["bio_auth"],
     ["page_route", "手機本地存儲", "/local_storage"],
     ["page_route", "藍芽頁面", "/ble_page"],
-    ["device", "esp32 core", "lib/icons/esp32.png", false],
-    ["device", "smart light", "lib/icons/light-bulb.png", true],
-    ["device", "smart AC", "lib/icons/air-conditioner.png", false],
-    ["device", "smart TV", "lib/icons/smart-tv.png", false],
-    ["device", "smart Fan", "lib/icons/fan.png", true],
+    [
+      "device",
+      "b3c477e0-4aef-11ee-be56-0242ac120002",
+      "esp32 core",
+      "lib/icons/esp32.png",
+      false
+    ],
+    [
+      "device",
+      "6b92b0fc-4af1-11ee-be56-0242ac120002",
+      "smart light",
+      "lib/icons/light-bulb.png",
+      true
+    ],
+    [
+      "device",
+      "75049088-4af1-11ee-be56-0242ac120002",
+      "smart AC",
+      "lib/icons/air-conditioner.png",
+      false
+    ],
+    [
+      "device",
+      "7b7dc876-4af1-11ee-be56-0242ac120002",
+      "smart TV",
+      "lib/icons/smart-tv.png",
+      false
+    ],
+    [
+      "device",
+      "870ee7c4-4af1-11ee-be56-0242ac120002",
+      "smart Fan",
+      "lib/icons/fan.png",
+      true
+    ],
   ];
 
   @override

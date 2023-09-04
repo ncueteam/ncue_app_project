@@ -7,7 +7,7 @@ import 'local_auth_unit.dart';
 
 class Unit extends StatefulWidget {
   const Unit({super.key, required this.inputData});
-  final List? inputData;
+  final List inputData;
 
   @override
   State<Unit> createState() => UnitState();
@@ -22,14 +22,11 @@ class UnitState extends State<Unit> {
   @override
   Widget build(BuildContext context) {
     List? data = widget.inputData;
-    switch (data?.elementAt(0)) {
+    switch (data.elementAt(0)) {
       case "device":
         {
           return DeviceUnit(
-              deviceName: data?.elementAt(1),
-              iconPath: data?.elementAt(2),
-              powerOn: data?.elementAt(3),
-              onChanged: (bool value) => {});
+              deviceData: data, onChanged: (bool value) => {setState(() {})});
         }
       case "account":
         {
@@ -42,7 +39,7 @@ class UnitState extends State<Unit> {
       case "page_route":
         {
           return PageRouteUnit(
-              pageName: data?.elementAt(1), pageID: data?.elementAt(2));
+              pageName: data.elementAt(1), pageID: data.elementAt(2));
         }
       default:
         {
