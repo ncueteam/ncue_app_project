@@ -79,8 +79,11 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: false,
         actions: [
           IconButton(
+              onPressed: () => {Navigator.popAndPushNamed(context, '/home')},
+              icon: const Icon(Icons.refresh)),
+          IconButton(
               onPressed: () => {FirebaseAuth.instance.signOut()},
-              icon: const Icon(Icons.logout))
+              icon: const Icon(Icons.logout)),
         ],
       ),
       body: const Column(
@@ -88,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
           UnitGridView(),
         ],
       ),
-      // bottomNavigationBar: const RouteNavigationBar(),
+      bottomNavigationBar: const RouteNavigationBar(),
     );
   }
 }

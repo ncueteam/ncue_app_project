@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
 import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
 import 'package:ncue_aiot/screens/ble_device_detecter.dart';
-import 'package:ncue_aiot/screens/ble_system/ble_page.dart';
 import 'package:ncue_aiot/screens/database.dart';
 import 'package:ncue_aiot/screens/json_page.dart';
 import 'package:ncue_aiot/screens/local_storage_system/json_display_page.dart';
@@ -21,7 +20,6 @@ void main() async {
   );
   await Hive.initFlutter();
   await Hive.openBox('local_storage');
-  await Hive.openBox('local_devices');
 
   runApp(const Main());
 }

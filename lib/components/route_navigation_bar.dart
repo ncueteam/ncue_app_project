@@ -21,7 +21,7 @@ class RouteNavigationBar extends StatelessWidget {
             switch (index) {
               case 0:
                 {
-                  Navigator.pushReplacementNamed(context, '/home');
+                  Navigator.pushNamed(context, '/home');
                   break;
                 }
               case 1:
