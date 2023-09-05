@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
-// ignore: implementation_imports, depend_on_referenced_packages
-import 'package:typed_data/src/typed_buffer.dart';
 
 class MqttPage extends StatefulWidget {
   const MqttPage({super.key});
@@ -128,8 +126,7 @@ class MqttPageState extends State<MqttPage> {
   void sendMessage(String topic, String message) {
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
-    client.publishMessage(
-        topic, MqttQos.exactlyOnce, builder.payload as Uint8Buffer);
+    client.publishMessage(topic, MqttQos.exactlyOnce, builder.payload!);
     setState(() {
       widgetList.add(messageComponent("送出 < $message"));
     });
