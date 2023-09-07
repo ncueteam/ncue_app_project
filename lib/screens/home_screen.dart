@@ -23,9 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List devices = [
     ["account", "yunitrish", "lib/icons/esp32.png", true],
-    ["bio_auth"],
     ["page_route", "手機本地存儲", "/local_storage"],
     ["page_route", "藍芽頁面", "/ble_page"],
+    ["page_route", "apple", "/apple_test"]
   ];
 
   List deviceID = [];
@@ -40,7 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
           for (var docSnapshot in querySnapshot.docs)
             {
               devices.add([
-                "device",
+                // docSnapshot.get('type'),
+                "bio_auth_device",
                 docSnapshot.get('uuid'),
                 docSnapshot.get('device_name'),
                 docSnapshot.get('iconPath'),

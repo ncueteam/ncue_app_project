@@ -52,7 +52,8 @@ class _DeviceUnitState extends State<DeviceUnit> {
     deviceUUID = widget.deviceData.elementAt(1);
     deviceName = widget.deviceData.elementAt(2);
     iconPath = widget.deviceData.elementAt(3);
-    powerOn = widget.deviceData.elementAt(4);
+    // ignore: sdk_version_since
+    powerOn = bool.parse(widget.deviceData.elementAt(4).toString());
   }
 
   @override

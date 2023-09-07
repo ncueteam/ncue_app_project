@@ -1,6 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ncue_aiot/services/soundPlayer.dart';
 
 import '../../components/login_button.dart';
 import '../../components/square_tile.dart';
@@ -34,9 +34,8 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text,
         password: passwordController.text,
       );
-      // ignore: use_build_context_synchronously
+      SoundPlayer().playLocalAudio("lib/sounds/crystal.mp3");
       // Navigator.pop(context);
-      AudioPlayer().play(AssetSource("sounds/crystal.mp3"));
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       if (e.code == 'user-not-found') {
@@ -138,10 +137,10 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         SquareTile(
                             onTap: () => AuthService().signInWithGoogle(),
-                            imagePath: 'assets/icons/google.png'),
+                            imagePath: 'lib/icons/google.png'),
                         const SizedBox(width: 25),
                         SquareTile(
-                            onTap: () {}, imagePath: 'assets/icons/apple.png')
+                            onTap: () {}, imagePath: 'lib/icons/apple.png')
                       ],
                     ),
                     const SizedBox(height: 50),

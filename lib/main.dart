@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ncue_aiot/screens/auth_system/apple_test.dart';
 import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
 import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
 import 'package:ncue_aiot/screens/ble_device_detecter.dart';
@@ -45,7 +46,8 @@ class Main extends StatelessWidget {
         '/webview': (context) => const WebViewTest(),
         '/ble': (context) => const BleDeviceList(),
         '/ble_page': (context) => const FlutterBlueApp(),
-        '/local_storage': (context) => const JsonDisplayPage()
+        '/local_storage': (context) => const JsonDisplayPage(),
+        '/apple_test': (context) => const AppleTest(),
       },
     );
   }

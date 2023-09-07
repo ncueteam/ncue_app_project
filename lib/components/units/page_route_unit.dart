@@ -8,16 +8,26 @@ class PageRouteUnit extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.symmetric(vertical: 60.0, horizontal: 10.0),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 25),
         decoration: BoxDecoration(
-            color: Colors.grey[400], borderRadius: BorderRadius.circular(100)),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          ElevatedButton(
-              onPressed: () => Navigator.pushNamed(context, pageID),
-              child: Text(pageName))
-        ]),
+          color: Colors.grey[400],
+          border: Border.all(color: Theme.of(context).primaryColor, width: 6),
+          borderRadius: BorderRadius.circular(180),
+        ),
+        child: TextButton(
+          onPressed: () => Navigator.pushNamed(context, pageID),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              pageName,
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
