@@ -42,8 +42,7 @@ class UnitState extends State<Unit> {
         }
       case "bio_auth":
         {
-          return BiomeAuthUnit(
-              deviceData: data, onChanged: (bool value) => {setState(() {})});
+          return BiomeAuthUnit();
         }
       case "page_route":
         {

@@ -25,54 +25,72 @@ class BioAuthDeviceUnitState extends State<BioAuthDeviceUnit> {
 
   Widget authDeviceButton() {
     if (authenticated) {
-      List data = widget.deviceData;
-      data.removeAt(0);
-      debugPrint(data.toString());
-      return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Image.asset(iconPath,
+            height: 40, color: powerOn ? Colors.black : Colors.white),
+        Row(
           children: [
-            Image.asset(iconPath,
-                height: 65, color: powerOn ? Colors.black : Colors.white),
-            Row(
-              children: [
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    deviceName,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: powerOn ? Colors.black : Colors.white),
-                  ),
-                )),
-                Transform.rotate(
-                    angle: pi / 2,
-                    child: Switch(
-                      value: powerOn,
-                      onChanged: (bool value) => {
-                        setState(
-                          () {
-                            powerOn = value;
-                            widget.onChanged;
-                            updateDeviceData();
-                          },
-                        )
+            Expanded(
+                child: Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: Text(
+                deviceName,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: powerOn ? Colors.black : Colors.white),
+              ),
+            )),
+            Transform.rotate(
+                angle: pi / 2,
+                child: Switch(
+                  value: powerOn,
+                  onChanged: (bool value) => {
+                    setState(
+                      () {
+                        powerOn = value;
+                        widget.onChanged;
+                        updateDeviceData();
                       },
-                    )),
-                const Text('Log out')
-              ],
-            )
-          ]);
+                    )
+                  },
+                )),
+          ],
+        ),
+        ElevatedButton(
+            onPressed: () {
+              setState(() {
+                authenticated = false;
+              });
+            },
+            child: const Text('Log out'))
+      ]);
     } else {
-      return ElevatedButton(
-          onPressed: () async {
-            final authenticate = await LocalAuth.authenticate();
-            setState(() {
-              authenticated = authenticate;
-            });
-          },
-          child: const Icon(Icons.fingerprint));
+      return FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                deviceName,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    color: powerOn ? Colors.black : Colors.white),
+              ),
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  final authenticate = await LocalAuth.authenticate();
+                  setState(() {
+                    authenticated = authenticate;
+                  });
+                },
+                child: const Icon(Icons.fingerprint)),
+          ],
+        ),
+      );
     }
   }
 
@@ -115,9 +133,9 @@ class BioAuthDeviceUnitState extends State<BioAuthDeviceUnit> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(8.0),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 25),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
             color: powerOn ? Colors.grey[350] : Colors.grey[700],
             borderRadius: BorderRadius.circular(24)),

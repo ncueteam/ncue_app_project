@@ -4,10 +4,7 @@ import '../../services/local_auth_service.dart';
 
 // ignore: must_be_immutable
 class BiomeAuthUnit extends StatefulWidget {
-  BiomeAuthUnit({super.key, required this.deviceData, required this.onChanged});
-
-  void Function(bool)? onChanged;
-  final List deviceData;
+  BiomeAuthUnit({super.key});
 
   @override
   State<BiomeAuthUnit> createState() => BiomeAuthUnitState();
@@ -18,10 +15,11 @@ class BiomeAuthUnitState extends State<BiomeAuthUnit> {
 
   Widget authButton() {
     if (authenticated) {
-      List data = widget.deviceData;
-      data.removeAt(0);
-      debugPrint(data.toString());
-      return const Text('Log out');
+      return ElevatedButton(
+          onPressed: () {
+            authenticated = false;
+          },
+          child: const Text('Log out'));
     } else {
       return ElevatedButton(
           onPressed: () async {

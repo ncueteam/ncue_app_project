@@ -40,8 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
           for (var docSnapshot in querySnapshot.docs)
             {
               devices.add([
-                // docSnapshot.get('type'),
-                "bio_auth_device",
+                docSnapshot.get('type'),
                 docSnapshot.get('uuid'),
                 docSnapshot.get('device_name'),
                 docSnapshot.get('iconPath'),
