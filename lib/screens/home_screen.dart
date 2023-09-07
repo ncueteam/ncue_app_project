@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:ncue_aiot/components/units/unit_grid_view.dart';
 
-import '../components/route_navigation_bar.dart';
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
