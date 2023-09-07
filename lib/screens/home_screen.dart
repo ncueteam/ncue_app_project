@@ -25,7 +25,11 @@ class _HomeScreenState extends State<HomeScreen> {
     ["account", "yunitrish", "lib/icons/esp32.png", true],
     ["page_route", "手機本地存儲", "/local_storage"],
     ["page_route", "藍芽頁面", "/ble_page"],
-    ["page_route", "apple", "/apple_test"]
+    ["page_route", "apple", "/apple"],
+    ["page_route", "網頁", "/webview"],
+    ["page_route", "資料庫", "/database"],
+    ["page_route", "Json", "/json"],
+    ["page_route", "MQTT", "/mqtt"],
   ];
 
   List deviceID = [];
@@ -74,24 +78,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("智慧物聯網系統"),
-        centerTitle: false,
-        actions: [
-          IconButton(
-              onPressed: () => {Navigator.popAndPushNamed(context, '/home')},
-              icon: const Icon(Icons.refresh)),
-          IconButton(
-              onPressed: () => {FirebaseAuth.instance.signOut()},
-              icon: const Icon(Icons.logout)),
-        ],
-      ),
-      body: const Column(
-        children: [
-          UnitGridView(),
-        ],
-      ),
-      bottomNavigationBar: const RouteNavigationBar(),
-    );
+        appBar: AppBar(
+          title: const Text("智慧物聯網系統"),
+          centerTitle: false,
+          actions: [
+            IconButton(
+                onPressed: () => {Navigator.popAndPushNamed(context, '/home')},
+                icon: const Icon(Icons.refresh)),
+            IconButton(
+                onPressed: () => {FirebaseAuth.instance.signOut()},
+                icon: const Icon(Icons.logout)),
+          ],
+        ),
+        body: const Column(
+          children: [
+            UnitGridView(),
+          ],
+        ));
   }
 }
