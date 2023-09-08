@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:ncue_aiot/components/units/unit_grid_view.dart';
+import 'package:ncueapp/components/units/unit_grid_view.dart';
 
 import '../services/device_handler.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ncue_aiot/components/units/unit.dart';
+
+import 'unit.dart';
 
 class UnitGridView extends StatefulWidget {
   const UnitGridView({super.key});

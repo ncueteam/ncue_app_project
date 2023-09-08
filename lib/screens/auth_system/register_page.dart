@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ncue_aiot/services/sound_player.dart';
 
 import '../../components/login_button.dart';
 import '../../components/square_tile.dart';
 import '../../components/styled_text_field.dart';
 import '../../services/auth_service.dart';
+import '../../services/sound_player.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;

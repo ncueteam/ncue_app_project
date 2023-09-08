@@ -1,15 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ncue_aiot/screens/auth_system/apple_test.dart';
-import 'package:ncue_aiot/screens/auth_system/firebase_auth_page.dart';
-import 'package:ncue_aiot/screens/auth_system/login_or_register.dart';
-import 'package:ncue_aiot/screens/ble_device_detecter.dart';
-import 'package:ncue_aiot/screens/database.dart';
-import 'package:ncue_aiot/screens/json_page.dart';
-import 'package:ncue_aiot/screens/local_storage_system/json_display_page.dart';
-import 'package:ncue_aiot/screens/mqtt.dart';
-import 'package:ncue_aiot/screens/webview.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:ncueapp/screens/auth_system/apple_test.dart';
+import 'package:ncueapp/screens/auth_system/firebase_auth_page.dart';
+import 'package:ncueapp/screens/auth_system/login_or_register.dart';
+import 'package:ncueapp/screens/ble_device_detecter.dart';
+import 'package:ncueapp/screens/database.dart';
+import 'package:ncueapp/screens/json_page.dart';
+import 'package:ncueapp/screens/local_storage_system/json_display_page.dart';
+import 'package:ncueapp/screens/mqtt.dart';
+import 'package:ncueapp/screens/webview.dart';
 
 import 'bluetooth/flutter_blue_plus/wifisetter.dart';
 import 'firebase_options.dart';
