@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:uuid/uuid.dart';
 
 class DeviceHandler {
-  static List devices = [];
   static FirebaseFirestore database = FirebaseFirestore.instance;
 
-  static Future<void> loadDevices() async {
+  static Future<void> loadDevices(List devices) async {
     database.collection('devices').get().then((querySnapshot) => {
           for (var docSnapshot in querySnapshot.docs)
             {
-              devices.add([
+              devices.addOrUpdate([
                 docSnapshot.get('type'),
                 docSnapshot.get('uuid'),
                 docSnapshot.get('device_name'),
@@ -30,15 +30,4 @@ class DeviceHandler {
       "powerOn": powerOn,
     });
   }
-
-  // static Map<String, dynamic> toFirestore(String type, String uuid,
-  //     String deviceName, String iconPath, bool powerOn) {
-  //   return {
-  //     "type": type,
-  //     "uuid": uuid,
-  //     "device_name": deviceName,
-  //     "iconPath": iconPath,
-  //     "powerOn": powerOn,
-  //   };
-  // }
 }

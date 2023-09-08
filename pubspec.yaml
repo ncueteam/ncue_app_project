@@ -29,7 +29,7 @@ dependencies:
   mysql_client: ^0.0.27
   permission_handler: ^10.4.3
   firebase_app_installations: ^0.2.3+4
-  firebase_auth: ^4.7.2
+  firebase_auth: ^4.9.0
   google_sign_in: ^6.1.4
   firebase_core: ^2.15.1
   audioplayers: ^5.0.0

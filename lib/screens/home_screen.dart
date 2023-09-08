@@ -29,20 +29,23 @@ class _HomeScreenState extends State<HomeScreen> {
     ["page_route", "MQTT", "/mqtt"],
   ];
 
-  Future loadUnits() async {
+  Future<void> loadUnits() async {
     if (deviceData.isNotEmpty) {
       deviceData.clear();
     }
-    await DeviceHandler.loadDevices();
-    units.addAll(DeviceHandler.devices);
     deviceData.put('Devices', units);
+  }
+
+  Future<void> combineUnits() async {
+    await DeviceHandler.loadDevices(units);
+    await loadUnits();
   }
 
   @override
   void initState() {
-    loadUnits();
-    setState(() {});
     super.initState();
+    combineUnits();
+    setState(() {});
   }
 
   @override
