@@ -1,46 +1,43 @@
 {
   "project_info": {
-    "project_number": "218597899046",
-    "firebase_url": "https://account-database-f8f8a-default-rtdb.firebaseio.com",
-    "project_id": "account-database-f8f8a",
-    "storage_bucket": "account-database-f8f8a.appspot.com"
+    "project_number": "117149850724",
+    "project_id": "ncueapp",
+    "storage_bucket": "ncueapp.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:218597899046:android:5963e4e6bb8f1b3f085fe7",
-        "android_client_info": {
-          "package_name": "haych.tw.postpartum_care_system"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCFPRE6Ao-jkQdFwuB4EkUmIa2A2DI-yVs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:218597899046:android:b7996c9489d7b098085fe7",
+        "mobilesdk_app_id": "1:117149850724:android:d24bf83bd565118a13d371",
         "android_client_info": {
           "package_name": "ncue.aiot"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "117149850724-nj1ef7gqbau3pi501d81ff10v5jtlv5o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFPRE6Ao-jkQdFwuB4EkUmIa2A2DI-yVs"
+          "current_key": "AIzaSyC1seViU-Yi66YoOkTwFvBLUd3SNXQgwo0"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "117149850724-nj1ef7gqbau3pi501d81ff10v5jtlv5o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "117149850724-jnjeegthr2on0qn6m7ak40otrovkspb1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ncueY.ncueYproject"
+              }
+            }
+          ]
         }
       }
     }

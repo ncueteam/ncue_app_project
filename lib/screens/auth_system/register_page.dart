@@ -1,7 +1,7 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ncue_aiot/services/sound_player.dart';
 
 import '../../components/login_button.dart';
 import '../../components/square_tile.dart';
@@ -55,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
             int.parse(ageController.text.trim()));
         // ignore: use_build_context_synchronously
         Navigator.pop(context);
-        AudioPlayer().play(AssetSource("sounds/crystal.mp3"));
+        SoundPlayer().playLocalAudio("lib/sounds/crystal.mp3");
       } else {
         Navigator.pop(context);
         wrongMessage("請確認密碼是否正確!");

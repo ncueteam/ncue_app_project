@@ -21,7 +21,7 @@ class LocalAuthUnit extends StatelessWidget {
           )),
           Expanded(
               child: Text(
-            user!.displayName!,
+            user!.email!,
             style: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
           )),

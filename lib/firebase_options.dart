@@ -44,42 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDZVfW0IpSLnPMCmM9FtfhFCkmmftCZr2Y',
-    appId: '1:218597899046:web:3f61c8989bc0e37b085fe7',
-    messagingSenderId: '218597899046',
-    projectId: 'account-database-f8f8a',
-    authDomain: 'account-database-f8f8a.firebaseapp.com',
-    storageBucket: 'account-database-f8f8a.appspot.com',
-    measurementId: 'G-ERJJELJZEZ',
+    apiKey: 'AIzaSyBuB8r-FuZ19Xe4OBscPG5PGb86quaYD_U',
+    appId: '1:117149850724:web:fe1509e27f67036b13d371',
+    messagingSenderId: '117149850724',
+    projectId: 'ncueapp',
+    authDomain: 'ncueapp.firebaseapp.com',
+    storageBucket: 'ncueapp.appspot.com',
+    measurementId: 'G-2FM98FLP44',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCFPRE6Ao-jkQdFwuB4EkUmIa2A2DI-yVs',
-    appId: '1:218597899046:android:b7996c9489d7b098085fe7',
-    messagingSenderId: '218597899046',
-    projectId: 'account-database-f8f8a',
-    storageBucket: 'account-database-f8f8a.appspot.com',
+    apiKey: 'AIzaSyC1seViU-Yi66YoOkTwFvBLUd3SNXQgwo0',
+    appId: '1:117149850724:android:d24bf83bd565118a13d371',
+    messagingSenderId: '117149850724',
+    projectId: 'ncueapp',
+    storageBucket: 'ncueapp.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCpDeSY5Vo8XwYMIGhnGT0e1le6IsPe3u0',
-    appId: '1:218597899046:ios:ae71a41c0356c4a0085fe7',
-    messagingSenderId: '218597899046',
-    projectId: 'account-database-f8f8a',
-    storageBucket: 'account-database-f8f8a.appspot.com',
-    androidClientId: '218597899046-h7cu072a9r6fnl9k9tidb87tt1rgf2d8.apps.googleusercontent.com',
-    iosClientId: '218597899046-pqv0j44j9a4fkqv5unrrkh3jbrmg7eqh.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAPzVC7xfFn8fyBBjVzul2Qtx7RJIW69EI',
+    appId: '1:117149850724:ios:1f674806cb52214013d371',
+    messagingSenderId: '117149850724',
+    projectId: 'ncueapp',
+    storageBucket: 'ncueapp.appspot.com',
+    iosClientId: '117149850724-jnjeegthr2on0qn6m7ak40otrovkspb1.apps.googleusercontent.com',
     iosBundleId: 'com.ncueY.ncueYproject',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCpDeSY5Vo8XwYMIGhnGT0e1le6IsPe3u0',
-    appId: '1:218597899046:ios:ae71a41c0356c4a0085fe7',
-    messagingSenderId: '218597899046',
-    projectId: 'account-database-f8f8a',
-    storageBucket: 'account-database-f8f8a.appspot.com',
-    androidClientId: '218597899046-h7cu072a9r6fnl9k9tidb87tt1rgf2d8.apps.googleusercontent.com',
-    iosClientId: '218597899046-pqv0j44j9a4fkqv5unrrkh3jbrmg7eqh.apps.googleusercontent.com',
+    apiKey: 'AIzaSyAPzVC7xfFn8fyBBjVzul2Qtx7RJIW69EI',
+    appId: '1:117149850724:ios:1f674806cb52214013d371',
+    messagingSenderId: '117149850724',
+    projectId: 'ncueapp',
+    storageBucket: 'ncueapp.appspot.com',
+    iosClientId: '117149850724-jnjeegthr2on0qn6m7ak40otrovkspb1.apps.googleusercontent.com',
     iosBundleId: 'com.ncueY.ncueYproject',
   );
 }
