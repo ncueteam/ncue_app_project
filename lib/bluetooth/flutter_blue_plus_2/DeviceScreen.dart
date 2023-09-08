@@ -1,14 +1,12 @@
+// ignore_for_file: file_names, deprecated_member_use, avoid_init_to_null
+
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'FlutterBlueApp.dart';
-import 'BluetoothOffScreen.dart';
 import 'widget2.dart';
 
 BluetoothCharacteristic? targetCharacteristic;
@@ -133,7 +131,6 @@ class DeviceScreen extends StatelessWidget {
         .toList();
   }
 
-
   // writeData(
   //     String data, BuildContext context, List<BluetoothService> services) async {
   //   services.forEach((service) {
@@ -196,7 +193,8 @@ class DeviceScreen extends StatelessWidget {
                       isConnectingOrDisconnecting[device.remoteId]!.value =
                           true;
                       try {
-                        await device.connect(timeout: Duration(seconds: 35));
+                        await device.connect(
+                            timeout: const Duration(seconds: 35));
                         final snackBar = snackBarGood("Connect: Success");
                         snackBarKeyC.currentState?.removeCurrentSnackBar();
                         snackBarKeyC.currentState?.showSnackBar(snackBar);
@@ -228,8 +226,8 @@ class DeviceScreen extends StatelessWidget {
                       if (isConnectingOrDisconnecting[device.remoteId]!.value ==
                           true) {
                         // Show spinner when connecting or disconnecting
-                        return Padding(
-                          padding: const EdgeInsets.all(14.0),
+                        return const Padding(
+                          padding: EdgeInsets.all(14.0),
                           child: AspectRatio(
                             aspectRatio: 1.0,
                             child: CircularProgressIndicator(
@@ -321,12 +319,12 @@ class DeviceScreen extends StatelessWidget {
                             ),
                             const IconButton(
                               icon: SizedBox(
+                                width: 18.0,
+                                height: 18.0,
                                 child: CircularProgressIndicator(
                                   valueColor:
                                       AlwaysStoppedAnimation(Colors.grey),
                                 ),
-                                width: 18.0,
-                                height: 18.0,
                               ),
                               onPressed: null,
                             )
@@ -372,14 +370,14 @@ class DeviceScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 child: TextField(
                   controller: wifiNameController,
-                  decoration: InputDecoration(labelText: 'Wifi Name'),
+                  decoration: const InputDecoration(labelText: 'Wifi Name'),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: TextField(
                   controller: wifiPasswordController,
-                  decoration: InputDecoration(labelText: 'Wifi Password'),
+                  decoration: const InputDecoration(labelText: 'Wifi Password'),
                 ),
               ),
               // Padding(
@@ -410,7 +408,7 @@ class DeviceScreen extends StatelessWidget {
       try {
         yield await device.readRssi();
       } catch (e) {
-        print("Error reading RSSI: $e");
+        debugPrint("Error reading RSSI: $e");
         break;
       }
       await Future.delayed(frequency);

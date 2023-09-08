@@ -2,6 +2,8 @@
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+// ignore_for_file: non_constant_identifier_names, prefer_const_declarations, unused_local_variable, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
@@ -95,12 +97,12 @@ class ScanResultTile extends StatelessWidget {
       title: _buildTitle(context),
       leading: Text(result.rssi.toString()),
       trailing: ElevatedButton(
-        child: const Text('CONNECT'),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.black,
           foregroundColor: Colors.white,
         ),
         onPressed: (result.advertisementData.connectable) ? onTap : null,
+        child: const Text('CONNECT'),
       ),
       children: <Widget>[
         _buildAdvRow(
@@ -147,7 +149,7 @@ class ServiceTile extends StatelessWidget {
         children: characteristicTiles,
       );
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 }
@@ -183,52 +185,52 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
         if (widget.characteristic.characteristicUuid.toString().toUpperCase() ==
             CHARACTERISTIC_UUID) {
           return ListTile(
-              title: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const Text('This Characteristic'),
-                  Text(
-                    '0x${widget.characteristic.characteristicUuid.toString().toUpperCase()}',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Theme.of(context).textTheme.bodySmall?.color),
-                  ),
-                  Row(
-                    children: [
-                      // if (widget.characteristic.properties.read)
-                      //   TextButton(
-                      //       child: Text("Read"),
-                      //       onPressed: () async {
-                      //         await widget.onReadPressed!();
-                      //         setState(() {});
-                      //       }),
-                      if (widget.characteristic.properties.write)
-                        ElevatedButton(
-                            child: Text(widget.characteristic.properties
-                                    .writeWithoutResponse
-                                ? "WriteNoResp"
-                                : "Submit"),
-                            onPressed: () async {
-                              await widget.onWritePressed!();
-                              setState(() {});
-                            }),
-                      // if (widget.characteristic.properties.notify ||
-                      //     widget.characteristic.properties.indicate)
-                      //   TextButton(
-                      //       child: Text(widget.characteristic.isNotifying
-                      //           ? "Unsubscribe"
-                      //           : "Subscribe"),
-                      //       onPressed: () async {
-                      //         await widget.onNotificationPressed!();
-                      //         setState(() {});
-                      //       })
-                    ],
-                  )
-                ],
-              ),
-              //subtitle: Text(value.toString()),
-              contentPadding: const EdgeInsets.all(15.0),
-            );
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const Text('This Characteristic'),
+                Text(
+                  '0x${widget.characteristic.characteristicUuid.toString().toUpperCase()}',
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).textTheme.bodySmall?.color),
+                ),
+                Row(
+                  children: [
+                    // if (widget.characteristic.properties.read)
+                    //   TextButton(
+                    //       child: Text("Read"),
+                    //       onPressed: () async {
+                    //         await widget.onReadPressed!();
+                    //         setState(() {});
+                    //       }),
+                    if (widget.characteristic.properties.write)
+                      ElevatedButton(
+                          child: Text(widget.characteristic.properties
+                                  .writeWithoutResponse
+                              ? "WriteNoResp"
+                              : "Submit"),
+                          onPressed: () async {
+                            await widget.onWritePressed!();
+                            setState(() {});
+                          }),
+                    // if (widget.characteristic.properties.notify ||
+                    //     widget.characteristic.properties.indicate)
+                    //   TextButton(
+                    //       child: Text(widget.characteristic.isNotifying
+                    //           ? "Unsubscribe"
+                    //           : "Subscribe"),
+                    //       onPressed: () async {
+                    //         await widget.onNotificationPressed!();
+                    //         setState(() {});
+                    //       })
+                  ],
+                )
+              ],
+            ),
+            //subtitle: Text(value.toString()),
+            contentPadding: const EdgeInsets.all(15.0),
+          );
         } else {
           return SizedBox.shrink();
         }

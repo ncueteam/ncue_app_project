@@ -9,10 +9,10 @@ class AppleTest extends StatefulWidget {
   const AppleTest({Key? key}) : super(key: key);
 
   @override
-  _AppleTestState createState() => _AppleTestState();
+  AppleTestState createState() => AppleTestState();
 }
 
-class _AppleTestState extends State<AppleTest> {
+class AppleTestState extends State<AppleTest> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -1,3 +1,5 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import '../models/index.dart';
@@ -20,6 +22,7 @@ class Global {
       }
     }
   }
+
   // 持久化Profile信息
   static saveProfile() =>
       _prefs.setString("profile", jsonEncode(profile.toJson()));

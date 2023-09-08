@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:ncue_aiot/components/units/unit_grid_view.dart';
+
+import '../services/device_handler.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,11 +16,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final user = FirebaseAuth.instance.currentUser;
-  bool authenticated = false;
   final deviceData = Hive.box('local_storage');
-  Future<void>? _dataLoadingFuture;
 
-  List devices = [
+  List units = [
     ["account", "yunitrish", "lib/icons/esp32.png", true],
     ["page_route", "手機本地存儲", "/local_storage"],
     ["page_route", "藍芽頁面", "/ble_page"],
@@ -30,42 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
     ["page_route", "MQTT", "/mqtt"],
   ];
 
-  List deviceID = [];
-
-  Future<void> refreshHandler() async {
-    return await Future.delayed(const Duration(seconds: 2));
-  }
-
-  Future loadDevices() async {
-    FirebaseFirestore database = FirebaseFirestore.instance;
-    database.collection('devices').get().then((querySnapshot) => {
-          for (var docSnapshot in querySnapshot.docs)
-            {
-              devices.add([
-                docSnapshot.get('type'),
-                docSnapshot.get('uuid'),
-                docSnapshot.get('device_name'),
-                docSnapshot.get('iconPath'),
-                docSnapshot.get('powerOn')
-              ])
-            }
-        });
-  }
-
   Future loadUnits() async {
     if (deviceData.isNotEmpty) {
       deviceData.clear();
     }
-    _dataLoadingFuture = loadDevices();
-    await _dataLoadingFuture;
-    deviceData.put('Devices', devices);
+    await DeviceHandler.loadDevices();
+    units.addAll(DeviceHandler.devices);
+    deviceData.put('Devices', units);
   }
 
   @override
   void initState() {
-    super.initState();
     loadUnits();
     setState(() {});
+    super.initState();
   }
 
   @override
@@ -80,6 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("智慧物聯網系統"),
           centerTitle: false,
           actions: [
+            IconButton(
+                onPressed: () => {
+                      DeviceHandler.addDevice(
+                          "device", "added", "lib/icons/fan.png", false)
+                    },
+                icon: const Icon(Icons.add)),
             IconButton(
                 onPressed: () => {Navigator.popAndPushNamed(context, '/home')},
                 icon: const Icon(Icons.refresh)),

@@ -1,3 +1,4 @@
+// ignore_for_file: file_names, unused_import
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -48,7 +49,7 @@ class BluetoothOffScreen extends StatelessWidget {
                       }
                     } catch (e) {
                       final snackBar =
-                      snackBarFail(prettyException("Error Turning On:", e));
+                          snackBarFail(prettyException("Error Turning On:", e));
                       snackBarKeyA.currentState?.removeCurrentSnackBar();
                       snackBarKeyA.currentState?.showSnackBar(snackBar);
                     }

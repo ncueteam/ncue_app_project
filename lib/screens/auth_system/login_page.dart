@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:ncue_aiot/services/soundPlayer.dart';
+import 'package:ncue_aiot/services/sound_player.dart';
 
 import '../../components/login_button.dart';
 import '../../components/square_tile.dart';

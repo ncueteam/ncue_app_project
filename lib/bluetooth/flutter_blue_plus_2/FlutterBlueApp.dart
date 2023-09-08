@@ -2,6 +2,8 @@
 // All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+// ignore_for_file: unused_import, file_names
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -19,7 +21,8 @@ import 'widget2.dart';
 final snackBarKeyA = GlobalKey<ScaffoldMessengerState>();
 final snackBarKeyB = GlobalKey<ScaffoldMessengerState>();
 final snackBarKeyC = GlobalKey<ScaffoldMessengerState>();
-final Map<DeviceIdentifier, ValueNotifier<bool>> isConnectingOrDisconnecting = {};
+final Map<DeviceIdentifier, ValueNotifier<bool>> isConnectingOrDisconnecting =
+    {};
 
 TextEditingController wifiNameController = TextEditingController();
 TextEditingController wifiPasswordController = TextEditingController();
@@ -72,6 +75,3 @@ class FlutterBlueApp extends StatelessWidget {
     );
   }
 }
-
-
-
