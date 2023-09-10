@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import '../models/index.dart';
-//import 'package:enhanced_http/enhanced_http.dart' as http;
 import 'package:http/http.dart' as http;
 
 abstract class ApiDataSource {
@@ -39,18 +38,16 @@ class UserRepository implements ApiDataSource {
     }
   }
 
-  @override
-  Future<String> createUser(User body) {
-    return _createUser(
-      Uri.parse('$domain/login'),
+  Future<String> register(User body) {
+    return _register(
+      Uri.parse('$domain/register'),
       body,
     );
   }
-
-  Future<String> _createUser(
-    Uri url,
-    User body,
-  ) async {
+  Future<String> _register(
+      Uri url,
+      User body,
+      ) async {
     try {
       await getXsrf();
       debugPrint("debug print5");
@@ -66,16 +63,57 @@ class UserRepository implements ApiDataSource {
         },
         body: json.encode(body.toJson()),
       );
-      //debugPrint("debug print4");
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {   //成功
         debugPrint(response.statusCode.toString());
         debugPrint(response.body);
-        /*log(
-          response.body,
-          name: response.statusCode.toString(),
-        );*/
+        response.body.split('"')[7];
+        var tempToken= response.body.split('"')[7];
+        debugPrint("tempToken: $tempToken");
+        return "${response.statusCode} $tempToken";
+      } else {   //400 不存在
+        debugPrint(response.statusCode.toString());
+        debugPrint(response.body);
         return response.statusCode.toString();
-      } else {
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  @override
+  Future<String> createUser(User body) {
+    return _login(
+      Uri.parse('$domain/login'),
+      body,
+    );
+  }
+  Future<String> _login(
+      Uri url,
+      User body,
+      ) async {
+    try {
+      await getXsrf();
+      debugPrint("debug print5");
+      debugPrint(body.toJson().toString());
+
+      final response = await client.post(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          "X-XSRF-TOKEN": xsrf,
+          "credentials": 'include',
+          "Accept": 'application/json',
+        },
+        body: json.encode(body.toJson()),
+      );
+      if (response.statusCode == 200) {   //成功
+        debugPrint(response.statusCode.toString());
+        debugPrint(response.body);
+        response.body.split('"')[7];
+        var tempToken= response.body.split('"')[7];
+        debugPrint("tempToken: $tempToken");
+        return "${response.statusCode} $tempToken";
+      } else {   //400 不存在
         debugPrint(response.statusCode.toString());
         debugPrint(response.body);
         return response.statusCode.toString();

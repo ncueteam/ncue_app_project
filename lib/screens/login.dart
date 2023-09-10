@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,21 +8,22 @@ import 'package:encrypt/encrypt.dart';
 import '../services/api_manager.dart';
 import '../models/user.dart';
 
+
 class LoginRoute extends StatefulWidget {
   const LoginRoute({super.key});
 
   @override
-  LoginRouteState createState() => LoginRouteState();
+  _LoginRouteState createState() => _LoginRouteState();
 }
 
-class LoginRouteState extends State<LoginRoute> {
+class _LoginRouteState extends State<LoginRoute> {
   final TextEditingController _unameController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
   bool pwdShow = false;
   final GlobalKey _formKey = GlobalKey<FormState>();
   late bool _nameAutoFocus = true;
   bool authenticated = false;
-  String loginMessage = "";
+  String loginMessage="";
 
   @override
   void initState() {
@@ -58,14 +57,12 @@ class LoginRouteState extends State<LoginRoute> {
                   ),
                   // 校验用户名（不能为空）
                   validator: (v) {
-                    String regexEmail =
-                        "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*\$";
-                    if ((v == null || v.trim().isNotEmpty) == false) {
+                    String regexEmail = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*\$";
+                    if((v==null||v.trim().isNotEmpty)== false){
                       return "電子信箱不能為空";
-                    } else if (RegExp(regexEmail).hasMatch(v!.trim()) ==
-                        false) {
+                    }else if(RegExp(regexEmail).hasMatch(v!.trim())== false){
                       return "格式錯誤";
-                    } else {
+                    }else{
                       return null;
                     }
                   }),
@@ -88,7 +85,7 @@ class LoginRouteState extends State<LoginRoute> {
                 obscureText: !pwdShow,
                 //校验密码（不能为空）
                 validator: (v) {
-                  return v == null || v.trim().isNotEmpty ? null : "密碼不能為空";
+                  return v==null||v.trim().isNotEmpty ? null : "密碼不能為空";
                 },
               ),
               Padding(
@@ -119,20 +116,19 @@ class LoginRouteState extends State<LoginRoute> {
         setState(() {
           authenticated = authenticate;
         });
-        if (authenticated) {
+        if(authenticated){
           const snackBar = SnackBar(
             content: Text('You are authenticated.'),
           );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-      },
+        },
       child: const Icon(Icons.fingerprint),
     );
   }
 
-  Future<String> encodeString(String content) async {
-    final publicKeyStr =
-        await rootBundle.loadString('assets/rsa_public_key.txt');
+   Future<String> encodeString(String content) async{
+    final publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.txt');
     debugPrint(publicKeyStr.toString());
     dynamic publicKey = RSAKeyParser().parse(publicKeyStr);
     final encode = Encrypter(RSA(publicKey: publicKey));
@@ -143,28 +139,28 @@ class LoginRouteState extends State<LoginRoute> {
     final UserRepository userRepository = UserRepository();
     if ((_formKey.currentState as FormState).validate()) {
       debugPrint(_pwdController.text);
-      String pwdTemp = "";
-      await encodeString(_pwdController.text).then((value) {
-        pwdTemp = value;
+      String pwdTemp="";
+      await encodeString(_pwdController.text).then((value){
+          pwdTemp=value;
       });
       debugPrint(pwdTemp);
-      var response = await userRepository.createUser(User()
-        ..email = _unameController.text
-        ..password = pwdTemp);
-      if (response == "401") {
+      var response=await userRepository.createUser(
+        User()..email = _unameController.text
+              ..password = pwdTemp
+      );
+      if(response=="401"){
         setState(() {
-          loginMessage = "帳號密碼錯誤";
+          loginMessage="帳號密碼錯誤";
         });
-      } else {
+      }else{
         setState(() {
-          loginMessage = "登入成功";
+          loginMessage="登入成功";
         });
-        Provider.of<UserModel>(context, listen: false).user.email =
-            _unameController.text;
+        Provider.of<UserModel>(context, listen: false).user.email = _unameController.text;
+        }
       }
     }
   }
-}
     // 先验证各个表单字段是否合法
     /*if ((_formKey.currentState as FormState).validate()) {
       showLoading(context);

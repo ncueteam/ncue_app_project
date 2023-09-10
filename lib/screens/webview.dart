@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../common/globals.dart';
+import 'drawer.dart';
 import 'login.dart';
 
 class WebViewTest extends StatefulWidget {
@@ -14,9 +16,7 @@ class WebViewTestState extends State<WebViewTest> {
   bool authenticated = false;
   var currentUrl = "http://frp.4hotel.tw:25580/";
 
-  @override
-  void initState() {
-    super.initState();
+  setCookie() async {
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
@@ -28,14 +28,37 @@ class WebViewTestState extends State<WebViewTest> {
         ),
       )
       ..loadRequest(Uri.parse(currentUrl));
+
+    debugPrint("cookie token: ${Global.profile.token}");
+    final manager = WebViewCookieManager();
+    await manager.setCookie(
+      WebViewCookie(
+        name: "login_token",
+        value: Global.profile.token.toString(),
+        domain: "frp.4hotel.tw",
+      ),
+    );
+    //manager.clearCookies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint("cookie token: ${Global.profile.token}");
+    //WebViewCookie cookie = WebViewCookie(
+    //    name: "token",
+    //    value: Global.profile.token.toString(),
+    //    domain: "frp.4hotel.tw");
+    //WebViewCookieManager().setCookie(cookie);
+    setCookie();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('WebView Test'),
-        toolbarHeight: 0.0,
+        title: const Text('WebView'),
+        //toolbarHeight: 0.0,
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -53,6 +76,8 @@ class WebViewTestState extends State<WebViewTest> {
         },
         child: WebViewWidget(controller: controller),
       ),
+      drawer: const MyDrawer(), //抽屉菜单
+      floatingActionButton: getCookie(),
     );
   }
 
@@ -68,7 +93,7 @@ class WebViewTestState extends State<WebViewTest> {
             currentUrl = value.toString();
           });
           debugPrint('Current URL2: $currentUrl');
-          if (currentUrl.toString() == '"http://frp.4hotel.tw:25580/sign-in"') {
+          if (currentUrl.toString() == '"http://frp.4hotel.tw:25580/login"') {
             debugPrint('Current URL4: $currentUrl');
             Navigator.push(
               context,
@@ -78,5 +103,18 @@ class WebViewTestState extends State<WebViewTest> {
         }
       });
     }
+  }
+
+  Widget getCookie() {
+    return FloatingActionButton(
+      onPressed: () async {
+        final cookies = await controller.runJavaScriptReturningResult(
+          'document.cookie',
+        );
+        debugPrint(cookies.toString());
+        debugPrint("user: ${Global.profile.user?.email}");
+      },
+      child: const Icon(Icons.cookie_outlined),
+    );
   }
 }
