@@ -38,7 +38,7 @@ class UserRepository implements ApiDataSource {
     }
   }
 
-  Future<String> register(User body) {
+  Future<String> register(Register body) {
     return _register(
       Uri.parse('$domain/register'),
       body,
@@ -46,7 +46,7 @@ class UserRepository implements ApiDataSource {
   }
   Future<String> _register(
       Uri url,
-      User body,
+      Register body,
       ) async {
     try {
       await getXsrf();

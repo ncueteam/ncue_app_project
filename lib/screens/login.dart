@@ -7,7 +7,7 @@ import '../services/local_auth_service.dart';
 import 'package:encrypt/encrypt.dart';
 import '../services/api_manager.dart';
 import '../models/user.dart';
-
+import 'drawer.dart';
 
 class LoginRoute extends StatefulWidget {
   const LoginRoute({super.key});
@@ -105,6 +105,7 @@ class _LoginRouteState extends State<LoginRoute> {
           ),
         ),
       ),
+      drawer: const MyDrawer(), //抽屉菜单
       floatingActionButton: _fingerPrinter(),
     );
   }
@@ -120,14 +121,15 @@ class _LoginRouteState extends State<LoginRoute> {
           const snackBar = SnackBar(
             content: Text('You are authenticated.'),
           );
+          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
-        },
+      },
       child: const Icon(Icons.fingerprint),
     );
   }
 
-   Future<String> encodeString(String content) async{
+  Future<String> encodeString(String content) async{
     final publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.txt');
     debugPrint(publicKeyStr.toString());
     dynamic publicKey = RSAKeyParser().parse(publicKeyStr);
@@ -141,14 +143,20 @@ class _LoginRouteState extends State<LoginRoute> {
       debugPrint(_pwdController.text);
       String pwdTemp="";
       await encodeString(_pwdController.text).then((value){
-          pwdTemp=value;
+        pwdTemp=value;
       });
       debugPrint(pwdTemp);
       var response=await userRepository.createUser(
-        User()..email = _unameController.text
-              ..password = pwdTemp
+          User()..email = _unameController.text
+            ..password = pwdTemp
       );
-      if(response=="401"){
+      debugPrint(response);
+      //debugPrint(User().toString());
+      //Provider.of<UserModel>(context, listen: false).user.email  = _unameController.text;
+      // ignore: use_build_context_synchronously
+      Provider.of<UserModel>(context, listen: false).setUser(_unameController.text);
+      debugPrint(Global.profile.user?.email);
+      if(response=="400"){
         setState(() {
           loginMessage="帳號密碼錯誤";
         });
@@ -156,33 +164,15 @@ class _LoginRouteState extends State<LoginRoute> {
         setState(() {
           loginMessage="登入成功";
         });
-        Provider.of<UserModel>(context, listen: false).user.email = _unameController.text;
-        }
+        String tempToken=response.split(" ")[1];
+        debugPrint(tempToken);
+        // ignore: use_build_context_synchronously
+        Provider.of<UserModel>(context, listen: false).setToken(tempToken);
+        //Global.profile.user?.email = _unameController.text;
+        debugPrint("continue");
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacementNamed(context, '/webview');
       }
     }
   }
-    // 先验证各个表单字段是否合法
-    /*if ((_formKey.currentState as FormState).validate()) {
-      showLoading(context);
-      User? user;
-      try {
-        user = await Git(context)
-            .login(_unameController.text, _pwdController.text);
-        // 因为登录页返回后，首页会build，所以我们传入false，这样更新user后便不触发更新。
-        Provider.of<UserModel>(context, listen: false).user = user;
-      } on DioError catch( e) {
-        //登录失败则提示
-        if (e.response?.statusCode == 401) {
-          showToast(GmLocalizations.of(context).userNameOrPasswordWrong);
-        } else {
-          showToast(e.toString());
-        }
-      } finally {
-        // 隐藏loading框
-        Navigator.of(context).pop();
-      }
-      //登录成功则返回
-      if (user != null) {
-        Navigator.of(context).pop();
-      }
-    }*/
+}
