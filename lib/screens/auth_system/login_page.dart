@@ -13,6 +13,8 @@ import '../../services/auth_service.dart';
 import '../../services/sound_player.dart';
 import '../../services/api_manager.dart';
 import '../../models/index.dart' as user_json;
+//ignore_for_file:use_build_context_synchronously
+
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -26,6 +28,13 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
 
   final passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    // 自动填充上次登录的用户名，填充后将焦点定位到密码输入框
+    emailController.text = Global.profile.lastLogin ?? "";
+    super.initState();
+  }
 
   Future<String> encodeString(String content) async{
     final publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.txt');

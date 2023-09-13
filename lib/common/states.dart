@@ -16,7 +16,8 @@ class UserModel extends ProfileChangeNotifier {
   String? get user => _profile.user?.email;
 
   // APP是否登录(如果有用户信息，则证明登录过)
-  bool get isLogin => user != null;
+  //bool get isLogin => user != null;
+  bool get isLogin => _profile.token != null;
 
   //用户信息发生变化，更新用户信息并通知依赖它的子孙Widgets更新
   /*void setUser(String email) {

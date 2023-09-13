@@ -163,7 +163,6 @@ class LoginRouteState extends State<LoginRoute> {
         String tempToken=response.split(" ")[1];
         debugPrint(tempToken);
         Provider.of<UserModel>(context, listen: false).setToken(tempToken);
-        //Global.profile.user?.email = _unameController.text;
         debugPrint("continue");
         Navigator.pushReplacementNamed(context, '/webview');
       }
