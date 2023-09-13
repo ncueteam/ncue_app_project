@@ -63,7 +63,7 @@ class UserRepository implements ApiDataSource {
         },
         body: json.encode(body.toJson()),
       );
-      if (response.statusCode == 200) {   //成功
+      if (response.statusCode == 201) {   //成功
         debugPrint(response.statusCode.toString());
         debugPrint(response.body);
         response.body.split('"')[7];

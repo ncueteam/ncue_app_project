@@ -6,7 +6,7 @@ part 'register.g.dart';
 class Register {
   Register();
 
-  String? user;
+  String? name;
   String? email;
   String? password;
   
