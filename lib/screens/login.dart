@@ -6,17 +6,18 @@ import '../common/states.dart';
 import '../services/local_auth_service.dart';
 import 'package:encrypt/encrypt.dart';
 import '../services/api_manager.dart';
-import '../models/user.dart';
+import '../models/index.dart';
 import 'drawer.dart';
+//ignore_for_file:use_build_context_synchronously
 
 class LoginRoute extends StatefulWidget {
   const LoginRoute({super.key});
 
   @override
-  _LoginRouteState createState() => _LoginRouteState();
+  LoginRouteState createState() => LoginRouteState();
 }
 
-class _LoginRouteState extends State<LoginRoute> {
+class LoginRouteState extends State<LoginRoute> {
   final TextEditingController _unameController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
   bool pwdShow = false;
@@ -37,7 +38,6 @@ class _LoginRouteState extends State<LoginRoute> {
 
   @override
   Widget build(BuildContext context) {
-    //var gm = GmLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(title: const Text("登入")),
       body: Padding(
@@ -93,9 +93,7 @@ class _LoginRouteState extends State<LoginRoute> {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints.expand(height: 55.0),
                   child: ElevatedButton(
-                    // color: Theme.of(context).primaryColor,
                     onPressed: _onLogin,
-                    // textColor: Colors.white,
                     child: const Text("登入"),
                   ),
                 ),
@@ -121,7 +119,6 @@ class _LoginRouteState extends State<LoginRoute> {
           const snackBar = SnackBar(
             content: Text('You are authenticated.'),
           );
-          // ignore: use_build_context_synchronously
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
@@ -140,21 +137,20 @@ class _LoginRouteState extends State<LoginRoute> {
   void _onLogin() async {
     final UserRepository userRepository = UserRepository();
     if ((_formKey.currentState as FormState).validate()) {
-      debugPrint(_pwdController.text);
       String pwdTemp="";
       await encodeString(_pwdController.text).then((value){
         pwdTemp=value;
       });
       debugPrint(pwdTemp);
+      User tempUser=User()..email = _unameController.text
+                          ..password = pwdTemp;
       var response=await userRepository.createUser(
           User()..email = _unameController.text
             ..password = pwdTemp
       );
       debugPrint(response);
-      //debugPrint(User().toString());
-      //Provider.of<UserModel>(context, listen: false).user.email  = _unameController.text;
-      // ignore: use_build_context_synchronously
-      Provider.of<UserModel>(context, listen: false).setUser(_unameController.text);
+      //Provider.of<UserModel>(context, listen: false).setUser(_unameController.text);
+      Provider.of<UserModel>(context, listen: false).setUser(tempUser);
       debugPrint(Global.profile.user?.email);
       if(response=="400"){
         setState(() {
@@ -166,11 +162,9 @@ class _LoginRouteState extends State<LoginRoute> {
         });
         String tempToken=response.split(" ")[1];
         debugPrint(tempToken);
-        // ignore: use_build_context_synchronously
         Provider.of<UserModel>(context, listen: false).setToken(tempToken);
         //Global.profile.user?.email = _unameController.text;
         debugPrint("continue");
-        // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, '/webview');
       }
     }

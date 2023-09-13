@@ -1,11 +1,18 @@
+import 'package:encrypt/encrypt.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import '../../common/globals.dart';
+import '../../common/states.dart';
 import '../../components/login_button.dart';
 import '../../components/square_tile.dart';
 import '../../components/styled_text_field.dart';
 import '../../services/auth_service.dart';
 import '../../services/sound_player.dart';
+import '../../services/api_manager.dart';
+import '../../models/index.dart' as user_json;
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -20,6 +27,14 @@ class _LoginPageState extends State<LoginPage> {
 
   final passwordController = TextEditingController();
 
+  Future<String> encodeString(String content) async{
+    final publicKeyStr = await rootBundle.loadString('assets/rsa_public_key.txt');
+    debugPrint(publicKeyStr.toString());
+    dynamic publicKey = RSAKeyParser().parse(publicKeyStr);
+    final encode = Encrypter(RSA(publicKey: publicKey));
+    return encode.encrypt(content).base64;
+  }
+
   void signUserIn() async {
     showDialog(
         context: context,
@@ -28,6 +43,28 @@ class _LoginPageState extends State<LoginPage> {
             child: CircularProgressIndicator(),
           );
         });
+
+    final UserRepository userRepository = UserRepository();
+    String pwdTemp="";
+    await encodeString(passwordController.text).then((value){
+      pwdTemp=value;
+    });
+    debugPrint(pwdTemp);
+    user_json.User tempUser=user_json.User()..email = emailController.text
+      ..password = pwdTemp;
+    var response=await userRepository.createUser(
+        user_json.User()..email = emailController.text
+          ..password = pwdTemp
+    );
+    debugPrint(response);
+    Provider.of<UserModel>(context, listen: false).setUser(tempUser);
+    debugPrint(Global.profile.user?.email);
+    if(response!="400"){
+      String tempToken = response.split(" ")[1];
+      debugPrint(tempToken);
+      Provider.of<UserModel>(context, listen: false).setToken(tempToken);
+    }
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,

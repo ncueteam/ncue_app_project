@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ncueapp/screens/register.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import '../common/globals.dart';
 import 'drawer.dart';
@@ -45,11 +46,6 @@ class WebViewTestState extends State<WebViewTest> {
   void initState() {
     super.initState();
     debugPrint("cookie token: ${Global.profile.token}");
-    //WebViewCookie cookie = WebViewCookie(
-    //    name: "token",
-    //    value: Global.profile.token.toString(),
-    //    domain: "frp.4hotel.tw");
-    //WebViewCookieManager().setCookie(cookie);
     setCookie();
   }
 
@@ -99,6 +95,10 @@ class WebViewTestState extends State<WebViewTest> {
               context,
               MaterialPageRoute(builder: (context) => const LoginRoute()),
             );
+            /*Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const RegisterTest()),
+            );*/
           }
         }
       });

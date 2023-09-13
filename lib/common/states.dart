@@ -15,20 +15,11 @@ class ProfileChangeNotifier extends ChangeNotifier {
 class UserModel extends ProfileChangeNotifier {
   String? get user => _profile.user?.email;
 
-  /*User get user(){
-    if(_profile.user==null){
-      return null;
-    }else{
-
-    }
-  }*/
-
   // APP是否登录(如果有用户信息，则证明登录过)
-  // ignore: unnecessary_null_comparison
   bool get isLogin => user != null;
 
   //用户信息发生变化，更新用户信息并通知依赖它的子孙Widgets更新
-  void setUser(String email) {
+  /*void setUser(String email) {
     debugPrint("setuser");
     debugPrint(email);
     if (email != _profile.user?.email) {
@@ -38,14 +29,14 @@ class UserModel extends ProfileChangeNotifier {
       debugPrint(_profile.user?.email);
       notifyListeners();
     }
-  }
-  /*void setUser(User user) {
+  }*/
+  void setUser(User user) {
     if (user.email != _profile.user?.email) {
-      _profile.lastLogin = _profile.user?.email;
+      _profile.lastLogin = user.email;
       _profile.user = user;
       notifyListeners();
     }
-  }*/
+  }
   void setToken(String token) {
     if (token != _profile.token) {
       _profile.token = token;
